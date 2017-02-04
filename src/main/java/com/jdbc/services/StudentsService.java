@@ -21,14 +21,14 @@ public class StudentsService implements StudentsDAO{
 
 
     @Override
-    public void insert(String firstName, String lastName) {
-
+    public int addNewStudent(String firstName, String lastName, int course, String group) {
+        return 0;
     }
 
     @Override
     public List<Student> getAllStudents() {
         String query = "SELECT * FROM students";
-        List<Student> studentsList = jdbc.query(query,new StudentRowMapper());
-        return studentsList;
+        List<Student> studentsList = jdbc.query(query, new StudentRowMapper());
+        return studentsList.size() == 0 ? null : studentsList;
     }
 }

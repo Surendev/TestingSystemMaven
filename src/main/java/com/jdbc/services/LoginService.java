@@ -33,7 +33,7 @@ public class LoginService implements LoginDAO {
         try {
             student = jdbc.queryForObject(query, new Object[]{login}, new StudentRowMapper());
         }catch(EmptyResultDataAccessException e){
-            System.out.println("Not found");
+            System.err.println("Not found");
             System.out.println(e.getMessage());
         }
         if(student == null){

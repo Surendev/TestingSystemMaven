@@ -18,6 +18,8 @@ public class StudentRowMapper implements RowMapper<Student> {
         student.setLastName(resultSet.getString("last_name"));
         student.setLogin(resultSet.getString("login"));
         student.setPassword(resultSet.getString("password"));
+        student.setCourse(resultSet.getInt("course"));
+        student.setGroup(resultSet.getString("group"));
         return student;
     }
 }
