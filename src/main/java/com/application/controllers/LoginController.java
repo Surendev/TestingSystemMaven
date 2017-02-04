@@ -8,7 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -16,10 +19,13 @@ import java.util.ResourceBundle;
 
 /**
  * Created by surik on 1/29/17
+ * Controller function is to show results to some actions.
+ * LoginController is provides login
  */
 public class LoginController implements Initializable{
 
     private LoginService loginService ;
+
     private @FXML Label dbConnectionLabel;
     private @FXML TextField loginField;
     private @FXML TextField passwordField;
@@ -29,21 +35,15 @@ public class LoginController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loginService = new LoginService();
-        if(loginService.isConnected()){
-            dbConnectionLabel.setTextFill(Color.GREEN);
-            dbConnectionLabel.setText("DB is Connected");
-        }else{
-            dbConnectionLabel.setTextFill(Color.RED);
-            dbConnectionLabel.setText("DB is NOT Connected");
-        }
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring_context.xml");
+        loginService =  context.getBean("loginDao",LoginService.class);
     }
 
-    public void logIn(ActionEvent event) throws SQLException {
+    public void logIn() {
         String login = loginField.getText();
         String pass = passwordField.getText();
         if(login.equals("") || pass.equals("")){
-            errLabel.setText("Login or password are invalid");
+            errLabel.setText("Invalid login or password");
             errLabel.setTextFill(Color.RED);
             return;
         }
@@ -52,12 +52,18 @@ public class LoginController implements Initializable{
             errLabel.setTextFill(Color.GREEN);
             return;
         }
-        errLabel.setText("Login or password are Incorrect");
+        errLabel.setText("Login and password are Incorrect");
         errLabel.setTextFill(Color.RED);
     }
 
-    public void cancel(ActionEvent event) {
+    public void cancel() {
         Platform.exit();
     }
 
+
+    public void checkKeyPressing(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            logIn();
+        }
+    }
 }

@@ -3,22 +3,27 @@ package com;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
 /**
  * Created by surik on 1/29/17
- */
+ *
+ * This is where application begin.
+ * At begin it loads {@code login.fxml}
+ * and prompt user to enter admins login and password
+*/
 public class StartApp extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/login.fxml"));
-        BorderPane pane = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
+        Pane pane = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         Scene scene = new Scene(pane, 300,300);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Application");
+        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        primaryStage.setTitle("Testing System");
         primaryStage.show();
     }
 

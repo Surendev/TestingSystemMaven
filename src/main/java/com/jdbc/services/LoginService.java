@@ -1,50 +1,45 @@
 package com.jdbc.services;
 
-import com.jdbc.connection.SQLiteConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.dto.Student;
+import com.jdbc.dao.LoginDAO;
+import com.jdbc.mappers.StudentRowMapper;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import javax.sql.DataSource;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by surik on 1/29/17
+ * This class provides communication with database
+ * for handling users right login
  */
-public class LoginService {
 
-    private Connection sqliteConnection;
+public class LoginService implements LoginDAO {
 
-    public LoginService() {
-        sqliteConnection = SQLiteConnection.Connector();
-        if(sqliteConnection == null){
-            System.out.println("DB is not connected");
-            System.exit(1);
-        }
+    private MessageDigest digest;
+    private JdbcTemplate jdbc;
+
+    public void setDataSource(DataSource dataSource) throws NoSuchAlgorithmException {
+        jdbc = new JdbcTemplate(dataSource);
+        digest = MessageDigest.getInstance("SHA-256");
     }
 
-    public boolean isConnected(){
+    public boolean login(String login, String password){
+        String query = "SELECT * FROM students WHERE login=?";
+        Student student = null;
         try {
-            return !sqliteConnection.isClosed();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            student = jdbc.queryForObject(query, new Object[]{login}, new StudentRowMapper());
+        }catch(EmptyResultDataAccessException e){
+            System.out.println("Not found");
+            System.out.println(e.getMessage());
+        }
+        if(student == null){
             return false;
         }
-    }
-
-
-
-    public boolean  login(String login, String password) throws SQLException {
-        String query = "SELECT * FROM students WHERE login=? and password=?";
-        try (PreparedStatement preparedStatement = sqliteConnection.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery()) {
-            preparedStatement.setString(1, login);
-            preparedStatement.setString(2, password);
-            return resultSet.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-
+        String pass = new String(digest.digest(password.getBytes()));
+        return student.getPassword().equals(password);
     }
 }
