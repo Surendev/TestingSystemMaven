@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class LoginController extends AbstractController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loginService =  context.getBean("loginDao",LoginService.class);
+        loginService =  context.getBean("loginDAO",LoginService.class);
     }
 
     public void logIn() throws IOException {

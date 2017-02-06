@@ -1,6 +1,6 @@
 package com.application.controllers;
 
-import com.application.helpers.AdminHelper;
+import com.application.utils.AdminUtil;
 import com.jdbc.dao.StudentsDAO;
 import com.jdbc.services.StudentsService;
 import javafx.event.ActionEvent;
@@ -32,10 +32,10 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void showStudents() {
-        dataPane.getChildren().add(AdminHelper.
+        dataPane.getChildren().add(AdminUtil.
                 getGroupOfLabels("Full Name","Group","Course"
                         ,"Rating","1st Exam","2st Exam",50));
-        dataPane.getChildren().add(AdminHelper.getStudentsData(studentsService.getAllStudents()));
+        dataPane.getChildren().add(AdminUtil.getStudentsData(studentsService.getAllStudents()));
     }
 
     public void addNewStudent(ActionEvent event) {

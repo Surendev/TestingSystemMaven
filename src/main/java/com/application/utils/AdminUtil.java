@@ -1,20 +1,17 @@
-package com.application.helpers;
+package com.application.utils;
 
 import com.dto.Student;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.text.TextAlignment;
 ;import java.util.List;
 
 /**
  * Created by surik on 2/4/17
  */
-public class AdminHelper {
+public class AdminUtil {
     private static final int STANDART_HEIGHT  = 30;
 
 
