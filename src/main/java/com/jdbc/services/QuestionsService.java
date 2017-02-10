@@ -5,6 +5,7 @@ import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.mappers.QuestionRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.jws.WebMethod;
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -23,6 +24,6 @@ public class QuestionsService implements QuestionsDAO {
     @Override
     public List<Question> getQuestionsByRating(int rating) {
         String query = "SELECT * FROM questions WHERE rating=?";
-        return jdbc.query(query,new QuestionRowMapper());
+        return jdbc.query(query,new Object[]{rating},new QuestionRowMapper());
     }
 }
