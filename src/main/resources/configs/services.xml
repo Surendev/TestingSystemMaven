@@ -3,7 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="loginDAO" class="com.jdbc.services.LoginService">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
     <bean id="studentsDAO" class="com.jdbc.services.StudentsService">
         <property name="dataSource" ref="datasource"/>
     </bean>
+
+    <bean id="questionsDAO" class="com.jdbc.services.QuestionsService">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+
 </beans>

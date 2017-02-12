@@ -9,7 +9,8 @@ import java.util.List;
  */
 public interface StudentsDAO {
 
-    void insert(String firstName,String lastName);
+    int addNewStudent(String firstName, String lastName, int course, String group);
 
     List<Student> getAllStudents();
+
 }

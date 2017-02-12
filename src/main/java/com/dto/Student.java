@@ -9,6 +9,9 @@ public class Student {
     private String lastName;
     private String group;
     private int course;
+    private double rating;
+    private boolean passedFirstExam;
+    private boolean passedSecondExam;
 
     private String login;
     private String password;
@@ -64,6 +67,30 @@ public class Student {
         this.course = course;
     }
 
+    public boolean isPassedFirstExam() {
+        return passedFirstExam;
+    }
+
+    public void setPassedFirstExam(boolean passedFirstExam) {
+        this.passedFirstExam = passedFirstExam;
+    }
+
+    public boolean isPassedSecondExam() {
+        return passedSecondExam;
+    }
+
+    public void setPassedSecondExam(boolean passedSecondExam) {
+        this.passedSecondExam = passedSecondExam;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "{" +
@@ -80,10 +107,10 @@ public class Student {
 
         Student student = (Student) o;
 
-//        if (getCourse() != student.getCourse()) return false;
+        if (getCourse() != student.getCourse()) return false;
         if (!getFirstName().equals(student.getFirstName())) return false;
         if (!getLastName().equals(student.getLastName())) return false;
-//        if (!getGroup().equals(student.getGroup())) return false;
+        if (!getGroup().equals(student.getGroup())) return false;
         if (!getLogin().equals(student.getLogin())) return false;
         return getPassword().equals(student.getPassword());
     }
