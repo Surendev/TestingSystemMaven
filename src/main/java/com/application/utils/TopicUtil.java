@@ -6,6 +6,7 @@ package com.application.utils;
 public enum TopicUtil {
 
     TOPIC_1("TOPIC_1"), TOPIC_2("TOPIC_2"), TOPIC_3("TOPIC_3"), TOPIC_4("TOPIC_4"), TOPIC_5("TOPIC_5");
+
     private  String topic;
 
     TopicUtil(String topic) {

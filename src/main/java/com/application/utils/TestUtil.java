@@ -20,28 +20,28 @@ public class TestUtil {
     // here is saving all questions by ratings
     private Map<Integer, List<Question>> questionsFromDB;
 
-    ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring_context.xml");
+    private ClassPathXmlApplicationContext context =
+            new ClassPathXmlApplicationContext("/spring_context.xml");
 
     public TestUtil() {
         questionsService = context.getBean("questionsDAO", QuestionsService.class);
-        getTopicsFromAdmin();
         fillQuestionsFromDB();
     }
 
     private void fillQuestionsFromDB() {
-        //TODO get questions by all ratings
-        //have to add topic in functions' arguments
+
         for (Integer rating : ratings) {
             questionsFromDB.put(rating, questionsService.getQuestionsByRating(rating));
         }
     }
 
     public List<Question> chooseFromListByTopic(int rating) {
-        //TODO choose questions by topic
         List<Question> questionsOfTopic = new ArrayList<>();
 
         for (TopicUtil eachTopic : topics) {
+
             String topic = eachTopic.getTopic();
+
             for (Question eachQuestion : questionsFromDB.get(rating)) {
                 if (eachQuestion.getTopic().equals(topic)) {
                     questionsOfTopic.add(eachQuestion);
@@ -51,7 +51,14 @@ public class TestUtil {
 
         return questionsOfTopic;
     }
-    //TODO for Suren, get topics array from admin terminal. Otherwise we can't call generateTest()
-    private void getTopicsFromAdmin(){topics = null;}
+
+    public void setTopics(String [] topics){
+
+        this.topics = new TopicUtil[topics.length];
+
+        for (int i=0;i<topics.length;i++){
+            this.topics[i] = TopicUtil.valueOf(topics[i]);
+        }
+    }
 
 }

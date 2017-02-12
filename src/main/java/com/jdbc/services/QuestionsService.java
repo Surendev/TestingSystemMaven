@@ -22,7 +22,6 @@ public class QuestionsService implements QuestionsDAO {
 
 
     @Override
-    //TODO for Suren, get questions from DB with rating and topics[]
     public List<Question> getQuestionsByRating(int rating) {
         String query = "SELECT * FROM questions WHERE rating=?";
         return jdbc.query(query,new Object[]{rating},new QuestionRowMapper());
