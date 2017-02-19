@@ -1,5 +1,6 @@
 package com.application.controllers;
 
+import com.StartApp;
 import com.jdbc.dao.LoginDAO;
 import com.jdbc.dao.StudentsDAO;
 import com.jdbc.services.LoginService;
@@ -64,8 +65,8 @@ public class LoginController extends AbstractController implements Initializable
         errLabel.setTextFill(Color.RED);
     }
 
-    public void cancel() {
-        Platform.exit();
+    public void cancel() throws IOException {
+        StartApp.showMainPage();
     }
 
 
