@@ -22,7 +22,10 @@ public class StudentsService implements StudentsDAO{
 
     @Override
     public int addNewStudent(String firstName, String lastName, int course, String group) {
-        return 0;
+        String sql = "INSERT INTO students(first_name,last_name," +
+                "course,'group', rating, login, password) VALUES(?,?,?,?,?,?,?)";
+
+        return jdbc.update(sql,firstName,lastName,course,group,0,"artyom","asdasdasd");
     }
 
     @Override

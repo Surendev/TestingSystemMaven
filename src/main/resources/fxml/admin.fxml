@@ -12,7 +12,7 @@
    <children>
       <HBox layoutY="550.0" prefHeight="50.0" prefWidth="800.0">
          <children>
-            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="50.0" prefWidth="200.0" text="HOME" textAlignment="CENTER">
+            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="49.0" prefWidth="159.0" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
@@ -21,9 +21,22 @@
       </HBox>
       <TabPane fx:id="tabPane" prefHeight="550.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab closable="false" text="Ուսանողներ">
+          <Tab fx:id="students" closable="false" onSelectionChanged="#showStudents" text="Ուսանողներ">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="studentsTable" prefHeight="517.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="firstNameCol" prefWidth="145.0" text="Անուն" />
+                              <TableColumn fx:id="lastNameCol" prefWidth="145.0" text="Ազգանուն" />
+                            <TableColumn fx:id="ratingCol" minWidth="0.0" text="ՄՈԳ" />
+                              <TableColumn fx:id="courseCol" minWidth="0.0" text="Կուրս" />
+                              <TableColumn fx:id="groupCol" prefWidth="110.0" text="Խումբ" />
+                              <TableColumn fx:id="firstExamCol" prefWidth="120.0" text="Առաջին Միջ." />
+                              <TableColumn fx:id="secondExamCol" prefWidth="120.0" text="Երկրորդ Միջ." />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
           <Tab text="Նոր Ուսանող">
@@ -38,14 +51,31 @@
                         <ComboBox fx:id="courseCheckBox" layoutX="80.0" layoutY="210.0" prefWidth="200.0" promptText="Ընտրել" />
                         <Label fx:id="groupLabel" alignment="CENTER" layoutX="130.0" layoutY="260.0" prefHeight="20.0" prefWidth="100.0" text="Խումբ" />
                         <TextField fx:id="groupField" layoutX="80.0" layoutY="280.0" prefWidth="200.0" />
-                        <Button fx:id="confirmButton" layoutX="130.0" layoutY="350.0" mnemonicParsing="false" prefWidth="100.0" text="Ավելացնել" />
+                        <Button fx:id="confirmStudentButton" layoutX="110.0" layoutY="350.0" mnemonicParsing="false" onAction="#addNewStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#06f54d" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
             <Tab closable="false" text="Նոր Հարց">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="questionField" layoutX="50.0" layoutY="70.0" prefHeight="50.0" prefWidth="200.0" />
+                        <TextField fx:id="ans1Field" layoutX="50.0" layoutY="270.0" prefHeight="50.0" prefWidth="200.0" />
+                        <Label alignment="CENTER" layoutX="100.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Հարց" />
+                        <Label alignment="CENTER" layoutX="450.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Թեմա" />
+                        <Label alignment="CENTER" layoutX="75.0" layoutY="150.0" prefHeight="20.0" prefWidth="150.0" text="Ճիշտ Պատասխան" />
+                        <Label alignment="CENTER" layoutX="75.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 1" />
+                        <Label alignment="CENTER" layoutX="325.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 2" />
+                        <Label alignment="CENTER" layoutX="575.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 3" />
+                        <Label alignment="CENTER" layoutX="450.0" layoutY="150.0" prefHeight="20.0" prefWidth="100.0" text="Արժեք" />
+                        <TextField fx:id="ans2Field" layoutX="300.0" layoutY="270.0" prefHeight="50.0" prefWidth="200.0" />
+                        <TextField fx:id="ans3Field" layoutX="550.0" layoutY="270.0" prefHeight="50.0" prefWidth="200.0" />
+                        <ComboBox fx:id="ratingBox" layoutX="425.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
+                        <ComboBox fx:id="topicBox" layoutX="425.0" layoutY="70.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
+                        <TextField fx:id="rightAnswerField" layoutX="50.0" layoutY="170.0" prefHeight="50.0" prefWidth="200.0" />
+                        <Button fx:id="confirmQuestionButton" layoutX="300.0" layoutY="400.0" mnemonicParsing="false" onAction="#addNewQuestion" prefHeight="30.0" prefWidth="200.0" text="Ավելացնել" textAlignment="CENTER" textFill="#15e406" />
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>
