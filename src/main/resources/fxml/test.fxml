@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane fx:controller="com.application.controllers.TestController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ToolBar prefHeight="40.0" prefWidth="800.0">
+        <items>
+          <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToHomePage" text="HOME" />
+            <Label fx:id="questionNumberLabel" alignment="CENTER" focusTraversable="false" prefHeight="20.0" prefWidth="150.0" textAlignment="CENTER" textFill="#a12c2c">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+        </items>
+      </ToolBar>
+      <Button fx:id="forwardButton" layoutX="400.0" layoutY="550.0" mnemonicParsing="false" onAction="#goToNextButton" prefHeight="40.0" prefWidth="50.0" text="&gt;" />
+      <Button fx:id="backButton" layoutX="300.0" layoutY="550.0" mnemonicParsing="false" onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;" />
+      <VBox layoutY="50.0" prefHeight="500.0" prefWidth="800.0">
+         <children>
+            <AnchorPane fx:id="questionTitleContainer" prefHeight="170.0" prefWidth="800.0">
+               <children>
+                  <TextFlow fx:id="questionTitleTextFlow" lineSpacing="5.0" prefHeight="200.0" prefWidth="800.0" textAlignment="CENTER">
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </TextFlow>
+               </children>
+            </AnchorPane>
+            <GridPane fx:id="answersGrid" gridLinesVisible="true" prefHeight="330.0" prefWidth="800.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="155.0" minHeight="10.0" prefHeight="155.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="123.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="95.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="158.0" minHeight="10.0" prefHeight="145.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children>
+      </VBox>
+   </children>
+</Pane>

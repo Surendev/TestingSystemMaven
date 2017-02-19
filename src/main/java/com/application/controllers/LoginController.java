@@ -1,5 +1,6 @@
 package com.application.controllers;
 
+import com.StartApp;
 import com.jdbc.dao.LoginDAO;
 import com.jdbc.dao.StudentsDAO;
 import com.jdbc.services.LoginService;
@@ -65,8 +66,8 @@ public class LoginController extends AbstractController implements Initializable
         errLabel.setTextFill(Color.RED);
     }
 
-    public void cancel() {
-        Platform.exit();
+    public void cancel() throws IOException {
+        StartApp.showMainPage();
     }
 
 
@@ -78,7 +79,7 @@ public class LoginController extends AbstractController implements Initializable
 
     private void showAdminPage() throws IOException {
         Pane pane = FXMLLoader.load(getClass().getResource("/fxml/admin.fxml"));
-        Scene scene = new Scene(pane, 600,400);
+        Scene scene = new Scene(pane, 800,600);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Admin Page");
