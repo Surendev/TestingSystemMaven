@@ -42,6 +42,7 @@ public class StartApp extends Application{
         }
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("Testing System");
+        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.show();
     }
 
@@ -51,8 +52,7 @@ public class StartApp extends Application{
             loginScene= new Scene(loginPane, 300,300);
         }
         primaryStage.setScene(loginScene);
-        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
-        primaryStage.setTitle("Testing System _ Login");
+        primaryStage.setTitle("Testing System Login");
         primaryStage.show();
 
     }

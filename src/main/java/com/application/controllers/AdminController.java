@@ -1,6 +1,7 @@
 package com.application.controllers;
 
 import com.StartApp;
+import com.application.utils.TopicUtil;
 import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
 import com.jdbc.services.StudentsService;
@@ -11,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
 import java.net.URL;
@@ -82,6 +84,7 @@ public class AdminController extends AbstractController implements Initializable
     private void initializeCheckBoxes(){
         courseCheckBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
         ratingBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
+        topicBox.setItems(new ObservableListWrapper<>(Arrays.asList(TopicUtil.values())));
     }
 
     private void initializeTableCellFactories(){

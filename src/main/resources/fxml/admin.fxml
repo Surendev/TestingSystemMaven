@@ -60,8 +60,6 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="questionField" layoutX="50.0" layoutY="70.0" prefHeight="50.0" prefWidth="200.0" />
-                        <TextField fx:id="ans1Field" layoutX="50.0" layoutY="270.0" prefHeight="50.0" prefWidth="200.0" />
                         <Label alignment="CENTER" layoutX="100.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Հարց" />
                         <Label alignment="CENTER" layoutX="450.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Թեմա" />
                         <Label alignment="CENTER" layoutX="75.0" layoutY="150.0" prefHeight="20.0" prefWidth="150.0" text="Ճիշտ Պատասխան" />
@@ -69,12 +67,14 @@
                         <Label alignment="CENTER" layoutX="325.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 2" />
                         <Label alignment="CENTER" layoutX="575.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 3" />
                         <Label alignment="CENTER" layoutX="450.0" layoutY="150.0" prefHeight="20.0" prefWidth="100.0" text="Արժեք" />
-                        <TextField fx:id="ans2Field" layoutX="300.0" layoutY="270.0" prefHeight="50.0" prefWidth="200.0" />
-                        <TextField fx:id="ans3Field" layoutX="550.0" layoutY="270.0" prefHeight="50.0" prefWidth="200.0" />
                         <ComboBox fx:id="ratingBox" layoutX="425.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
                         <ComboBox fx:id="topicBox" layoutX="425.0" layoutY="70.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
-                        <TextField fx:id="rightAnswerField" layoutX="50.0" layoutY="170.0" prefHeight="50.0" prefWidth="200.0" />
                         <Button fx:id="confirmQuestionButton" layoutX="300.0" layoutY="400.0" mnemonicParsing="false" onAction="#addNewQuestion" prefHeight="30.0" prefWidth="200.0" text="Ավելացնել" textAlignment="CENTER" textFill="#15e406" />
+                        <TextArea layoutY="70.0" prefHeight="70.0" prefWidth="300.0" />
+                        <TextArea layoutY="170.0" prefHeight="70.0" prefWidth="300.0" />
+                        <TextArea layoutX="10.0" layoutY="270.0" prefHeight="70.0" prefWidth="250.0" />
+                        <TextArea layoutX="290.0" layoutY="270.0" prefHeight="70.0" prefWidth="250.0" />
+                        <TextArea layoutX="560.0" layoutY="270.0" prefHeight="70.0" prefWidth="230.0" />
                      </children></AnchorPane>
                </content>
             </Tab>

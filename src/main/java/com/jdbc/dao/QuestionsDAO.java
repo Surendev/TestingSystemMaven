@@ -11,4 +11,5 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
+    int addNewQuestion();
 }
