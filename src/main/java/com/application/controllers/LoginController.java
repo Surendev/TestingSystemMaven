@@ -64,7 +64,7 @@ public class LoginController extends AbstractController implements Initializable
             logIn.getScene().getWindow().hide();
             showAdminPage();
         }
-        if(loginService.login(login,SecurityUtil.encrypt(pass))){
+        if(loginService.login(login,pass)){
             logIn.getScene().getWindow().hide();
             StartApp.showTestPage();
             return;

@@ -29,18 +29,15 @@ public class LoginService implements LoginDAO {
         digest = MessageDigest.getInstance("SHA-256");
     }
 
-    public boolean login(String login, String password){
+    public boolean login(String login, String password) {
         String query = "SELECT * FROM students WHERE login=?";
         Student student = null;
         try {
             student = jdbc.queryForObject(query, new Object[]{login}, new StudentRowMapper());
-        }catch(EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             System.err.println("Not found");
             System.out.println(e.getMessage());
         }
-        if(student == null){
-            return false;
-        }
-        return student.getPassword().equals(password);
+        return student != null && student.getPassword().equals(password);
     }
 }

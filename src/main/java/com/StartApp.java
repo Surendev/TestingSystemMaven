@@ -1,9 +1,10 @@
 package com;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -50,11 +51,18 @@ public class StartApp extends Application{
         if (loginPane == null) {
             loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
             loginScene= new Scene(loginPane, 300,300);
+        }else {
+            resetLoginPage();
         }
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
         primaryStage.show();
 
+    }
+
+    private static void resetLoginPage() {
+        ((TextField)loginScene.lookup("loginField")).setText("");
+        ((PasswordField)loginScene.lookup("passwordField")).setText("");
     }
 
     public static void showTestPage() throws IOException{

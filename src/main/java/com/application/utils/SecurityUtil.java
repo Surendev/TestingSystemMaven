@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SecurityUtil {
 
-    public static final String justString = "489a19ea13afa52ba751be7e4fdf69af1a2bf2a15845aa744f43ae47ee8cd901";
+    public static final String justString = "adminchik";
 
     public static String encrypt(String plainText) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
