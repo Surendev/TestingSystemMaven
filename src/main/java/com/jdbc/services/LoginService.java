@@ -19,6 +19,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class LoginService implements LoginDAO {
 
+    private static final String  SAP = "R_PetRosYan";
+
     private MessageDigest digest;
     private JdbcTemplate jdbc;
 
@@ -39,7 +41,6 @@ public class LoginService implements LoginDAO {
         if(student == null){
             return false;
         }
-        String pass = new String(digest.digest(password.getBytes()));
         return student.getPassword().equals(password);
     }
 }

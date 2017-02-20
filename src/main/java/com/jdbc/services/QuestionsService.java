@@ -26,4 +26,13 @@ public class QuestionsService implements QuestionsDAO {
         String query = "SELECT * FROM questions WHERE rating=?";
         return jdbc.query(query,new Object[]{rating},new QuestionRowMapper());
     }
+
+    @Override
+    public int addNewQuestion() {
+
+
+        return 0;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.application.controllers;
 
 import com.StartApp;
+import com.application.utils.SecurityUtil;
 import com.jdbc.dao.LoginDAO;
 import com.jdbc.dao.StudentsDAO;
 import com.jdbc.services.LoginService;
@@ -25,6 +26,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -34,6 +36,7 @@ import java.util.ResourceBundle;
  * LoginController is provides login
  */
 public class LoginController extends AbstractController implements Initializable{
+
 
     private LoginDAO loginService;
 
@@ -46,10 +49,10 @@ public class LoginController extends AbstractController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loginService =  context.getBean("loginDAO",LoginService.class);
+        loginService =  context.getBean("loginService",LoginService.class);
     }
 
-    public void logIn() throws IOException {
+    public void logIn() throws IOException, NoSuchAlgorithmException {
         String login = loginField.getText();
         String pass = passwordField.getText();
         if(login.equals("") || pass.equals("")){
@@ -57,9 +60,13 @@ public class LoginController extends AbstractController implements Initializable
             errLabel.setTextFill(Color.RED);
             return;
         }
-        if(loginService.login(login,pass)){
+        if(login.equals("admin") && pass.equals(SecurityUtil.justString)){
             logIn.getScene().getWindow().hide();
             showAdminPage();
+        }
+        if(loginService.login(login,SecurityUtil.encrypt(pass))){
+            logIn.getScene().getWindow().hide();
+            StartApp.showTestPage();
             return;
         }
         errLabel.setText("Login and password are Incorrect");
@@ -70,8 +77,7 @@ public class LoginController extends AbstractController implements Initializable
         StartApp.showMainPage();
     }
 
-
-    public void checkKeyPressing(KeyEvent keyEvent) throws IOException {
+    public void checkKeyPressing(KeyEvent keyEvent) throws IOException, NoSuchAlgorithmException {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
             logIn();
         }
