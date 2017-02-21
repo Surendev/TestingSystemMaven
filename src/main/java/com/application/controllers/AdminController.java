@@ -48,9 +48,9 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private ComboBox ratingBox;
     @FXML private ComboBox topicBox;
     @FXML private TextArea questionArea;
-    @FXML private TextArea ans1Area;
-    @FXML private TextArea ans2Area;
-    @FXML private TextArea ans3Area;
+    @FXML private TextArea answer_1Area;
+    @FXML private TextArea answer_2Area;
+    @FXML private TextArea answer_3Area;
     @FXML private TextArea rightAnswerArea;
     @FXML private Button confirmQuestionButton;
     @FXML private Label questionAddedLabel;

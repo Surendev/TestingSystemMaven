@@ -11,5 +11,5 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
-    int addNewQuestion();
+    String addNewQuestion(Object... params);
 }

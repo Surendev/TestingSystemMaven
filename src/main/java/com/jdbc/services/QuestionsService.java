@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.jws.WebMethod;
 import javax.sql.DataSource;
+import java.sql.Types;
 import java.util.List;
 
 /**
@@ -15,6 +16,15 @@ import java.util.List;
 public class QuestionsService implements QuestionsDAO {
     
     private JdbcTemplate jdbc;
+    private final String insertQuery = "INSERT INTO questions (" +
+            " question, " +
+            " rating, " +
+            " topic, " +
+            " answer, " +
+            " answer_1, " +
+            " answer_2, " +
+            " answer_3) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     public void setDataSource(DataSource dataSource) {
         jdbc = new JdbcTemplate(dataSource);
@@ -28,10 +38,12 @@ public class QuestionsService implements QuestionsDAO {
     }
 
     @Override
-    public int addNewQuestion(/*parameters need*/ ) {
+    public String addNewQuestion(Object... params ) {
 
         //TODO insert question info to db
-        return 0;
+        int[] types = new int[]{Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+        int row = jdbc.update(insertQuery, params, types);
+        return (row + "-րդ հարցը հաջողությամբ ներմուծված է");
     }
 
 
