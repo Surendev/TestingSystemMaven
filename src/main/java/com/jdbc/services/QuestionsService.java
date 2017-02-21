@@ -28,9 +28,9 @@ public class QuestionsService implements QuestionsDAO {
     }
 
     @Override
-    public int addNewQuestion() {
+    public int addNewQuestion(/*parameters need*/ ) {
 
-
+        //TODO insert question info to db
         return 0;
     }
 

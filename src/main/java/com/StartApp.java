@@ -33,36 +33,18 @@ public class StartApp extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         StartApp.primaryStage = primaryStage;
-        showMainPage();
-    }
-
-    public static void showMainPage() throws IOException {
-        if(mainLayout==null) {
-            mainLayout = FXMLLoader.load(StartApp.class.getResource("/fxml/main.fxml"));
-            mainScene = new Scene(mainLayout,300,300);
-        }
-        primaryStage.setScene(mainScene);
-        primaryStage.setTitle("Testing System");
-        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
-        primaryStage.show();
+        showLoginPage();
     }
 
     public static void showLoginPage() throws IOException {
         if (loginPane == null) {
             loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
             loginScene= new Scene(loginPane, 300,300);
-        }else {
-            resetLoginPage();
         }
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
         primaryStage.show();
 
-    }
-
-    private static void resetLoginPage() {
-        ((TextField)loginScene.lookup("loginField")).setText("");
-        ((PasswordField)loginScene.lookup("passwordField")).setText("");
     }
 
     public static void showTestPage() throws IOException{
