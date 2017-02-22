@@ -88,23 +88,15 @@ public class AdminController extends AbstractController implements Initializable
             }
         };
         timer.start();
-        resetStudentFields();
-    }
-
-    private void resetStudentFields() {
-        firstNameField.setText("");
-        lastNameField.setText("");
-        courseCheckBox.getSelectionModel().clearSelection();
-        groupField.setText("");
     }
 
     public void addNewQuestion() {
-        //TODO add new question to db
+
     }
 
     public void goToMainPage() throws IOException {
         homeButton.getScene().getWindow().hide();
-        StartApp.showLoginPage();
+        StartApp.showMainPage();
     }
 
     private void initializeCheckBoxes(){

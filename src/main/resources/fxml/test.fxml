@@ -25,7 +25,7 @@
             </Label>
         </items>
       </ToolBar>
-      <Button fx:id="forwardButton" layoutX="400.0" layoutY="550.0" mnemonicParsing="false" onAction="#goToNextQuestion" prefHeight="40.0" prefWidth="50.0" text="&gt;" />
+      <Button fx:id="forwardButton" layoutX="400.0" layoutY="550.0" mnemonicParsing="false" onAction="#goToNextButton" prefHeight="40.0" prefWidth="50.0" text="&gt;" />
       <Button fx:id="backButton" layoutX="300.0" layoutY="550.0" mnemonicParsing="false" onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;" />
       <VBox layoutY="50.0" prefHeight="500.0" prefWidth="800.0">
          <children>

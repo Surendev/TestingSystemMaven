@@ -25,10 +25,10 @@ public class TestController {
     public GridPane answersGrid;
 
     public void goToHomePage(ActionEvent event) throws IOException {
-        StartApp.showLoginPage();
+        StartApp.showMainPage();
     }
 
-    public void goToNextQuestion(ActionEvent event) {
+    public void goToNextButton(ActionEvent event) {
         
     }
 
