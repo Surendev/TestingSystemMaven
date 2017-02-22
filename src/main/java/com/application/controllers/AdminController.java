@@ -114,7 +114,7 @@ public class AdminController extends AbstractController implements Initializable
             @Override
             public void handle(long now) {
                 opacity -=0.01;
-                studentAddedLabel.opacityProperty().set(opacity);
+                questionAddedLabel.opacityProperty().set(opacity);
                 if(opacity<=0){
                     stop();
                 }
