@@ -99,6 +99,28 @@ public class AdminController extends AbstractController implements Initializable
 
     public void addNewQuestion() {
         //TODO check valid question parameters and add it to DB
+        String question = questionArea.getText();
+        String[] answers = new String[]{answer_1Area.getText(), answer_2Area.getText(), answer_3Area.getText()};
+        String rightAnswer = rightAnswerArea.getText();
+        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() ||answers[0].isEmpty())
+            return;
+        String topic = topicBox.getPromptText();
+        int rating = Integer.parseInt(ratingBox.getPromptText());
+        questionsService.addNewQuestion(question, rating, topic, rightAnswer, answers);
+
+        questionAddedLabel.setText("Ավելացված է");
+        AnimationTimer timer = new AnimationTimer() {
+            private double opacity = 1;
+            @Override
+            public void handle(long now) {
+                opacity -=0.01;
+                studentAddedLabel.opacityProperty().set(opacity);
+                if(opacity<=0){
+                    stop();
+                }
+            }
+        };
+        timer.start();
 
     }
 
