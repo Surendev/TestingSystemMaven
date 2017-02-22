@@ -11,7 +11,7 @@
         <property name="dataSource" ref="datasource"/>
     </bean>
 
-    <bean id="questionsDAO" class="com.jdbc.services.QuestionsService">
+    <bean id="questionsService" class="com.jdbc.services.QuestionsService">
         <property name="dataSource" ref="datasource"/>
     </bean>
 

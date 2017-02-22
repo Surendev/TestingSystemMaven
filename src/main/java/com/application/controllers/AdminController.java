@@ -3,7 +3,9 @@ package com.application.controllers;
 import com.StartApp;
 import com.application.utils.TopicUtil;
 import com.dto.Student;
+import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.StudentsDAO;
+import com.jdbc.services.QuestionsService;
 import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
@@ -56,10 +58,11 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private Label questionAddedLabel;
 
     private StudentsDAO studentsService;
-
+    private QuestionsDAO questionsService;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentsService = context.getBean("studentsService", StudentsService.class);
+        questionsService = context.getBean("questionsDAO", QuestionsService.class);
         homeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/home.png"))));
         initializeCheckBoxes();
         initializeTableCellFactories();
@@ -72,6 +75,10 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void addNewStudent() {
+        if(!firstNameField.getText().matches("\\w{4,}") || !lastNameField.getText().matches("\\w{5,}") ||
+                groupField.getText().matches("\\w{3,}")){
+            return;
+        }
         studentsService.addNewStudent(
                 firstNameField.getText(),lastNameField.getText(),courseCheckBox.getValue(),groupField.getText()
         );
@@ -91,6 +98,7 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void addNewQuestion() {
+        //TODO check valid question parameters and add it to DB
 
     }
 

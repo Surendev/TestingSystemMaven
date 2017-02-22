@@ -21,9 +21,6 @@ public class TestService implements TestDAO {
 
     @Override
     public Test generateTest() {
-
-        //TODO get all questions by all ratings and generate TEST
-        //if need add new method
         Map<Integer, List<Question>> testMap = new TreeMap<>();
         for (int i = 1; i < questionsCountByRating.length; i++){
             testMap.put(testUtil.ratings[i],

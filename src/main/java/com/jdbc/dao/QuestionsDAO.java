@@ -11,5 +11,5 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
-    String addNewQuestion(Object... params);
+    String addNewQuestion(String question, int rating,String topic, String rightAnswer, String... answers);
 }
