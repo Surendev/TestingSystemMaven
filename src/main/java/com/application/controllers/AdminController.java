@@ -104,8 +104,8 @@ public class AdminController extends AbstractController implements Initializable
         String rightAnswer = rightAnswerArea.getText();
         if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() ||answers[0].isEmpty())
             return;
-        String topic = topicBox.getPromptText();
-        int rating = Integer.parseInt(ratingBox.getPromptText());
+        String topic = (String) topicBox.getValue();
+        int rating = (int) ratingBox.getValue();
         questionsService.addNewQuestion(question, rating, topic, rightAnswer, answers);
 
         questionAddedLabel.setText("Ավելացված է");
