@@ -20,11 +20,8 @@ public class QuestionsService implements QuestionsDAO {
             " question, " +
             " rating, " +
             " topic, " +
-            " answer, " +
-            " answer_1, " +
-            " answer_2, " +
-            " answer_3) " +
-            "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            " answer) " +
+            "VALUES (?, ?, ?, ?)";
 
     public void setDataSource(DataSource dataSource) {
         jdbc = new JdbcTemplate(dataSource);
