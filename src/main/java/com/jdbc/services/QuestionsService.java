@@ -41,7 +41,7 @@ public class QuestionsService implements QuestionsDAO {
     public String addNewQuestion(Object... params ) {
 
         //TODO insert question info to db
-        int[] types = new int[]{Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+        int[] types = new int[]{Types.VARCHAR, Types.INTEGER, Types.VARCHAR, Types.VARCHAR};
         int row = jdbc.update(insertQuery, params, types);
         return (row + "-րդ հարցը հաջողությամբ ներմուծված է");
     }
