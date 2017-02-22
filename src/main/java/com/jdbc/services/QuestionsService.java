@@ -14,7 +14,7 @@ import java.util.List;
  * Created by surik on 2/6/17
  */
 public class QuestionsService implements QuestionsDAO {
-    
+
     private JdbcTemplate jdbc;
     private final String insertQuery = "INSERT INTO questions (" +
             " question, " +
