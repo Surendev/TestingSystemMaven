@@ -22,7 +22,7 @@ public class MainController {
     }
 
     public void goToTestPage(ActionEvent event) throws IOException {
-        StartApp.showLoginPage();
+        StartApp.showTestPage();
     }
 
     public void exitFromApp(ActionEvent event) {

@@ -26,9 +26,11 @@ public class StartApp extends Application{
     private static BorderPane mainLayout;
     private static Pane loginPane;
     private static Pane testPane;
+    private static Pane registrationPane;
     private static Scene mainScene;
     private static Scene loginScene;
     private static Scene testScene;
+    private static Scene registrationScene;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -52,10 +54,11 @@ public class StartApp extends Application{
             loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
             loginScene= new Scene(loginPane, 300,300);
         }else {
-            resetLoginPage();
+//            resetLoginPage();
         }
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
+        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.show();
 
     }
@@ -73,6 +76,16 @@ public class StartApp extends Application{
         primaryStage.setScene(testScene);
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Testing System _ Test");
+        primaryStage.show();
+    }
+
+    public static void showRegistrationPage() throws IOException{
+        if (registrationPane == null){
+            registrationPane = FXMLLoader.load(StartApp.class.getResource("/fxml/register.fxml"));
+            registrationScene = new Scene(registrationPane, 800, 600);
+        }
+        primaryStage.setScene(registrationScene);
+        primaryStage.setTitle("Registering system _ Test");
         primaryStage.show();
     }
 

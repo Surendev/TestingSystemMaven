@@ -1,5 +1,6 @@
 package com.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,6 @@ public class Test {
 
     public Test(Map<Integer,List<Question>> questions){
         this.questions = questions;
-//        Object [] keySet = questions.keySet().toArray();
-//        for (int i=0;i<questions.size();i++){
-//            fullRating +=(int) keySet[i];
-//        }
         for (Integer pair : questions.keySet()){
             fullRating += questions.get(pair).size();
         }
@@ -38,6 +35,15 @@ public class Test {
 
     public void setFullRating(int fullRating) {
         this.fullRating = fullRating;
+    }
+
+    public List<Question> getQuestionsInApp(){
+        List<Question> questionsInApp = new ArrayList<>();
+        for (Integer pair : questions.keySet()){
+            questionsInApp.addAll(questions.get(pair));
+        }
+
+        return questionsInApp;
     }
 
 }

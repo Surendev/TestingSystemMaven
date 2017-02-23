@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class TestUtil {
 
-    public final int[] ratings = {1, 2, 3};
+    public final int[] ratings = {1, 2, 3, 4};
     private QuestionsDAO questionsService;
     private TopicUtil[] topics;
 

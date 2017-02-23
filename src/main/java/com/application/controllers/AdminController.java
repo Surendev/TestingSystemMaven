@@ -47,12 +47,12 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private TextField groupField;
     @FXML private Label studentAddedLabel;
 
-    @FXML private ComboBox ratingBox;
-    @FXML private ComboBox topicBox;
+    @FXML private ComboBox<Integer> ratingBox;
+    @FXML private ComboBox<TopicUtil> topicBox;
     @FXML private TextArea questionArea;
-    @FXML private TextArea answer_1Area;
-    @FXML private TextArea answer_2Area;
-    @FXML private TextArea answer_3Area;
+    public TextArea ans1Area;
+    public TextArea ans2Area;
+    public TextArea ans3Area;
     @FXML private TextArea rightAnswerArea;
     @FXML private Button confirmQuestionButton;
     @FXML private Label questionAddedLabel;
@@ -62,7 +62,7 @@ public class AdminController extends AbstractController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentsService = context.getBean("studentsService", StudentsService.class);
-        questionsService = context.getBean("questionsDAO", QuestionsService.class);
+        questionsService = context.getBean("questionsService", QuestionsService.class);
         homeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/home.png"))));
         initializeCheckBoxes();
         initializeTableCellFactories();
@@ -100,12 +100,12 @@ public class AdminController extends AbstractController implements Initializable
     public void addNewQuestion() {
         //TODO check valid question parameters and add it to DB
         String question = questionArea.getText();
-        String[] answers = new String[]{answer_1Area.getText(), answer_2Area.getText(), answer_3Area.getText()};
+        String[] answers = new String[]{ans1Area.getText(), ans2Area.getText(), ans3Area.getText()};
         String rightAnswer = rightAnswerArea.getText();
         if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() ||answers[0].isEmpty())
             return;
-        String topic = (String) topicBox.getValue();
-        int rating = (int) ratingBox.getValue();
+        String topic =  topicBox.getValue().getTopic();
+        int rating =  ratingBox.getValue();
         questionsService.addNewQuestion(question, rating, topic, rightAnswer, answers);
 
         questionAddedLabel.setText("Ավելացված է");
