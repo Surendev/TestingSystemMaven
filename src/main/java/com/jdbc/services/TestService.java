@@ -1,7 +1,6 @@
 package com.jdbc.services;
 
 import com.application.utils.TestUtil;
-import com.application.utils.TopicUtil;
 import com.dto.Question;
 import com.dto.Test;
 import com.jdbc.dao.TestDAO;
@@ -17,7 +16,7 @@ public class TestService implements TestDAO {
     private TestUtil testUtil = new TestUtil();
     private Random random = new Random();
 
-    private final int[] questionsCountByRating = {8, 3, 2};
+    private final int[] questionsCountByRating = {6, 2, 2, 1};
 
     @Override
     public Test generateTest() {
@@ -26,14 +25,12 @@ public class TestService implements TestDAO {
             testMap.put(testUtil.ratings[i],
                     generateFinalQuestionsByCount(testUtil.ratings[i], questionsCountByRating[i]));
         }
-
-
         return new Test(testMap);
     }
 
     private List<Question> generateFinalQuestionsByCount(int rating, int countOfQuestions) {
 
-        List<Question> chosenFromListByTopic = testUtil.chooseFromListByTopic(rating);
+        List<Question> chosenFromListByTopic = testUtil.chooseFromListByTopics(rating);
         List<Question> lastSorted = new ArrayList<>();
         generateQuestionsListByCount(countOfQuestions, lastSorted, (Question[]) chosenFromListByTopic.toArray());
 

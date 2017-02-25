@@ -1,6 +1,7 @@
 package com.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,41 +10,26 @@ import java.util.Map;
  */
 public class Test {
 
-    private int fullRating;
+    private int index;
 
-    //Key - rating, Value - question
-    private Map<Integer,List<Question>> questions;
+    private List<Question> questions = new ArrayList<>();
+    private List<Answer> wrongAnswers;
+    private Map<Integer,Integer> studentAnswers = new HashMap<>();
 
     public Test(Map<Integer,List<Question>> questions){
-        this.questions = questions;
-        for (Integer pair : questions.keySet()){
-            fullRating += questions.get(pair).size();
+        for (Integer pair : questions.keySet()) {
+            this.questions.addAll(questions.get(pair));
         }
+        //TODO fill wrong answers from db
     }
 
-    public Map<Integer, List<Question>> getQuestions() {
-        return questions;
+    public QuestionInApp getQuestion(int currIndex) {
+        index = currIndex-1;
+        //TODO transform Question to QuestionInApp
+        return null;
     }
 
-    public void setQuestions(Map<Integer, List<Question>> questions) {
-        this.questions = questions;
+    public void markAnswerToQuestion(int answerIndex){
+        //todo mark answer in studentAnswers
     }
-
-    public int getFullRating() {
-        return fullRating;
-    }
-
-    public void setFullRating(int fullRating) {
-        this.fullRating = fullRating;
-    }
-
-    public List<Question> getQuestionsInApp(){
-        List<Question> questionsInApp = new ArrayList<>();
-        for (Integer pair : questions.keySet()){
-            questionsInApp.addAll(questions.get(pair));
-        }
-
-        return questionsInApp;
-    }
-
 }

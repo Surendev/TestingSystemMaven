@@ -4,19 +4,12 @@ import com.dto.Answer;
 import com.dto.Question;
 import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.mappers.QuestionRowMapper;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.jws.WebMethod;
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
 import java.util.List;
 
-/**
- * Created by surik on 2/6/17
- */
+
 public class QuestionsService implements QuestionsDAO {
     
     private JdbcTemplate jdbc;
@@ -43,5 +36,9 @@ public class QuestionsService implements QuestionsDAO {
         return (questionId + "-րդ հարցը հաջողությամբ ներմուծված է");
     }
 
-
+    @Override
+    public Answer[] getAnswersByQuestionId(int id) {
+        //TODO get all answers from db by question id
+        return new Answer[0];
+    }
 }

@@ -3,11 +3,7 @@ package com.application.controllers;
 import com.StartApp;
 import com.application.utils.SecurityUtil;
 import com.jdbc.dao.LoginDAO;
-import com.jdbc.dao.StudentsDAO;
 import com.jdbc.services.LoginService;
-import com.jdbc.services.StudentsService;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,32 +11,25 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
- * Created by surik on 1/29/17
  * Controller function is to show results to some actions.
  * LoginController is provides login
  */
 public class LoginController extends AbstractController implements Initializable{
 
-
     private LoginDAO loginService;
 
-    private @FXML Label dbConnectionLabel;
     private @FXML TextField loginField;
     private @FXML TextField passwordField;
     private @FXML Button logIn;

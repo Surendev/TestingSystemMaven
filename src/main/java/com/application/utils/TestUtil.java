@@ -24,7 +24,7 @@ public class TestUtil {
             new ClassPathXmlApplicationContext("/spring_context.xml");
 
     public TestUtil() {
-        questionsService = context.getBean("questionsDAO", QuestionsService.class);
+        questionsService = context.getBean("questionsService", QuestionsService.class);
         fillQuestionsFromDB();
     }
 
@@ -35,7 +35,7 @@ public class TestUtil {
         }
     }
 
-    public List<Question> chooseFromListByTopic(int rating) {
+    public List<Question> chooseFromListByTopics(int rating) {
         List<Question> questionsOfTopic = new ArrayList<>();
 
         for (TopicUtil eachTopic : topics) {

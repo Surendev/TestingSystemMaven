@@ -1,5 +1,6 @@
 package com.jdbc.dao;
 
+import com.dto.Answer;
 import com.dto.Question;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface QuestionsDAO {
     List<Question> getQuestionsByRating(int rating);
 
     String addNewQuestion(String question, int rating,String topic, String rightAnswer, String... answers);
+
+    Answer[] getAnswersByQuestionId(int id);
 }
