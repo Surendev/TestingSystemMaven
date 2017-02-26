@@ -3,6 +3,7 @@ package com.jdbc.services;
 import com.application.utils.TestUtil;
 import com.dto.Question;
 import com.dto.Test;
+import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.TestDAO;
 
 import java.util.*;
@@ -19,13 +20,13 @@ public class TestService implements TestDAO {
     private final int[] questionsCountByRating = {6, 2, 2, 1};
 
     @Override
-    public Test generateTest() {
+    public Test generateTest(QuestionsDAO questionsService) {
         Map<Integer, List<Question>> testMap = new TreeMap<>();
         for (int i = 1; i < questionsCountByRating.length; i++){
             testMap.put(testUtil.ratings[i],
                     generateFinalQuestionsByCount(testUtil.ratings[i], questionsCountByRating[i]));
         }
-        return new Test(testMap);
+        return new Test(testMap,questionsService);
     }
 
     private List<Question> generateFinalQuestionsByCount(int rating, int countOfQuestions) {

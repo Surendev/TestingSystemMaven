@@ -1,12 +1,14 @@
 package com.dto;
 
+import java.util.List;
+
 /**
  * Created by surik on 2/25/17
  */
 public class QuestionInApp {
 
     private String question;
-    private String[] answers;
+    private List<String> answers;
     private String topic;
 
     public String getTopic() {
@@ -25,11 +27,11 @@ public class QuestionInApp {
         this.question = question;
     }
 
-    public String[] getAnswers() {
+    public List<String> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(String[] answers) {
+    public void setAnswers(List<String> answers) {
         this.answers = answers;
     }
 }

@@ -8,6 +8,6 @@ import com.dto.Test;
  */
 public interface TestDAO {
 
-    Test generateTest();
+    Test generateTest(QuestionsDAO questionsService);
 
 }

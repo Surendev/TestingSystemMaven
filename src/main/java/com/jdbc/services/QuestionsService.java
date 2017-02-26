@@ -38,9 +38,8 @@ public class QuestionsService implements QuestionsDAO {
     }
 
     @Override
-    public Answer[] getAnswersByQuestionId(int id) {
-        //TODO get all answers from db by question id
+    public List<Answer> getAnswersByQuestionId(int id) {
         String query = "SELECT * FROM answers WHERE to_question=?";
-        return  (Answer[]) jdbc.query(query,new Object[]{id}, new AnswerRowMapper()).toArray();
+        return  jdbc.query(query,new Object[]{id}, new AnswerRowMapper());
     }
 }

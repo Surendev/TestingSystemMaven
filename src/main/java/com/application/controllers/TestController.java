@@ -2,6 +2,7 @@ package com.application.controllers;
 
 import com.StartApp;
 import com.dto.Test;
+import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
 import javafx.event.ActionEvent;
@@ -36,7 +37,7 @@ public class TestController extends AbstractController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        test = testService.generateTest();
+        test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
     }
 
     public void goToNextButton(ActionEvent event) {
