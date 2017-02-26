@@ -32,14 +32,16 @@ public class Test {
 
     public QuestionInApp getQuestion(int currIndex) {
         index = currIndex-1;
+        Question currentQuestion = questions.get(index);
+
         QuestionInApp questionInApp = new QuestionInApp();
-        questionInApp.setQuestion(questions.get(index).getQuestion());
-        questionInApp.setTopic(questions.get(index).getTopic());
-        List<String> tempList = new ArrayList<>();
-        //TODO optimize getting questions from wrongAnswers.
-        // HINT. see adding wrongAnswers
+        questionInApp.setQuestion(currentQuestion.getQuestion());
+        questionInApp.setTopic(currentQuestion.getTopic());
+        questionInApp.setRating(currentQuestion.getRating());
+
+        List<Answer> tempList = new ArrayList<>();
         for(Answer pair : wrongAnswers){
-            if (pair.getToQuestion() == index) tempList.add(pair.getText());
+            if (pair.getToQuestion() == index) tempList.add(pair);
         }
         questionInApp.setAnswers(tempList);
 

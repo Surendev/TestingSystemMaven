@@ -8,8 +8,20 @@ import java.util.List;
 public class QuestionInApp {
 
     private String question;
-    private List<String> answers;
     private String topic;
+    private Integer rating;
+    private String rightAnswer;
+    private String answer1;
+    private String answer2;
+    private String answer3;
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
 
     public String getTopic() {
         return topic;
@@ -27,11 +39,10 @@ public class QuestionInApp {
         this.question = question;
     }
 
-    public List<String> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<String> answers) {
-        this.answers = answers;
+    public void setAnswers(List<Answer> answers) {
+        this.rightAnswer = answers.get(0).getText();
+        this.answer1 = answers.get(1).getText();
+        this.answer2 = answers.get(2).getText();
+        this.answer3 = answers.get(3).getText();
     }
 }

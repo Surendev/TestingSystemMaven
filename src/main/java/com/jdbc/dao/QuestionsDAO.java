@@ -4,6 +4,7 @@ import com.dto.Answer;
 import com.dto.Question;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by surik on 2/6/17
@@ -15,4 +16,6 @@ public interface QuestionsDAO {
     String addNewQuestion(String question, int rating,String topic, String rightAnswer, String... answers);
 
     List<Answer> getAnswersByQuestionId(int id);
+
+    Map<Question,List<Answer>> getAllQuestions();
 }

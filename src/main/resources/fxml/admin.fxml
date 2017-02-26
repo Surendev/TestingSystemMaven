@@ -39,7 +39,26 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Նոր Ուսանող">
+            <Tab fx:id="questions" closable="false" onSelectionChanged="#showQuestions" text="Հարցեր">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TableView fx:id="questionsTable" prefHeight="517.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                    <TableColumn fx:id="questionCol" prefWidth="145.0" text="Հարց" />
+                                    <TableColumn fx:id="questionRatingCol" prefWidth="145.0" text="Արժեք" />
+                                    <TableColumn fx:id="topicCol" minWidth="0.0" text="Թեմա" />
+                                    <TableColumn fx:id="rightAnswerCol" minWidth="0.0" text="Ճիշտ Պատասխան" />
+                                    <TableColumn fx:id="answer1Col" prefWidth="110.0" text="Պատասխան 1" />
+                                    <TableColumn fx:id="answer2Col" prefWidth="120.0" text="Պատասխան 2" />
+                                    <TableColumn fx:id="answer3Col" prefWidth="120.0" text="Պատասխան 3" />
+                                </columns>
+                            </TableView>
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+
+            <Tab text="Նոր Ուսանող">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

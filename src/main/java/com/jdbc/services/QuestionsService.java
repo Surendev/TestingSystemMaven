@@ -8,7 +8,9 @@ import com.jdbc.mappers.QuestionRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class QuestionsService implements QuestionsDAO {
@@ -41,5 +43,16 @@ public class QuestionsService implements QuestionsDAO {
     public List<Answer> getAnswersByQuestionId(int id) {
         String query = "SELECT * FROM answers WHERE to_question=?";
         return  jdbc.query(query,new Object[]{id}, new AnswerRowMapper());
+    }
+
+    @Override
+    public Map<Question, List<Answer>> getAllQuestions() {
+        String query = "SELECT * FROM questions";
+        Map<Question,List<Answer>> result = new HashMap<>();
+        List<Question> questions = jdbc.query(query,new QuestionRowMapper());
+        for (Question eachQuestion : questions){
+            result.put(eachQuestion,getAnswersByQuestionId(eachQuestion.getId()));
+        }
+        return result;
     }
 }
