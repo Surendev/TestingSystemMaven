@@ -36,8 +36,6 @@ public class Test {
         questionInApp.setQuestion(questions.get(index).getQuestion());
         questionInApp.setTopic(questions.get(index).getTopic());
         List<String> tempList = new ArrayList<>();
-        //TODO optimize getting questions from wrongAnswers.
-        // HINT. see adding wrongAnswers
         for(int i = index; i < index + 3; i++){
             tempList.add(wrongAnswers.get(i).getText());
         }
