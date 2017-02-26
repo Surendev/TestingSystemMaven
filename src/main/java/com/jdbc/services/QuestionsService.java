@@ -3,6 +3,7 @@ package com.jdbc.services;
 import com.dto.Answer;
 import com.dto.Question;
 import com.jdbc.dao.QuestionsDAO;
+import com.jdbc.mappers.AnswerRowMapper;
 import com.jdbc.mappers.QuestionRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 public class QuestionsService implements QuestionsDAO {
-    
+
     private JdbcTemplate jdbc;
 
     public void setDataSource(DataSource dataSource) {
@@ -39,6 +40,7 @@ public class QuestionsService implements QuestionsDAO {
     @Override
     public Answer[] getAnswersByQuestionId(int id) {
         //TODO get all answers from db by question id
-        return new Answer[0];
+        String query = "SELECT * FROM answers WHERE to_question=?";
+        return  (Answer[]) jdbc.query(query,new Object[]{id}, new AnswerRowMapper()).toArray();
     }
 }
