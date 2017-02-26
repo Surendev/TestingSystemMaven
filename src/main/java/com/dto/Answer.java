@@ -8,10 +8,6 @@ public class Answer {
     private String text;
     private Integer toQuestion;
 
-    public Answer(String text, Integer toQuestion) {
-        this.text = text;
-        this.toQuestion = toQuestion;
-    }
 
     public String getText() {
         return text;

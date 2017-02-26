@@ -38,11 +38,10 @@ public class Test {
         List<String> tempList = new ArrayList<>();
         //TODO optimize getting questions from wrongAnswers.
         // HINT. see adding wrongAnswers
-        for(Answer pair : wrongAnswers){
-            if (pair.getToQuestion() == index) tempList.add(pair.getText());
+        for(int i = index; i < index + 3; i++){
+            tempList.add(wrongAnswers.get(i).getText());
         }
         questionInApp.setAnswers(tempList);
-
         return questionInApp;
     }
 
