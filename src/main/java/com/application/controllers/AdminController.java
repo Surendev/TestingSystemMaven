@@ -3,6 +3,8 @@ package com.application.controllers;
 import com.StartApp;
 import com.application.utils.QuestionsUtil;
 import com.application.utils.TopicUtil;
+import com.dto.Answer;
+import com.dto.Question;
 import com.dto.QuestionInApp;
 import com.dto.Student;
 import com.jdbc.dao.QuestionsDAO;
@@ -17,55 +19,87 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
  * Created by surik on 2/4/17
  */
-public class AdminController extends AbstractController implements Initializable{
+public class AdminController extends AbstractController implements Initializable {
 
-    @FXML private TabPane tabPane;
-    @FXML private Button homeButton;
-    @FXML private TableView<Student> studentsTable;
+    @FXML
+    private TabPane tabPane;
+    @FXML
+    private Button homeButton;
+    @FXML
+    private TableView<Student> studentsTable;
 
-    @FXML private TableColumn<Student,String> firstNameCol;
-    @FXML private TableColumn<Student,String> lastNameCol;
-    @FXML private TableColumn<Student,Integer> courseCol;
-    @FXML private TableColumn<Student,String> groupCol;
-    @FXML private TableColumn<Student,String> ratingCol;
-    @FXML private TableColumn<Student,String> firstExamCol;
-    @FXML private TableColumn<Student,String> secondExamCol;
-    @FXML private TextField firstNameField;
+    @FXML
+    private TableColumn<Student, String> firstNameCol;
+    @FXML
+    private TableColumn<Student, String> lastNameCol;
+    @FXML
+    private TableColumn<Student, Integer> courseCol;
+    @FXML
+    private TableColumn<Student, String> groupCol;
+    @FXML
+    private TableColumn<Student, String> ratingCol;
+    @FXML
+    private TableColumn<Student, String> firstExamCol;
+    @FXML
+    private TableColumn<Student, String> secondExamCol;
+    @FXML
+    private TextField firstNameField;
 
-    @FXML private TableView<QuestionInApp> questionsTable;
+    @FXML
+    private TableView<QuestionInApp> questionsTable;
 
-    @FXML private TableColumn<QuestionInApp, String> questionCol;
-    @FXML private TableColumn<QuestionInApp, Integer> questionRatingCol;
-    @FXML private TableColumn<QuestionInApp, String> topicCol;
-    @FXML private TableColumn<QuestionInApp, String> rightAnswerCol;
-    @FXML private TableColumn<QuestionInApp, String> answer1Col;
-    @FXML private TableColumn<QuestionInApp, String> answer2Col;
-    @FXML private TableColumn<QuestionInApp, String> answer3Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> questionCol;
+    @FXML
+    private TableColumn<QuestionInApp, Integer> questionRatingCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> topicCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> rightAnswerCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer1Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer2Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer3Col;
 
 
-    @FXML private TextField lastNameField;
-    @FXML private ComboBox<Integer> courseCheckBox;
-    @FXML private TextField groupField;
-    @FXML private Label studentAddedLabel;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private ComboBox<Integer> courseCheckBox;
+    @FXML
+    private TextField groupField;
+    @FXML
+    private Label studentAddedLabel;
 
-    @FXML private ComboBox<Integer> ratingBox;
-    @FXML private ComboBox<TopicUtil> topicBox;
-    @FXML private TextArea questionArea;
+    @FXML
+    private ComboBox<Integer> ratingBox;
+    @FXML
+    private ComboBox<TopicUtil> topicBox;
+    @FXML
+    private TextArea questionArea;
     public TextArea ans1Area;
     public TextArea ans2Area;
     public TextArea ans3Area;
-    @FXML private TextArea rightAnswerArea;
-    @FXML private Button confirmQuestionButton;
-    @FXML private Label questionAddedLabel;
+    @FXML
+    private TextArea rightAnswerArea;
+    @FXML
+    private Button confirmQuestionButton;
+    @FXML
+    private Label questionAddedLabel;
 
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
@@ -79,7 +113,7 @@ public class AdminController extends AbstractController implements Initializable
         initializeStudentsTableCellFactories();
         initializeQuestionsTableCellFactories();
         showStudents();
-        showQuestions();
+//        showQuestions();
         courseCheckBox.getSelectionModel().select(null);
     }
 
@@ -87,29 +121,33 @@ public class AdminController extends AbstractController implements Initializable
     private void showStudents() {
         try {
             studentsTable.setItems(new ObservableListWrapper<>(studentsService.getAllStudents()));
-        }catch(NullPointerException e){
-            System.out.println("Null");
-        }
-    }
-    @FXML
-    private void showQuestions(){
-        try {
-            questionsTable.setItems(
-                    new ObservableListWrapper<>(
-                            QuestionsUtil.getInAppFromQuestions(questionsService.getAllQuestions())
-                    ));
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Null");
         }
     }
 
+    @FXML
+    private void showQuestions() {
+        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
+        if (resultFromDB != null) {
+            try {
+                questionsTable.setItems(
+                        new ObservableListWrapper<>(QuestionsUtil.getInAppFromQuestions(resultFromDB)));
+            } catch (NullPointerException ignored){
+            }
+        }
+    }
+
+
     public void addNewStudent() {
-        if(!firstNameField.getText().matches("\\w{4,}") || !lastNameField.getText().matches("\\w{5,}") ||
-                !groupField.getText().matches("\\w{3,}")){
+        if (firstNameField.getText().length() < 3 || lastNameField.getText().length() < 5 ||
+                groupField.getText().length() < 5) {
+            studentAddedLabel.setText("Սխալ տվյալներ");
+            studentAddedLabel.setTextFill(Color.RED);
             return;
         }
         studentsService.addNewStudent(
-                firstNameField.getText(),lastNameField.getText(),courseCheckBox.getValue(),groupField.getText()
+                firstNameField.getText(), lastNameField.getText(), courseCheckBox.getValue(), groupField.getText()
         );
         studentAddedLabel.setText("Ավելացված է");
         successPopup(studentAddedLabel);
@@ -120,10 +158,10 @@ public class AdminController extends AbstractController implements Initializable
         String question = questionArea.getText();
         String[] answers = new String[]{ans1Area.getText(), ans2Area.getText(), ans3Area.getText()};
         String rightAnswer = rightAnswerArea.getText();
-        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() ||answers[0].isEmpty())
+        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() || answers[0].isEmpty())
             return;
-        String topic =  topicBox.getValue().getTopic();
-        int rating =  ratingBox.getValue();
+        String topic = topicBox.getValue().getTopic();
+        int rating = ratingBox.getValue();
         questionsService.addNewQuestion(question, rating, topic, rightAnswer, answers);
 
         questionAddedLabel.setText("Ավելացված է");
@@ -136,13 +174,13 @@ public class AdminController extends AbstractController implements Initializable
         StartApp.showMainPage();
     }
 
-    private void initializeCheckBoxes(){
+    private void initializeCheckBoxes() {
         courseCheckBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
         ratingBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
         topicBox.setItems(new ObservableListWrapper<>(Arrays.asList(TopicUtil.values())));
     }
 
-    private void initializeStudentsTableCellFactories(){
+    private void initializeStudentsTableCellFactories() {
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         courseCol.setCellValueFactory(new PropertyValueFactory<>("course"));
@@ -152,7 +190,7 @@ public class AdminController extends AbstractController implements Initializable
         secondExamCol.setCellValueFactory(new PropertyValueFactory<>("passedSecondExam"));
     }
 
-    private void initializeQuestionsTableCellFactories(){
+    private void initializeQuestionsTableCellFactories() {
         questionCol.setCellValueFactory(new PropertyValueFactory<>("question"));
         questionRatingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
         topicCol.setCellValueFactory(new PropertyValueFactory<>("topic"));
@@ -162,14 +200,15 @@ public class AdminController extends AbstractController implements Initializable
         answer3Col.setCellValueFactory(new PropertyValueFactory<>("answer3"));
     }
 
-    private void successPopup(Label inLabel){
+    private void successPopup(Label inLabel) {
         AnimationTimer timer = new AnimationTimer() {
             private double opacity = 1;
+
             @Override
             public void handle(long now) {
-                opacity -=0.01;
+                opacity -= 0.01;
                 inLabel.opacityProperty().set(opacity);
-                if(opacity<=0){
+                if (opacity <= 0) {
                     stop();
                 }
             }

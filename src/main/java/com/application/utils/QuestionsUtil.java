@@ -16,7 +16,7 @@ public class QuestionsUtil {
     public static List<QuestionInApp> getInAppFromQuestions(Map<Question,List<Answer>> questions){
         List<QuestionInApp> result = new ArrayList<>();
         QuestionInApp forApp;
-        for (Question current : questions.keySet()){
+         for (Question current : questions.keySet()){
             forApp = new QuestionInApp();
             forApp.setQuestion(current.getQuestion());
             forApp.setRating(current.getRating());

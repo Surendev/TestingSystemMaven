@@ -43,6 +43,6 @@ public class QuestionInApp {
         this.rightAnswer = answers.get(0).getText();
         this.answer1 = answers.get(1).getText();
         this.answer2 = answers.get(2).getText();
-        this.answer3 = answers.get(3).getText();
+//        this.answer3 = answers.get(3).getText();
     }
 }
