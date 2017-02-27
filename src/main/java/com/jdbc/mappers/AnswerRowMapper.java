@@ -12,10 +12,9 @@ import java.sql.SQLException;
 public class AnswerRowMapper implements RowMapper<Answer> {
     @Override
     public Answer mapRow(ResultSet resultSet, int i) throws SQLException {
-        Answer answer = new Answer(resultSet.getString("text"),
-                                    resultSet.getInt("to_question"));
-
-
+        Answer answer = new Answer();
+        answer.setText(resultSet.getString("text"));
+        answer.setToQuestion(resultSet.getInt("to_question"));
         return answer;
     }
 }
