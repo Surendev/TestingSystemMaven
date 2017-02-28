@@ -41,7 +41,7 @@ public class Test {
 
         List<Answer> tempList = new ArrayList<>();
         for(int i = index; i < index + 3; i++){
-            tempList.add(wrongAnswers.get(i).getText());
+            tempList.add(wrongAnswers.get(i));
         }
         questionInApp.setAnswers(tempList);
         return questionInApp;
