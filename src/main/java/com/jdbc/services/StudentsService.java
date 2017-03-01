@@ -22,9 +22,8 @@ public class StudentsService implements StudentsDAO{
 
     @Override
     public Student getStudentById(String id) {
-        //TODO get from db student by id
         String query = "SELECT * FROM students WHERE id=?";
-        return jdbc.query(query, new StudentRowMapper()).get(0);
+        return jdbc.queryForObject(query, new Object[]{id},new StudentRowMapper());
     }
 
     @Override

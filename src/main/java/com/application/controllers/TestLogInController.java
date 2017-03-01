@@ -1,6 +1,7 @@
 package com.application.controllers;
 
 
+import com.StartApp;
 import com.jdbc.dao.StudentsDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -37,12 +39,15 @@ public class TestLogInController extends AbstractController implements Initializ
         });*/
     }
 
-    public void checkAuthentication() {
+    public void checkAuthentication() throws IOException {
         if(!isValidEnteredValues()){
             return;
         }
         studentsService.getStudentById(idField.getText());
-
+        //TODO check student info
+        if("it's ok"){
+            StartApp.showTestPage();
+        }
     }
 
     private boolean isValidEnteredValues() {
