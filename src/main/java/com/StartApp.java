@@ -63,11 +63,6 @@ public class StartApp extends Application{
 
     }
 
-    private static void resetLoginPage() {
-        ((TextField)loginScene.lookup("loginField")).setText("");
-        ((PasswordField)loginScene.lookup("passwordField")).setText("");
-    }
-
     public static void showTestPage() throws IOException{
         if(testPane == null) {
             testPane = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
@@ -82,11 +77,16 @@ public class StartApp extends Application{
     public static void showRegistrationPage() throws IOException{
         if (registrationPane == null){
             registrationPane = FXMLLoader.load(StartApp.class.getResource("/fxml/register.fxml"));
-            registrationScene = new Scene(registrationPane, 800, 600);
+            registrationScene = new Scene(registrationPane, 500, 600);
         }
         primaryStage.setScene(registrationScene);
         primaryStage.setTitle("Registering system _ Test");
         primaryStage.show();
+    }
+
+    private static void resetLoginPage() {
+        ((TextField)loginScene.lookup("loginField")).setText("");
+        ((PasswordField)loginScene.lookup("passwordField")).setText("");
     }
 
     public static void main(String[] args) {

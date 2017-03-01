@@ -21,6 +21,12 @@ public class StudentsService implements StudentsDAO{
 
 
     @Override
+    public Student getStudentById(String id) {
+        //TODO get from db student by id
+        return null;
+    }
+
+    @Override
     public int addNewStudent(String firstName, String lastName, int course, String group) {
         String sql = "INSERT INTO students(first_name,last_name," +
                 "course,'group', rating, login, password) VALUES(?,?,?,?,?,?,?)";

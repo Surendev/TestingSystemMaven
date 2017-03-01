@@ -1,24 +1,23 @@
 package com.application.utils;
 
 import com.dto.Question;
-import com.dto.Test;
 import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.services.QuestionsService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- * Created by surik on 2/6/17
- */
-public class TestUtil {
+public class TestUtil{
 
     public final int[] ratings = {1, 2, 3, 4};
+    private TopicUtil[] topics = TopicUtil.values();
     private QuestionsDAO questionsService;
-    private TopicUtil[] topics;
 
     // here is saving all questions by ratings
-    private Map<Integer, List<Question>> questionsFromDB;
+    private Map<Integer, List<Question>> questionsFromDB = new HashMap<>();
 
     private ClassPathXmlApplicationContext context =
             new ClassPathXmlApplicationContext("/spring_context.xml");

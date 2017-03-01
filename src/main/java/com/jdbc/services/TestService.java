@@ -33,29 +33,29 @@ public class TestService implements TestDAO {
 
         List<Question> chosenFromListByTopic = testUtil.chooseFromListByTopics(rating);
         List<Question> lastSorted = new ArrayList<>();
-        generateQuestionsListByCount(countOfQuestions, lastSorted, (Question[]) chosenFromListByTopic.toArray());
+        generateQuestionsListByCount(countOfQuestions, lastSorted, chosenFromListByTopic);
 
         return lastSorted;
     }
 
-    private void generateQuestionsListByCount(int countOfQuestion, List<Question> lastSorted, Question[] chosenFromListByTopic) {
+    private void generateQuestionsListByCount(int countOfQuestion, List<Question> lastSorted, List<Question> chosenFromListByTopic) {
 
-        if (countOfQuestion > chosenFromListByTopic.length)
+        if (countOfQuestion > chosenFromListByTopic.size())
             throw new NoSuchElementException("there is no such questions in base");
-        if (countOfQuestion == chosenFromListByTopic.length) {
-            lastSorted.addAll(Arrays.asList(chosenFromListByTopic));
+        if (countOfQuestion == chosenFromListByTopic.size()) {
+            lastSorted.addAll(chosenFromListByTopic);
             return;
         }
         if (countOfQuestion > 1)
             generateQuestionsListByCount(Math.round(countOfQuestion / 2), lastSorted,
-                Arrays.copyOf(chosenFromListByTopic, chosenFromListByTopic.length / 2));
+                chosenFromListByTopic.subList(0,chosenFromListByTopic.size() / 2) );
         if (countOfQuestion == 1) {
             int r = random.nextInt(1);
-            lastSorted.add(chosenFromListByTopic[r]);
+            lastSorted.add(chosenFromListByTopic.get(r));
         }
         if (countOfQuestion > 1)
             generateQuestionsListByCount(countOfQuestion / 2, lastSorted,
-                Arrays.copyOfRange(chosenFromListByTopic, chosenFromListByTopic.length / 2, chosenFromListByTopic.length));
+                chosenFromListByTopic.subList(chosenFromListByTopic.size() / 2, chosenFromListByTopic.size()) );
     }
 
     public void setTestTopics(String [] topics){
