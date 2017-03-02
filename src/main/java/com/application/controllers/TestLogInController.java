@@ -2,6 +2,7 @@ package com.application.controllers;
 
 
 import com.StartApp;
+import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -31,21 +32,19 @@ public class TestLogInController extends AbstractController implements Initializ
     public void initialize(URL location, ResourceBundle resources) {
         studentsService = context.getBean("studentsService", StudentsDAO.class);
         groupBox.setItems(FXCollections.observableArrayList("Հ420-1","Հ420-2"));
-        /*Group group = new Group(firstNameField,lastNameField,middleNameField,idField,groupBox);
-        group.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue){
-                errLabel.setText("Լրացրեք ձեր տվյալները ԱՆՍԽԱԼ");
-            }
-        });*/
     }
 
     public void checkAuthentication() throws IOException {
         if(!isValidEnteredValues()){
             return;
         }
-        studentsService.getStudentById(idField.getText());
-        //TODO check student info
-        if("it's ok"){
+        Student studentFromDB = studentsService.getStudentById(idField.getText());
+        if(!studentFromDB.getFirstName().equals(firstNameField.getText()) ||
+            !studentFromDB.getLastName().equals(lastNameField.getText()) ||
+            !studentFromDB.getGroup().equals(groupBox.getValue())) {
+            errLabel.setText("Ուսանողի տվյալները չեն համապատասխանում");
+            errLabel.setTextFill(Color.RED);
+        }else{
             StartApp.showTestPage();
         }
     }
