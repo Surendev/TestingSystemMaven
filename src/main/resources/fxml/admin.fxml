@@ -62,20 +62,23 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="firstNameLabel" alignment="CENTER" layoutX="130.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Անուն" />
-                        <Label fx:id="lastNameLabel" alignment="CENTER" layoutX="130.0" layoutY="120.0" prefHeight="20.0" prefWidth="100.0" text="Ազգանուն" />
-                        <TextField fx:id="firstNameField" layoutX="80.0" layoutY="70.0" prefWidth="200.0" />
-                        <TextField fx:id="lastNameField" layoutX="80.0" layoutY="140.0" prefWidth="200.0" />
-                        <Label fx:id="courseLabel" alignment="CENTER" layoutX="130.0" layoutY="190.0" prefHeight="20.0" prefWidth="100.0" text="Կուրս" />
-                        <ComboBox fx:id="courseCheckBox" layoutX="80.0" layoutY="210.0" prefWidth="200.0" promptText="Ընտրել" />
-                        <Label fx:id="groupLabel" alignment="CENTER" layoutX="130.0" layoutY="260.0" prefHeight="20.0" prefWidth="100.0" text="Խումբ" />
-                        <TextField fx:id="groupField" layoutX="80.0" layoutY="280.0" prefWidth="200.0" />
-                        <Button fx:id="confirmStudentButton" layoutX="110.0" layoutY="350.0" mnemonicParsing="false" onAction="#addNewStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#58c978" />
-                        <Label fx:id="studentAddedLabel" alignment="CENTER" layoutX="400.0" layoutY="200.0" prefHeight="20.0" prefWidth="300.0">
+                        <Label fx:id="firstNameLabel" alignment="CENTER" layoutX="330.0" layoutY="96.0" prefHeight="20.0" prefWidth="100.0" text="Անուն" />
+                        <Label fx:id="lastNameLabel" alignment="CENTER" layoutX="330.0" layoutY="166.0" prefHeight="20.0" prefWidth="100.0" text="Ազգանուն" />
+                        <TextField fx:id="firstNameField" layoutX="280.0" layoutY="116.0" prefWidth="200.0" />
+                        <TextField fx:id="lastNameField" layoutX="280.0" layoutY="186.0" prefWidth="200.0" />
+                        <Label fx:id="courseLabel" alignment="CENTER" layoutX="330.0" layoutY="236.0" prefHeight="20.0" prefWidth="100.0" text="Կուրս" />
+                        <ComboBox fx:id="courseCheckBox" layoutX="280.0" layoutY="256.0" prefWidth="200.0" promptText="Ընտրել" />
+                        <Label fx:id="groupLabel" alignment="CENTER" layoutX="330.0" layoutY="306.0" prefHeight="20.0" prefWidth="100.0" text="Խումբ" />
+                        <TextField fx:id="groupField" layoutX="280.0" layoutY="326.0" prefWidth="200.0" />
+                        <Button fx:id="confirmStudentButton" layoutX="308.0" layoutY="396.0" mnemonicParsing="false" onAction="#addNewStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#58c978" />
+                        <Label fx:id="studentAddedLabel" alignment="CENTER" layoutX="478.0" layoutY="226.0" prefHeight="20.0" prefWidth="300.0">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <CheckBox fx:id="editCheckBox" layoutX="76.0" layoutY="190.0" mnemonicParsing="false" onAction="#unHideIdField" text="Փոփոխություն" />
+                        <TextField fx:id="iDField" layoutX="35.0" layoutY="256.0" prefWidth="200.0" />
+                        <Label fx:id="iDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="238.0" prefWidth="100.0" text="ID" />
                      </children>
                   </AnchorPane>
             </content>

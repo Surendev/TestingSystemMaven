@@ -13,6 +13,7 @@ import com.jdbc.services.QuestionsService;
 import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -39,9 +40,9 @@ public class AdminController extends AbstractController implements Initializable
     private Button homeButton;
     @FXML
     private TableView<Student> studentsTable;
-
     @FXML
     private TableColumn<Student, String> firstNameCol;
+
     @FXML
     private TableColumn<Student, String> lastNameCol;
     @FXML
@@ -56,12 +57,12 @@ public class AdminController extends AbstractController implements Initializable
     private TableColumn<Student, String> secondExamCol;
     @FXML
     private TextField firstNameField;
-
     @FXML
     private TableView<QuestionInApp> questionsTable;
 
     @FXML
     private TableColumn<QuestionInApp, String> questionCol;
+
     @FXML
     private TableColumn<QuestionInApp, Integer> questionRatingCol;
     @FXML
@@ -74,19 +75,19 @@ public class AdminController extends AbstractController implements Initializable
     private TableColumn<QuestionInApp, String> answer2Col;
     @FXML
     private TableColumn<QuestionInApp, String> answer3Col;
-
-
     @FXML
     private TextField lastNameField;
+
+
     @FXML
     private ComboBox<Integer> courseCheckBox;
     @FXML
     private TextField groupField;
     @FXML
     private Label studentAddedLabel;
-
     @FXML
     private ComboBox<Integer> ratingBox;
+
     @FXML
     private ComboBox<TopicUtil> topicBox;
     @FXML
@@ -100,6 +101,10 @@ public class AdminController extends AbstractController implements Initializable
     private Button confirmQuestionButton;
     @FXML
     private Label questionAddedLabel;
+
+
+    @FXML
+    private CheckBox editCheckBox;
 
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
@@ -115,6 +120,7 @@ public class AdminController extends AbstractController implements Initializable
         showStudents();
 //        showQuestions();
         courseCheckBox.getSelectionModel().select(null);
+
     }
 
     @FXML
@@ -128,14 +134,14 @@ public class AdminController extends AbstractController implements Initializable
 
     @FXML
     private void showQuestions() {
-        /*Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
+        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
         if (resultFromDB != null) {
             try {
                 questionsTable.setItems(
                         new ObservableListWrapper<>(QuestionsUtil.getInAppFromQuestions(resultFromDB)));
-            } catch (NullPointerException ignored){
+            } catch (NullPointerException ignored) {
             }
-        }*/
+        }
     }
 
 
@@ -221,5 +227,9 @@ public class AdminController extends AbstractController implements Initializable
         lastNameField.setText("");
         courseCheckBox.getSelectionModel().select(0);
         groupField.setText("");
+    }
+
+    public void unHideIdField(ActionEvent actionEvent) {
+
     }
 }

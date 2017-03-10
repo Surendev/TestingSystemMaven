@@ -1,5 +1,9 @@
 package com.dto;
 
+import com.application.utils.SecurityUtil;
+
+import java.security.NoSuchAlgorithmException;
+
 /**
  * Created by Suro Smith on 2/22/2017
  */
@@ -23,5 +27,9 @@ public class Answer {
 
     public void setToQuestion(Integer toQuestion) {
         this.toQuestion = toQuestion;
+    }
+
+    public String getEncrypted()  {
+        return SecurityUtil.encrypt(text);
     }
 }

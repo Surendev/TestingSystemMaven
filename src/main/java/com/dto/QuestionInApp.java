@@ -1,5 +1,6 @@
 package com.dto;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -39,10 +40,16 @@ public class QuestionInApp {
         this.question = question;
     }
 
-    public void setAnswers(List<Answer> answers) {
-        this.rightAnswer = answers.get(0).getText();
-        this.answer1 = answers.get(1).getText();
-        this.answer2 = answers.get(2).getText();
-//        this.answer3 = answers.get(3).getText();
+    public void setAnswers(List<Answer> answers, String rightAnswer) {
+        for (Answer answer : answers) {
+            if(rightAnswer.equals(answer.getEncrypted())){
+                this.rightAnswer = answer.getText();
+                answers.remove(answer);
+                break;
+            }
+        }
+        this.answer1 = answers.get(0).getText();
+        this.answer2 = answers.get(1).getText();
+        this.answer3 = answers.get(2).getText();
     }
 }
