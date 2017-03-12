@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface StudentsDAO {
 
-    int addNewStudent(String firstName, String lastName, int course, String group);
+    int addOrUpdateStudent(String id,String firstName, String lastName, Integer course, String group, boolean update);
 
     List<Student> getAllStudents();
 

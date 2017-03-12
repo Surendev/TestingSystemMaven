@@ -13,7 +13,6 @@ import com.jdbc.services.QuestionsService;
 import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -34,77 +33,50 @@ import java.util.ResourceBundle;
  */
 public class AdminController extends AbstractController implements Initializable {
 
-    @FXML
-    private TabPane tabPane;
-    @FXML
-    private Button homeButton;
-    @FXML
-    private TableView<Student> studentsTable;
-    @FXML
-    private TableColumn<Student, String> firstNameCol;
+    @FXML private Button homeButton;
+    @FXML private TableView<Student> studentsTable;
+    @FXML private TableColumn<Student, String> firstNameCol;
+    @FXML private TableColumn<Student, String> lastNameCol;
 
-    @FXML
-    private TableColumn<Student, String> lastNameCol;
-    @FXML
-    private TableColumn<Student, Integer> courseCol;
-    @FXML
-    private TableColumn<Student, String> groupCol;
-    @FXML
-    private TableColumn<Student, String> ratingCol;
-    @FXML
-    private TableColumn<Student, String> firstExamCol;
-    @FXML
-    private TableColumn<Student, String> secondExamCol;
-    @FXML
-    private TextField firstNameField;
-    @FXML
-    private TableView<QuestionInApp> questionsTable;
+    @FXML private TableColumn<Student, Integer> courseCol;
+    @FXML private TableColumn<Student, String> groupCol;
+    @FXML private TableColumn<Student, String> ratingCol;
+    @FXML private TableColumn<Student, String> firstExamCol;
+    @FXML private TableColumn<Student, String> secondExamCol;
+    @FXML private TextField firstNameField;
+    @FXML private TableView<QuestionInApp> questionsTable;
+    @FXML private TableColumn<QuestionInApp, String> questionCol;
 
-    @FXML
-    private TableColumn<QuestionInApp, String> questionCol;
+    @FXML private TableColumn<QuestionInApp, Integer> questionRatingCol;
 
-    @FXML
-    private TableColumn<QuestionInApp, Integer> questionRatingCol;
-    @FXML
-    private TableColumn<QuestionInApp, String> topicCol;
-    @FXML
-    private TableColumn<QuestionInApp, String> rightAnswerCol;
-    @FXML
-    private TableColumn<QuestionInApp, String> answer1Col;
-    @FXML
-    private TableColumn<QuestionInApp, String> answer2Col;
-    @FXML
-    private TableColumn<QuestionInApp, String> answer3Col;
-    @FXML
-    private TextField lastNameField;
+    @FXML private TableColumn<QuestionInApp, String> topicCol;
+    @FXML private TableColumn<QuestionInApp, String> rightAnswerCol;
+    @FXML private TableColumn<QuestionInApp, String> answer1Col;
+    @FXML private TableColumn<QuestionInApp, String> answer2Col;
+    @FXML private TableColumn<QuestionInApp, String> answer3Col;
+    @FXML private TextField lastNameField;
+    @FXML private ComboBox<Integer> courseCheckBox;
 
 
-    @FXML
-    private ComboBox<Integer> courseCheckBox;
-    @FXML
-    private TextField groupField;
-    @FXML
-    private Label studentAddedLabel;
-    @FXML
-    private ComboBox<Integer> ratingBox;
-
-    @FXML
-    private ComboBox<TopicUtil> topicBox;
-    @FXML
-    private TextArea questionArea;
-    public TextArea ans1Area;
-    public TextArea ans2Area;
-    public TextArea ans3Area;
-    @FXML
-    private TextArea rightAnswerArea;
-    @FXML
-    private Button confirmQuestionButton;
-    @FXML
-    private Label questionAddedLabel;
+    @FXML private TextField groupField;
+    @FXML private Label studentAddedLabel;
+    @FXML private ComboBox<Integer> ratingBox;
+    @FXML private ComboBox<TopicUtil> topicBox;
+    @FXML private Button confirmStudentButton;
 
 
-    @FXML
-    private CheckBox editCheckBox;
+    @FXML private TextArea questionArea;
+    @FXML private TextArea ans1Area;
+    @FXML private TextArea ans2Area;
+    @FXML private TextArea ans3Area;
+    @FXML private TextArea rightAnswerArea;
+    @FXML private Button confirmQuestionButton;
+    @FXML private Label questionAddedLabel;
+
+
+    @FXML private CheckBox editCheckBox;
+    @FXML private TextField iDField;
+    @FXML private Label iDLabel;
 
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
@@ -120,7 +92,7 @@ public class AdminController extends AbstractController implements Initializable
         showStudents();
 //        showQuestions();
         courseCheckBox.getSelectionModel().select(null);
-
+        disableEditFields(true);
     }
 
     @FXML
@@ -146,15 +118,28 @@ public class AdminController extends AbstractController implements Initializable
 
 
     public void addNewStudent() {
+        if (editCheckBox.selectedProperty().get()){
+            if(iDField.getText().equals("") || !iDField.getText().matches("^\\d+$")){
+                studentAddedLabel.setText("Սխալ տվյալ. ID");
+                studentAddedLabel.setTextFill(Color.RED);
+                return;
+            }
+            if (firstNameField.getText().length() < 3 && lastNameField.getText().length() < 5 &&
+                    groupField.getText().length() < 5 && courseCheckBox.getSelectionModel().getSelectedIndex() == -1) {
+                studentAddedLabel.setText("Սխալ տվյալներ");
+                studentAddedLabel.setTextFill(Color.RED);
+                return;
+            }
+        }else
         if (firstNameField.getText().length() < 3 || lastNameField.getText().length() < 5 ||
                 groupField.getText().length() < 5) {
             studentAddedLabel.setText("Սխալ տվյալներ");
             studentAddedLabel.setTextFill(Color.RED);
             return;
         }
-        studentsService.addNewStudent(
-                firstNameField.getText(), lastNameField.getText(), courseCheckBox.getValue(), groupField.getText()
-        );
+        studentsService.addOrUpdateStudent(
+                iDField.getText(),firstNameField.getText(), lastNameField.getText(),
+                courseCheckBox.getValue(), groupField.getText(),editCheckBox.selectedProperty().get());
         studentAddedLabel.setText("Ավելացված է");
         successPopup(studentAddedLabel);
         resetStudentFields();
@@ -222,14 +207,28 @@ public class AdminController extends AbstractController implements Initializable
         timer.start();
     }
 
+    public void unHideEditFields() {
+        if(editCheckBox.selectedProperty().get()){
+            disableEditFields(false);
+        }else{
+            disableEditFields(true);
+        }
+    }
+
     private void resetStudentFields() {
         firstNameField.setText("");
         lastNameField.setText("");
-        courseCheckBox.getSelectionModel().select(0);
+        courseCheckBox.getSelectionModel().select(-1);
         groupField.setText("");
     }
 
-    public void unHideIdField(ActionEvent actionEvent) {
-
+    private void disableEditFields(boolean bool){
+        iDField.setDisable(bool);
+        iDLabel.setDisable(bool);
+        if(bool){
+            confirmStudentButton.setText("Ավելացնել");
+        }else {
+            confirmStudentButton.setText("Փոփոխել");
+        }
     }
 }
