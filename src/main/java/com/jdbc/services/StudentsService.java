@@ -27,11 +27,23 @@ public class StudentsService implements StudentsDAO{
     }
 
     @Override
-    public int addNewStudent(String firstName, String lastName, int course, String group) {
-        String sql = "INSERT INTO students(first_name,last_name," +
-                "course,'group', rating, login, password) VALUES(?,?,?,?,?,?,?)";
+    public int addOrUpdateStudent(String id,String firstName, String lastName, Integer course, String group, boolean update) {
+        StringBuilder query;
+        if(!update) {
+            query = new StringBuilder("INSERT INTO students(first_name,last_name,")
+                    .append("course,'group', rating) VALUES(?,?,?,?,?)");
+            return jdbc.update(query.toString(), firstName, lastName, course, group, 0);
+        }else{
+            query = new StringBuilder("UPDATE students SET ");
+            query   .append(firstName.equals("") ? "" : "first_name='" + firstName + "'")
+                    .append(lastName.equals("") ? "" :  (query.charAt(query.length()-1)!=' '? "," : "") + "last_name='" + lastName + "'")
+                    .append(course==null ? "" : (query.charAt(query.length()-1)!=' '? "," : "" )+ "course=" + course )
+                    .append(group.equals("") ? "" : (query.charAt(query.length()-1)!=' '? "," : "") + "'group'='" + group + "'")
+                    .append(" WHERE id=" + id);
+            return jdbc.update(query.toString());
+        }
 
-        return jdbc.update(sql,firstName,lastName,course,group,0,"artyom","asdasdasd");
+
     }
 
     @Override
