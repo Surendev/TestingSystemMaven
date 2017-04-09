@@ -79,28 +79,19 @@ public class AdminController extends AbstractController implements Initializable
     private TextField lastNameField;
 
 
-    @FXML
-    private ComboBox<Integer> courseCheckBox;
-    @FXML
-    private TextField groupField;
-    @FXML
-    private Label studentAddedLabel;
-    @FXML
-    private ComboBox<Integer> ratingBox;
+    @FXML private ComboBox<Integer> courseCheckBox;
+    @FXML private TextField groupField;
+    @FXML private Label studentAddedLabel;
+    @FXML private ComboBox<Integer> ratingBox;
 
-    @FXML
-    private ComboBox<TopicUtil> topicBox;
-    @FXML
-    private TextArea questionArea;
-    public TextArea ans1Area;
-    public TextArea ans2Area;
-    public TextArea ans3Area;
-    @FXML
-    private TextArea rightAnswerArea;
-    @FXML
-    private Button confirmQuestionButton;
-    @FXML
-    private Label questionAddedLabel;
+    @FXML private ComboBox<TopicUtil> topicBox;
+    @FXML private TextArea questionArea;
+    @FXML private TextArea ans1Area;
+    @FXML private TextArea ans2Area;
+    @FXML private TextArea ans3Area;
+    @FXML private TextArea rightAnswerArea;
+    @FXML private Button confirmQuestionButton;
+    @FXML private Label questionAddedLabel;
 
 
     @FXML
@@ -120,7 +111,6 @@ public class AdminController extends AbstractController implements Initializable
         showStudents();
 //        showQuestions();
         courseCheckBox.getSelectionModel().select(null);
-
     }
 
     @FXML
