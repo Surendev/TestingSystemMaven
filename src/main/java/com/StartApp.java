@@ -14,8 +14,6 @@ import java.io.IOException;
 
 
 /**
- * Created by surik on 1/29/17
- *
  * This is where application begin.
  * At begin it loads {@code login.fxml}
  * and prompt user to enter admins login and password

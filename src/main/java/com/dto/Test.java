@@ -43,7 +43,7 @@ public class Test {
         for(int i = index; i < index + 3; i++){
             tempList.add(wrongAnswers.get(i));
         }
-        questionInApp.setAnswers(tempList);
+        questionInApp.setAnswers(tempList, currentQuestion.getAnswer());
         return questionInApp;
     }
 

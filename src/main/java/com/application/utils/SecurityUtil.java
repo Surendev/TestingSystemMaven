@@ -10,8 +10,16 @@ public class SecurityUtil {
 
     public static final String justString = "adminchik";
 
-    public static String encrypt(String plainText) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+    public static String encrypt(String plainText) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        if(digest==null){
+            return null;
+        }
         digest.update(plainText.getBytes());
         return new String(digest.digest());
     }
