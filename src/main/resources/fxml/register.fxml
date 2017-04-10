@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.TestLogInController">
+   <children>
+      <TextField fx:id="firstNameField" layoutX="125.0" layoutY="109.0" prefHeight="20.0" prefWidth="250.0" />
+      <TextField fx:id="middleNameField" layoutX="125.0" layoutY="259.0" prefHeight="20.0" prefWidth="250.0" />
+      <TextField fx:id="lastNameField" layoutX="125.0" layoutY="184.0" prefHeight="20.0" prefWidth="250.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="125.0" layoutY="89.0" prefHeight="20.0" prefWidth="250.0" text="Անուն">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="125.0" layoutY="164.0" prefHeight="20.0" prefWidth="250.0" text="Ազգանուն">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="125.0" layoutY="239.0" prefHeight="20.0" prefWidth="250.0" text="Հայրանուն">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="groupBox" layoutX="175.0" layoutY="334.0" prefWidth="150.0" />
+      <Label fx:id="errLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" prefHeight="50.0" prefWidth="500.0" text="Լրացրեք ձեր տվյալները ԱՆՍԽԱԼ" textAlignment="CENTER" textFill="#389438"
+             wrapText="true">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="idField" layoutX="125.0" layoutY="409.0" prefHeight="20.0" prefWidth="250.0" />
+      <Label alignment="CENTER" layoutX="125.0" layoutY="313.0" prefHeight="20.0" prefWidth="250.0" text="Խումբ">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="125.0" layoutY="388.0" prefHeight="20.0" prefWidth="250.0" text="Հերթական համար - ID">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="confirmButton" layoutX="175.0" layoutY="500.0" mnemonicParsing="false" onAction="#checkAuthentication" prefHeight="20.0" prefWidth="150.0" text="Մուտք" />
+   </children>
+</Pane>

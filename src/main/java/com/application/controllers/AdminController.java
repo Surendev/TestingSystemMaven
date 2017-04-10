@@ -128,14 +128,14 @@ public class AdminController extends AbstractController implements Initializable
 
     @FXML
     private void showQuestions() {
-        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
+        /*Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
         if (resultFromDB != null) {
             try {
                 questionsTable.setItems(
                         new ObservableListWrapper<>(QuestionsUtil.getInAppFromQuestions(resultFromDB)));
             } catch (NullPointerException ignored){
             }
-        }
+        }*/
     }
 
 

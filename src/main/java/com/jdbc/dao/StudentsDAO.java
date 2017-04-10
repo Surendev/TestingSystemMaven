@@ -13,4 +13,6 @@ public interface StudentsDAO {
 
     List<Student> getAllStudents();
 
+    Student getStudentById(String id);
+
 }
