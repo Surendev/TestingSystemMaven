@@ -9,50 +9,45 @@ import java.util.Properties;
 /**
  * Created by Atom on 3/9/2017.
  */
-public class MailService {
-    private int id = -1;
-    private int rate = 0;
+public class SendMailService {
 
-    private final String to = "artyom.gishyan@mail.ru";
-    private final String from = "arthades047@gmail.com";
-    private final String username = "arthades047";
-    private final String password = "*****";
-    private static Properties properties;
+    private final String from = "artyom.gishyan@mail.ru";
+    private final String to = "arthades047@gmail.com";
+    private static Properties properties = new Properties();
+    private Session session = null;
+    private Message message = null;
 
     static {
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.ssl.enable", "true");
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "465");
-    }
-    Session session = Session.getInstance(properties,
-            new javax.mail.Authenticator() {
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new   PasswordAuthentication(username, password);
-                }
-            });
+        properties.put("mail.smtp.auth", true);
+        properties.put("mail.smtp.starttls.enable", true);
+        properties.put("mail.smtp.ssl.enable", true);
+        properties.put("mail.smtp.host", "smtp.mail.ru");
+        properties.put("mail.smtp.port", 465);
 
-    public MailService(int id, int rate) {
-        this.id = id;
-        this.rate = rate;
     }
 
-    public boolean send() {
+    public SendMailService() throws MessagingException {
+        session = Session.getInstance(properties,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication("mail", "*");
+                    }
+                });
+        message = new MimeMessage(session);
+        message.setFrom(new InternetAddress((from)));
+        message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(to));
+        message.setSubject("passedExam");
+    }
+
+    public boolean send(int id, int rate) {
         try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress((from)));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
-            message.setSubject("passedExam");
             message.setText(id + " " + rate);
             Transport.send(message);
             return true;
         } catch (MessagingException e) {
-            e.printStackTrace();
+            return false;
         }
-        return false;
     }
-
 
 }
