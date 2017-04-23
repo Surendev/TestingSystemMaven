@@ -113,7 +113,7 @@ public class AdminController extends AbstractController implements Initializable
         initializeStudentsTableCellFactories();
         initializeQuestionsTableCellFactories();
         showStudents();
-//        showQuestions();
+        showQuestions();
         courseCheckBox.getSelectionModel().select(null);
     }
 
@@ -128,14 +128,18 @@ public class AdminController extends AbstractController implements Initializable
 
     @FXML
     private void showQuestions() {
-        /*Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
-        if (resultFromDB != null) {
+        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
+        if (resultFromDB == null) {
+            System.err.println("Questions Not Found");
+        }
             try {
                 questionsTable.setItems(
-                        new ObservableListWrapper<>(QuestionsUtil.getInAppFromQuestions(resultFromDB)));
+                        new ObservableListWrapper<>(
+                                QuestionsUtil.getInAppFromQuestions(resultFromDB)));
             } catch (NullPointerException ignored){
             }
-        }*/
+
+
     }
 
 

@@ -49,13 +49,16 @@ public class QuestionsService implements QuestionsDAO {
     public Map<Question, List<Answer>> getAllQuestions(){
         String query = "SELECT * FROM questions";
         Map<Question,List<Answer>> result = new HashMap<>();
+
         List<Question> questions = jdbc.query(query,new QuestionRowMapper());
         for (Question eachQuestion : questions){
             result.put(eachQuestion,getAnswersByQuestionId(eachQuestion.getId()));
         }
+
         if(result.isEmpty()){
             return null;
         }
+
         return result;
     }
 }
