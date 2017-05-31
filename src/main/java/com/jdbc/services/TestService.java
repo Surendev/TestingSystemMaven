@@ -50,7 +50,7 @@ public class TestService implements TestDAO {
             generateQuestionsListByCount(Math.round(countOfQuestion / 2), lastSorted,
                 chosenFromListByTopic.subList(0,chosenFromListByTopic.size() / 2) );
         if (countOfQuestion == 1) {
-            int r = random.nextInt(1);
+            int r = random.nextInt(chosenFromListByTopic.size());
             lastSorted.add(chosenFromListByTopic.get(r));
         }
         if (countOfQuestion > 1)
