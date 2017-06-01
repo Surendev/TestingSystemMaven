@@ -45,6 +45,7 @@ public class TestController extends AbstractController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
+        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
         timer = new Service<Void>() {
             @Override
             protected Task<Void> createTask() {
@@ -67,6 +68,7 @@ public class TestController extends AbstractController implements Initializable{
         timer.setOnSucceeded(event -> {
             showEndPopup();
         });
+        timer.start();
     }
 
     public void goToNextButton(ActionEvent event) {
