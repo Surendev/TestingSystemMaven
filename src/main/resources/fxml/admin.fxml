@@ -12,7 +12,7 @@
    <children>
       <HBox layoutY="550.0" prefHeight="50.0" prefWidth="800.0">
          <children>
-            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="49.0" prefWidth="159.0" textAlignment="CENTER">
+            <Button fx:id="homeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="49.0" prefWidth="159.0" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
@@ -108,6 +108,63 @@
                            </font>
                         </Label>
                      </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="students1" closable="false" onSelectionChanged="#showStudents" text="Կարգավորումներ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="52.0" prefHeight="20.0" prefWidth="200.0" text="Թեստի տևողություն" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="timerLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="508.0" layoutY="52.0" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակ" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="126.0" layoutY="85.0" mouseTransparent="true" prefHeight="20.0" prefWidth="200.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                        <TextField layoutX="508.0" layoutY="87.0" prefHeight="20.0" prefWidth="200.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                        <Label fx:id="timerLabel2" alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="168.0" prefHeight="20.0" prefWidth="200.0" text="Հարցի Արժեք" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="timerLabel3" alignment="CENTER" contentDisplay="CENTER" layoutX="226.0" layoutY="168.0" prefHeight="20.0" prefWidth="200.0" text="Թեստում հարցի քանակը" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField alignment="CENTER" layoutX="26.0" layoutY="215.0" mouseTransparent="true" prefHeight="20.0" prefWidth="200.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                        <Label fx:id="timerLabel31" alignment="CENTER" contentDisplay="CENTER" layoutX="508.0" layoutY="168.0" prefHeight="20.0" prefWidth="200.0" text="Թեմաներ" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane layoutX="26.0" layoutY="189.0" prefHeight="320.0" prefWidth="200.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>
