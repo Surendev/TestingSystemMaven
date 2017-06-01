@@ -48,8 +48,11 @@ public class QuestionInApp {
                 break;
             }
         }
-        this.answer1 = answers.get(0).getText();
-        this.answer2 = answers.get(1).getText();
-        this.answer3 = answers.get(2).getText();
+        try {
+            this.answer1 = answers.get(0).getText();
+            this.answer2 = answers.get(1).getText();
+            this.answer3 = answers.get(2).getText();
+        }catch(IndexOutOfBoundsException ignored){
+        }
     }
 }
