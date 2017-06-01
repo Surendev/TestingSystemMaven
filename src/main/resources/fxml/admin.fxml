@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -110,36 +111,42 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="students1" closable="false" onSelectionChanged="#showStudents" text="Կարգավորումներ">
+            <Tab fx:id="configs" closable="false" text="Կարգավորումներ" >
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="126.0" layoutY="52.0" prefHeight="20.0" prefWidth="200.0" text="Թեստի տևողություն" textAlignment="CENTER">
+                        <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="52.0" prefHeight="20.0" prefWidth="220.0" text="Թեստի տևողություն, րոպե" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="timerLabel1" alignment="CENTER" contentDisplay="CENTER" layoutX="508.0" layoutY="52.0" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակ" textAlignment="CENTER">
+                        <Label fx:id="countLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="508.0" layoutY="52.0" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակ" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="126.0" layoutY="85.0" mouseTransparent="true" prefHeight="20.0" prefWidth="200.0">
+                        <TextField fx:id="testTimeField" alignment="CENTER" layoutX="126.0" layoutY="85.0" mouseTransparent="true" prefHeight="20.0" prefWidth="200.0">
                            <font>
                               <Font size="15.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
                         </TextField>
-                        <TextField layoutX="508.0" layoutY="87.0" prefHeight="20.0" prefWidth="200.0">
+                        <TextField fx:id="questionsCountField" alignment="CENTER" layoutX="508.0" layoutY="87.0" prefHeight="20.0" prefWidth="200.0">
                            <font>
                               <Font size="15.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
                         </TextField>
-                        <Label fx:id="timerLabel2" alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="168.0" prefHeight="20.0" prefWidth="200.0" text="Հարցի Արժեք" textAlignment="CENTER">
+                        <Label fx:id="ratingsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Հարցի Արժեք" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="timerLabel3" alignment="CENTER" contentDisplay="CENTER" layoutX="226.0" layoutY="168.0" prefHeight="20.0" prefWidth="200.0" text="Թեստում հարցի քանակը" textAlignment="CENTER">
+                        <Label fx:id="questionsCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակը" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -149,20 +156,39 @@
                               <Font size="15.0" />
                            </font>
                         </TextField>
-                        <Label fx:id="timerLabel31" alignment="CENTER" contentDisplay="CENTER" layoutX="508.0" layoutY="168.0" prefHeight="20.0" prefWidth="200.0" text="Թեմաներ" textAlignment="CENTER">
+                        <Label fx:id="topicsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Թեմաներ" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ScrollPane layoutX="26.0" layoutY="189.0" prefHeight="320.0" prefWidth="200.0">
+                        <ScrollPane fx:id="ratingsPane" layoutX="27.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <VBox layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
+                                    <VBox fx:id="ratingsVBox" layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
                                  </children>
                               </AnchorPane>
                           </content>
                         </ScrollPane>
+                        <ScrollPane fx:id="questionCountsPane" layoutX="227.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox fx:id="countOfQuestionsByRatingVBox" layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="topicsPane" layoutX="512.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox fx:id="topicsVBox" layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <Button fx:id="savePropsButton" layoutX="522.0" layoutY="480.0" mnemonicParsing="false" onAction="#saveSettingsInPropFIle" prefHeight="32.0" prefWidth="180.0" text="Պահպանել" />
                      </children>
                   </AnchorPane>
                </content>

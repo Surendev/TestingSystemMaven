@@ -1,6 +1,7 @@
 package com.application.controllers;
 
 import com.StartApp;
+import com.application.utils.ConfigsLoader;
 import com.application.utils.QuestionsUtil;
 import com.application.utils.TopicUtil;
 import com.dto.Answer;
@@ -19,14 +20,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by surik on 2/4/17
@@ -78,6 +77,18 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private TextField iDField;
     @FXML private Label iDLabel;
 
+    private Properties props = ConfigsLoader.getInstance().getProperties();
+    @FXML private TextField questionsCountField;
+    @FXML private TextField testTimeField;
+    @FXML private VBox ratingsVBox;
+    @FXML private VBox countOfQuestionsByRatingVBox;
+    @FXML private VBox topicsVBox;
+    @FXML private Button savePropsButton;
+
+    @FXML private ScrollPane ratingsPane;
+    @FXML private ScrollPane questionCountsPane;
+    @FXML private ScrollPane topicsPane;
+
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
 
@@ -93,6 +104,7 @@ public class AdminController extends AbstractController implements Initializable
         showQuestions();
         courseCheckBox.getSelectionModel().select(null);
         disableEditFields(true);
+        locateAllConfigs();
     }
 
     @FXML
@@ -234,5 +246,75 @@ public class AdminController extends AbstractController implements Initializable
         }else {
             confirmStudentButton.setText("Փոփոխել");
         }
+    }
+
+    private void locateAllConfigs() {
+        testTimeField.setText(props.getProperty("test.timer"));
+        questionsCountField.setText(props.getProperty("test.questionsCount"));
+
+        int [] ratings =
+                Arrays.stream(props.getProperty("test.ratings").split(","))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        TextField ratingField;
+        for (int rating : ratings){
+            ratingField = new TextField(String.valueOf(rating));
+            ratingField.setPrefWidth(198);
+            ratingsVBox.getChildren().add(ratingField);
+        }
+
+        int [] countOfQuestionsByRating =
+                Arrays.stream(props.getProperty("test.countOfRatings").split(","))
+                        .mapToInt(Integer::parseInt)
+                        .toArray();
+
+        TextField questionCountField;
+        for (int count : countOfQuestionsByRating){
+            questionCountField = new TextField(String.valueOf(count));
+            questionCountField.setPrefWidth(198);
+            countOfQuestionsByRatingVBox.getChildren().add(questionCountField);
+        }
+
+        String[] topics = props.getProperty("test.topics").split(",");
+
+        TextField topicField;
+        for (String topic : topics){
+            topicField = new TextField(topic);
+            topicField.setPrefWidth(198);
+            topicsVBox.getChildren().add(topicField);
+        }
+
+        ratingsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        ratingsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        topicsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        topicsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        questionCountsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        questionCountsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+    }
+
+    public void saveSettingsInPropFIle() {
+        if(!props.getProperty("test.timer").equals(testTimeField.getText())){
+            props.setProperty("test.timer",testTimeField.getText());
+        }
+        if (!props.getProperty("test.questionsCount").equals(questionsCountField.getText())){
+            props.setProperty("test.questionsCount",questionsCountField.getText());
+        }
+
+        StringBuilder ratings = new StringBuilder();
+        ratingsVBox.getChildren().forEach(node -> ratings.append(((TextField) node).getText()).append(","));
+        ratings.delete(ratings.length()-1,ratings.length());
+        props.setProperty("test.ratings",ratings.toString());
+
+        StringBuilder countOfQuestions = new StringBuilder();
+        countOfQuestionsByRatingVBox.getChildren().forEach(node -> countOfQuestions.append(((TextField) node).getText()).append(","));
+        countOfQuestions.delete(countOfQuestions.length()-1,countOfQuestions.length());
+        props.setProperty("test.countOfRatings",countOfQuestions.toString());
+
+        StringBuilder topics = new StringBuilder();
+        topicsVBox.getChildren().forEach(node -> topics.append(((TextField) node).getText()).append(","));
+        topics.delete(topics.length()-1,topics.length());
+        props.setProperty("test.countOfRatings",topics.toString());
+
+        ConfigsLoader.getInstance().setProperties(props);
     }
 }
