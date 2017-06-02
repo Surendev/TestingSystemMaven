@@ -14,9 +14,10 @@ import java.util.Properties;
 public class ConfigsLoader {
 
     private static ConfigsLoader instance;
-    private static final String FILE_PATH = "D:\\Java\\Hamalsaran\\TestingSystemMaven\\src\\main\\resources\\admin\\configs.properties";
+    private static final String FILE_PATH = "/admin/configs.properties";
     public Properties getProperties(){
-        Path configLocation = Paths.get(FILE_PATH);
+        String path = ConfigsLoader.class.getResource(FILE_PATH).getFile();
+        Path configLocation = Paths.get(System.getProperty( "os.name" ).contains( "indow" ) ? path.substring(1) : path);
         try (InputStream stream = Files.newInputStream(configLocation)) {
             Properties config = new Properties();
             config.load(stream);

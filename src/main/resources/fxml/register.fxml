@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -26,8 +27,7 @@
          </font>
       </Label>
       <ComboBox fx:id="groupBox" layoutX="175.0" layoutY="334.0" prefWidth="150.0" />
-      <Label fx:id="errLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" prefHeight="50.0" prefWidth="500.0" text="Լրացրեք ձեր տվյալները ԱՆՍԽԱԼ" textAlignment="CENTER" textFill="#389438"
-             wrapText="true">
+      <Label fx:id="errLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" prefHeight="50.0" prefWidth="500.0" text="Լրացրեք ձեր տվյալները ԱՆՍԽԱԼ" textAlignment="CENTER" textFill="#389438" wrapText="true">
          <font>
             <Font size="15.0" />
          </font>
@@ -44,5 +44,14 @@
          </font>
       </Label>
       <Button fx:id="confirmButton" layoutX="175.0" layoutY="500.0" mnemonicParsing="false" onAction="#checkAuthentication" prefHeight="20.0" prefWidth="150.0" text="Մուտք" />
+      <Button fx:id="homeButton" layoutY="550.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="40.0" prefWidth="100.0">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </Pane>

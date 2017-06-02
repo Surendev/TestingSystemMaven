@@ -111,7 +111,7 @@
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="configs" closable="false" text="Կարգավորումներ" >
+            <Tab fx:id="configs" closable="false" text="Կարգավորումներ">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -125,7 +125,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="testTimeField" alignment="CENTER" layoutX="126.0" layoutY="85.0" mouseTransparent="true" prefHeight="20.0" prefWidth="200.0">
+                        <TextField fx:id="testTimeField" alignment="CENTER" layoutX="126.0" layoutY="85.0" prefHeight="20.0" prefWidth="200.0">
                            <font>
                               <Font size="15.0" />
                            </font>

@@ -15,12 +15,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,16 +32,15 @@ import java.util.ResourceBundle;
  */
 public class TestController extends AbstractController implements Initializable{
 
-    private Integer timeOfExam = 1200;
+    private Integer timeOfExam = Integer.valueOf(adminConfigs.getProperty("test.timer"));
     private @FXML Label timerLabel;
-    private @FXML Button homeButton;
 
     private @FXML Label questionNumberLabel;
     private @FXML Button forwardButton;
     private @FXML Button backButton;
     private @FXML AnchorPane questionTitleContainer;
-    private @FXML TextFlow questionTitleTextFlow;
-    private @FXML GridPane answersGrid;
+    private @FXML TextFlow questionTitle;//question
+    private @FXML GridPane answersGrid; // answers grid
     public TextField insertedQuestionId;
 
     private TestDAO testService = new TestService();
@@ -74,31 +76,33 @@ public class TestController extends AbstractController implements Initializable{
         });
         timer.start();
     }
-    //TODO
-    public void goToNextButton() {
+
+    public void goToNextButton() throws UnsupportedEncodingException {
         QuestionInApp curr = test.getQuestion(Integer.parseInt(questionNumberLabel.getText())+1);
-        
+        //TODO next
     }
 
     public void backToPreviousQuestion(ActionEvent event) {
-
+        //TODO previous
     }
 
     private void showEndPopup() {
 
     }
 
-    private void goToInsertedQuestion(){
+    private void goToInsertedQuestion() throws UnsupportedEncodingException {
         test.getQuestion(Integer.parseInt(insertedQuestionId.getText()));
     }
-
-
-
-
 
 
     public void goToHomePage() throws IOException {
 
         StartApp.showMainPage();
+    }
+
+    public void goToQuestion(KeyEvent keyEvent) {
+        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+            //TODO go go ))
+        }
     }
 }

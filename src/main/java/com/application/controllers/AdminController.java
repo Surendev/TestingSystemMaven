@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.*;
 
@@ -127,6 +128,8 @@ public class AdminController extends AbstractController implements Initializable
                         new ObservableListWrapper<>(
                                 QuestionsUtil.getInAppFromQuestions(resultFromDB)));
             } catch (NullPointerException ignored) {
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
 
 
@@ -184,7 +187,7 @@ public class AdminController extends AbstractController implements Initializable
     private void initializeCheckBoxes() {
         courseCheckBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
         ratingBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
-        topicBox.setItems(new ObservableListWrapper<>(Arrays.asList(TopicUtil.values())));
+        topicBox.setItems(new ObservableListWrapper<>(TopicUtil.topics));
     }
 
     private void initializeStudentsTableCellFactories() {

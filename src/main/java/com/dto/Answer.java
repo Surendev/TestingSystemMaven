@@ -2,6 +2,7 @@ package com.dto;
 
 import com.application.utils.SecurityUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -29,7 +30,7 @@ public class Answer {
         this.toQuestion = toQuestion;
     }
 
-    public String getEncrypted()  {
+    public String getEncrypted() throws UnsupportedEncodingException {
         return SecurityUtil.encrypt(text);
     }
 }

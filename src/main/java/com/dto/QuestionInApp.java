@@ -1,5 +1,6 @@
 package com.dto;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class QuestionInApp {
         this.question = question;
     }
 
-    public void setAnswers(List<Answer> answers, String rightAnswer) {
+    public void setAnswers(List<Answer> answers, String rightAnswer) throws UnsupportedEncodingException {
         for (Answer answer : answers) {
             if(rightAnswer.equals(answer.getEncrypted())){
                 this.rightAnswer = answer.getText();

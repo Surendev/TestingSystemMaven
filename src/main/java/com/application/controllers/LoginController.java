@@ -49,14 +49,9 @@ public class LoginController extends AbstractController implements Initializable
             errLabel.setTextFill(Color.RED);
             return;
         }
-        if(login.equals("admin") && pass.equals(SecurityUtil.justString)){
+        if(login.equals("admin") && SecurityUtil.encrypt(pass).equals(SecurityUtil.justString)){
             logIn.getScene().getWindow().hide();
             showAdminPage();
-        }
-        if(loginService.login(login,pass)){
-            logIn.getScene().getWindow().hide();
-            StartApp.showTestPage();
-            return;
         }
         errLabel.setText("Login and password are Incorrect");
         errLabel.setTextFill(Color.RED);

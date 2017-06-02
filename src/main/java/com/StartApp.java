@@ -34,6 +34,7 @@ public class StartApp extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         StartApp.primaryStage = primaryStage;
+        StartApp.primaryStage.setResizable(false);
         showMainPage();
     }
 

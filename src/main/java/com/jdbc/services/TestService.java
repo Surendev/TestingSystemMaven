@@ -58,9 +58,5 @@ public class TestService implements TestDAO {
                 chosenFromListByTopic.subList(chosenFromListByTopic.size() / 2, chosenFromListByTopic.size()) );
     }
 
-    public void setTestTopics(String [] topics){
-        testUtil.setTopics(topics);
-    }
-
 
 }

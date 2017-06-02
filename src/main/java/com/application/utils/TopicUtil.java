@@ -1,12 +1,20 @@
 package com.application.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Atom on 2/10/2017
  */
-public enum TopicUtil {
+public class TopicUtil {
 
-    TOPIC_1("ԱՐԱՏՈՐՈՇՈՒՄ"), TOPIC_2("TOPIC_2"), TOPIC_3("TOPIC_3"), TOPIC_4("TOPIC_4"), TOPIC_5("TOPIC_5");
+    public static List<TopicUtil> topics = new ArrayList<>();
 
+    static {
+        Arrays.stream(ConfigsLoader.getInstance().getProperties().getProperty("test.topics").split(","))
+                .forEach(s -> topics.add(new TopicUtil(s)));
+    }
     private  String topic;
 
     TopicUtil(String topic) {

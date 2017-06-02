@@ -32,7 +32,7 @@ public class LoginService implements LoginDAO {
     }
 
     public boolean login(String login, String password) {
-        String query = "SELECT * FROM students WHERE login=?";
+        String query = "SELECT * FROM students";
         Student student = null;
         try {
             student = jdbc.queryForObject(query, new Object[]{login}, new StudentRowMapper());

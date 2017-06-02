@@ -3,6 +3,7 @@ package com.dto;
 
 import com.jdbc.dao.QuestionsDAO;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Test {
 
     }
 
-    public QuestionInApp getQuestion(int currIndex) {
+    public QuestionInApp getQuestion(int currIndex) throws UnsupportedEncodingException {
         index = currIndex-1;
         Question currentQuestion = questions.get(index);
 
