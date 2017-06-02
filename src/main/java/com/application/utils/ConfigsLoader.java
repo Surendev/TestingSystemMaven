@@ -14,9 +14,9 @@ import java.util.Properties;
 public class ConfigsLoader {
 
     private static ConfigsLoader instance;
-    private static final String FILE_PATH = "/admin/configs.properties";
+    private static final String FILE_PATH = "D:\\Java\\Hamalsaran\\TestingSystemMaven\\src\\main\\resources\\admin\\configs.properties";
     public Properties getProperties(){
-        Path configLocation = Paths.get(ConfigsLoader.class.getResource(FILE_PATH).getPath());
+        Path configLocation = Paths.get(FILE_PATH);
         try (InputStream stream = Files.newInputStream(configLocation)) {
             Properties config = new Properties();
             config.load(stream);
@@ -28,7 +28,7 @@ public class ConfigsLoader {
     }
 
     public void setProperties(Properties newProps){
-        Path configLocation = Paths.get(ConfigsLoader.class.getResource(FILE_PATH).getPath());
+        Path configLocation = Paths.get(FILE_PATH);
         try (OutputStream out = Files.newOutputStream(configLocation)){
             newProps.store(out,"");
         } catch (IOException e) {

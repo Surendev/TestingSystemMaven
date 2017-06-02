@@ -313,7 +313,7 @@ public class AdminController extends AbstractController implements Initializable
         StringBuilder topics = new StringBuilder();
         topicsVBox.getChildren().forEach(node -> topics.append(((TextField) node).getText()).append(","));
         topics.delete(topics.length()-1,topics.length());
-        props.setProperty("test.countOfRatings",topics.toString());
+        props.setProperty("test.topics",topics.toString());
 
         ConfigsLoader.getInstance().setProperties(props);
     }

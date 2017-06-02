@@ -1,6 +1,8 @@
 package com.application.controllers;
 
 import com.StartApp;
+import com.dto.Question;
+import com.dto.QuestionInApp;
 import com.dto.Test;
 import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.TestDAO;
@@ -12,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -28,14 +31,15 @@ public class TestController extends AbstractController implements Initializable{
 
     private Integer timeOfExam = 1200;
     private @FXML Label timerLabel;
-
     private @FXML Button homeButton;
+
     private @FXML Label questionNumberLabel;
     private @FXML Button forwardButton;
     private @FXML Button backButton;
     private @FXML AnchorPane questionTitleContainer;
     private @FXML TextFlow questionTitleTextFlow;
     private @FXML GridPane answersGrid;
+    public TextField insertedQuestionId;
 
     private TestDAO testService = new TestService();
     private Test test;
@@ -70,9 +74,10 @@ public class TestController extends AbstractController implements Initializable{
         });
         timer.start();
     }
-
-    public void goToNextButton(ActionEvent event) {
-
+    //TODO
+    public void goToNextButton() {
+        QuestionInApp curr = test.getQuestion(Integer.parseInt(questionNumberLabel.getText())+1);
+        
     }
 
     public void backToPreviousQuestion(ActionEvent event) {
@@ -81,6 +86,10 @@ public class TestController extends AbstractController implements Initializable{
 
     private void showEndPopup() {
 
+    }
+
+    private void goToInsertedQuestion(){
+        test.getQuestion(Integer.parseInt(insertedQuestionId.getText()));
     }
 
 
