@@ -46,6 +46,7 @@ public class StartApp extends Application{
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("Testing System");
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -54,11 +55,12 @@ public class StartApp extends Application{
             loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
             loginScene= new Scene(loginPane, 300,300);
         }else {
-//            resetLoginPage();
+            resetLoginPage();
         }
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
@@ -71,6 +73,7 @@ public class StartApp extends Application{
         primaryStage.setScene(testScene);
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Testing System _ Test");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -81,6 +84,7 @@ public class StartApp extends Application{
         }
         primaryStage.setScene(registrationScene);
         primaryStage.setTitle("Registering system _ Test");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

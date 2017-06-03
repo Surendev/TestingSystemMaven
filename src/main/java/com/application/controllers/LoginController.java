@@ -3,7 +3,6 @@ package com.application.controllers;
 import com.StartApp;
 import com.application.utils.SecurityUtil;
 import com.jdbc.dao.LoginDAO;
-import com.jdbc.services.LoginService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,24 +27,21 @@ import java.util.ResourceBundle;
  */
 public class LoginController extends AbstractController implements Initializable{
 
-    private LoginDAO loginService;
 
     private @FXML TextField loginField;
     private @FXML TextField passwordField;
     private @FXML Button logIn;
-    private @FXML Button cancel;
     private @FXML Label errLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loginService =  context.getBean("loginService",LoginService.class);
     }
 
     public void logIn() throws IOException, NoSuchAlgorithmException {
         String login = loginField.getText();
         String pass = passwordField.getText();
         if(login.equals("") || pass.equals("")){
-            errLabel.setText("Invalid login or password");
+            errLabel.setText("Սխալ տվյալներ");
             errLabel.setTextFill(Color.RED);
             return;
         }
@@ -53,7 +49,7 @@ public class LoginController extends AbstractController implements Initializable
             logIn.getScene().getWindow().hide();
             showAdminPage();
         }
-        errLabel.setText("Login and password are Incorrect");
+        errLabel.setText("Սխալ տվյալներ");
         errLabel.setTextFill(Color.RED);
     }
 

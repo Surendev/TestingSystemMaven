@@ -1,9 +1,9 @@
 package com.application.utils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -18,9 +18,10 @@ public class ConfigsLoader {
     public Properties getProperties(){
         String path = ConfigsLoader.class.getResource(FILE_PATH).getFile();
         Path configLocation = Paths.get(System.getProperty( "os.name" ).contains( "indow" ) ? path.substring(1) : path);
-        try (InputStream stream = Files.newInputStream(configLocation)) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(configLocation.toString()), "UTF8"))) {
             Properties config = new Properties();
-            config.load(stream);
+            config.load(reader);
             return config;
         } catch (IOException e) {
             System.out.println("file not found \n" + e.getMessage());

@@ -41,6 +41,22 @@ public class QuestionInApp {
         this.question = question;
     }
 
+    public String getRightAnswer() {
+        return rightAnswer;
+    }
+
+    public String getAnswer1() {
+        return answer1;
+    }
+
+    public String getAnswer2() {
+        return answer2;
+    }
+
+    public String getAnswer3() {
+        return answer3;
+    }
+
     public void setAnswers(List<Answer> answers, String rightAnswer) throws UnsupportedEncodingException {
         for (Answer answer : answers) {
             if(rightAnswer.equals(answer.getEncrypted())){

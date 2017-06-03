@@ -27,6 +27,12 @@ public class StudentsService implements StudentsDAO{
     }
 
     @Override
+    public List<String> getGroups() {
+        final String query = "SELECT DISTINCT \"group\" FROM students";
+        return jdbc.query(query,(resultSet, i) -> resultSet.getString(1));
+    }
+
+    @Override
     public int addOrUpdateStudent(String id,String firstName, String lastName, Integer course, String group, boolean update) {
         StringBuilder query;
         if(!update) {

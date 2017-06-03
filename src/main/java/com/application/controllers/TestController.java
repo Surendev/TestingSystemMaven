@@ -7,19 +7,19 @@ import com.dto.Test;
 import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
@@ -36,46 +36,38 @@ public class TestController extends AbstractController implements Initializable{
     private @FXML Label timerLabel;
 
     private @FXML Label questionNumberLabel;
+    private @FXML AnchorPane questionTitleContainer;
+
+    private @FXML TextArea questionTitle;
+
+    private @FXML RadioButton answer1CheckBox;
+    private @FXML RadioButton answer2CheckBox;
+    private @FXML RadioButton answer3CheckBox;
+    private ToggleGroup answersGroup = new ToggleGroup();
+
+    private @FXML TextArea answer1;
+    private @FXML TextArea answer2;
+    private @FXML TextArea answer3;
+
+    private @FXML TextField insertedQuestionId;
     private @FXML Button forwardButton;
     private @FXML Button backButton;
-    private @FXML AnchorPane questionTitleContainer;
-    private @FXML TextFlow questionTitle;//question
-    private @FXML GridPane answersGrid; // answers grid
-    public TextField insertedQuestionId;
 
     private TestDAO testService = new TestService();
+
+    private Integer questionId = 1;
     private Test test;
 
-    private Service<Void> timer;
+    private Thread timer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
-        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
-        timer = new Service<Void>() {
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        while(timeOfExam > 0) {
-                            if(timeOfExam/60 < 3){
-                                timerLabel.setTextFill(Color.RED);
-                            }
-                            timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
-                            Thread.sleep(1000);
-                            --timeOfExam;
-                        }
-                        return null;
-                    }
-                };
-            }
-        };
-        timer.setOnSucceeded(event -> {
-            showEndPopup();
-        });
-        timer.start();
+        initializeTimer();
+        displayCurrentQuestion();
+        initRadioButtons();
     }
+
 
     public void goToNextButton() throws UnsupportedEncodingException {
         QuestionInApp curr = test.getQuestion(Integer.parseInt(questionNumberLabel.getText())+1);
@@ -90,14 +82,14 @@ public class TestController extends AbstractController implements Initializable{
 
     }
 
-    private void goToInsertedQuestion() throws UnsupportedEncodingException {
-        test.getQuestion(Integer.parseInt(insertedQuestionId.getText()));
-    }
-
-
     public void goToHomePage() throws IOException {
 
         StartApp.showMainPage();
+    }
+
+
+    public void goToInsertedQuestion() throws UnsupportedEncodingException {
+        test.getQuestion(Integer.parseInt(insertedQuestionId.getText()));
     }
 
     public void goToQuestion(KeyEvent keyEvent) {
@@ -105,4 +97,61 @@ public class TestController extends AbstractController implements Initializable{
             //TODO go go ))
         }
     }
+
+
+    private final void updateTimer() {
+
+        if(timeOfExam/60 < 3){
+            timerLabel.setTextFill(Color.RED);
+        }
+        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
+        --timeOfExam;
+        if (timeOfExam<0){
+            timer.interrupt();
+            showEndPopup();
+        }
+    }
+
+
+
+    //region Initialization
+    private void initializeTimer(){
+        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
+        timer = new Thread(() ->
+            Platform.runLater(() -> {
+                try {
+                    updateTimer();
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            })
+        );
+        timer.start();
+    }
+
+    private void displayCurrentQuestion() {
+        QuestionInApp current = null;
+        try {
+            current = test.getQuestion(questionId);
+            questionTitle.setText(current.getQuestion());
+            answer1.setText(current.getAnswer1());
+            answer1CheckBox.setUserData(current.getAnswer1());
+            answer2.setText(current.getAnswer2());
+            answer2CheckBox.setUserData(current.getAnswer2());
+            answer3.setText(current.getAnswer3());
+            answer3CheckBox.setUserData(current.getAnswer3());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void initRadioButtons() {
+        answer1CheckBox.setToggleGroup(answersGroup);
+        answer2CheckBox.setToggleGroup(answersGroup);
+        answer3CheckBox.setToggleGroup(answersGroup);
+    }
+    //endregion
+
 }

@@ -15,4 +15,5 @@ public interface StudentsDAO {
 
     Student getStudentById(String id);
 
+    List<String> getGroups();
 }

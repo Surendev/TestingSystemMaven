@@ -3,9 +3,6 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="loginService" class="com.jdbc.services.LoginService">
-        <property name="dataSource" ref="datasource"/>
-    </bean>
 
     <bean id="studentsService" class="com.jdbc.services.StudentsService">
         <property name="dataSource" ref="datasource"/>

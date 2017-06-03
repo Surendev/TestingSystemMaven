@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
@@ -8,9 +9,12 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.TestLogInController">
    <children>
-      <TextField fx:id="firstNameField" layoutX="125.0" layoutY="109.0" prefHeight="20.0" prefWidth="250.0" />
-      <TextField fx:id="middleNameField" layoutX="125.0" layoutY="259.0" prefHeight="20.0" prefWidth="250.0" />
-      <TextField fx:id="lastNameField" layoutX="125.0" layoutY="184.0" prefHeight="20.0" prefWidth="250.0" />
+      <TextField id="1" fx:id="firstNameField" layoutX="125.0" layoutY="109.0" prefHeight="20.0" prefWidth="250.0">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextField>
+      <TextField id="2" fx:id="lastNameField" layoutX="125.0" layoutY="184.0" prefHeight="20.0" prefWidth="250.0" />
+      <TextField id="3" fx:id="middleNameField" layoutX="125.0" layoutY="259.0" prefHeight="20.0" prefWidth="250.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="125.0" layoutY="89.0" prefHeight="20.0" prefWidth="250.0" text="Անուն">
          <font>
             <Font size="15.0" />
@@ -26,13 +30,13 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="groupBox" layoutX="175.0" layoutY="334.0" prefWidth="150.0" />
+      <ComboBox id="4" fx:id="groupBox" layoutX="175.0" layoutY="334.0" prefWidth="150.0" />
       <Label fx:id="errLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="4.0" prefHeight="50.0" prefWidth="500.0" text="Լրացրեք ձեր տվյալները ԱՆՍԽԱԼ" textAlignment="CENTER" textFill="#389438" wrapText="true">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="idField" layoutX="125.0" layoutY="409.0" prefHeight="20.0" prefWidth="250.0" />
+      <TextField id="5" fx:id="idField" layoutX="125.0" layoutY="409.0" prefHeight="20.0" prefWidth="250.0" />
       <Label alignment="CENTER" layoutX="125.0" layoutY="313.0" prefHeight="20.0" prefWidth="250.0" text="Խումբ">
          <font>
             <Font size="15.0" />
@@ -43,8 +47,8 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button fx:id="confirmButton" layoutX="175.0" layoutY="500.0" mnemonicParsing="false" onAction="#checkAuthentication" prefHeight="20.0" prefWidth="150.0" text="Մուտք" />
-      <Button fx:id="homeButton" layoutY="550.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="40.0" prefWidth="100.0">
+      <Button id="6" fx:id="confirmButton" layoutX="175.0" layoutY="500.0" mnemonicParsing="false" onAction="#checkAuthentication" prefHeight="20.0" prefWidth="150.0" text="Մուտք" />
+      <Button id="7" fx:id="homeButton" layoutY="552.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="40.0" prefWidth="100.0">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
