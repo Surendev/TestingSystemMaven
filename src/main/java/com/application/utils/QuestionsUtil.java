@@ -20,6 +20,7 @@ public class QuestionsUtil {
             forApp.setRating(current.getRating());
             forApp.setTopic(current.getTopic());
             forApp.setAnswers(questions.get(current), current.getAnswer());
+            forApp.setQuestionId(current.getId());
             result.add(forApp);
          }
         return result;

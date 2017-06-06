@@ -33,16 +33,16 @@ import java.util.*;
  */
 public class AdminController extends AbstractController implements Initializable {
 
+
     @FXML private Button homeButton;
     @FXML private TableView<Student> studentsTable;
+    @FXML private TableColumn<Student, String> studentIdCol;
     @FXML private TableColumn<Student, String> firstNameCol;
     @FXML private TableColumn<Student, String> lastNameCol;
 
     @FXML private TableColumn<Student, Integer> courseCol;
     @FXML private TableColumn<Student, String> groupCol;
-    @FXML private TableColumn<Student, String> ratingCol;
-    @FXML private TableColumn<Student, String> firstExamCol;
-    @FXML private TableColumn<Student, String> secondExamCol;
+    @FXML private TableColumn<Student, String> middleNameCol;
     @FXML private TextField firstNameField;
     @FXML private TableView<QuestionInApp> questionsTable;
     @FXML private TableColumn<QuestionInApp, String> questionCol;
@@ -53,17 +53,15 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private TableColumn<QuestionInApp, String> rightAnswerCol;
     @FXML private TableColumn<QuestionInApp, String> answer1Col;
     @FXML private TableColumn<QuestionInApp, String> answer2Col;
-    @FXML private TableColumn<QuestionInApp, String> answer3Col;
+    @FXML private TableColumn<QuestionInApp, String> questionId;
     @FXML private TextField lastNameField;
     @FXML private ComboBox<Integer> courseCheckBox;
-
 
     @FXML private TextField groupField;
     @FXML private Label studentAddedLabel;
     @FXML private ComboBox<Integer> ratingBox;
     @FXML private ComboBox<TopicUtil> topicBox;
     @FXML private Button confirmStudentButton;
-
 
     @FXML private TextArea questionArea;
     @FXML private TextArea ans1Area;
@@ -72,7 +70,6 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private TextArea rightAnswerArea;
     @FXML private Button confirmQuestionButton;
     @FXML private Label questionAddedLabel;
-
 
     @FXML private CheckBox editCheckBox;
     @FXML private TextField iDField;
@@ -191,23 +188,22 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     private void initializeStudentsTableCellFactories() {
+        studentIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         courseCol.setCellValueFactory(new PropertyValueFactory<>("course"));
         groupCol.setCellValueFactory(new PropertyValueFactory<>("group"));
-        ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        firstExamCol.setCellValueFactory(new PropertyValueFactory<>("passedFirstExam"));
-        secondExamCol.setCellValueFactory(new PropertyValueFactory<>("passedSecondExam"));
+        middleNameCol.setCellValueFactory(new PropertyValueFactory<>("middleName"));
     }
 
     private void initializeQuestionsTableCellFactories() {
         questionCol.setCellValueFactory(new PropertyValueFactory<>("question"));
         questionRatingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
         topicCol.setCellValueFactory(new PropertyValueFactory<>("topic"));
-        rightAnswerCol.setCellValueFactory(new PropertyValueFactory<>("rightAnswer"));
-        answer1Col.setCellValueFactory(new PropertyValueFactory<>("answer1"));
-        answer2Col.setCellValueFactory(new PropertyValueFactory<>("answer2"));
-        answer3Col.setCellValueFactory(new PropertyValueFactory<>("answer3"));
+        rightAnswerCol.setCellValueFactory(new PropertyValueFactory<>("answer1"));
+        answer1Col.setCellValueFactory(new PropertyValueFactory<>("answer2"));
+        answer2Col.setCellValueFactory(new PropertyValueFactory<>("answer3"));
+        questionId.setCellValueFactory(new PropertyValueFactory<>("questionId"));
     }
 
     private void successPopup(Label inLabel) {

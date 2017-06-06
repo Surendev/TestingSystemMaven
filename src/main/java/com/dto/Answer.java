@@ -1,5 +1,6 @@
 package com.dto;
 
+import com.application.utils.ConverteSymbols;
 import com.application.utils.SecurityUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -31,6 +32,6 @@ public class Answer {
     }
 
     public String getEncrypted() throws UnsupportedEncodingException {
-        return SecurityUtil.encrypt(text);
+        return SecurityUtil.encrypt(ConverteSymbols.converteFromHex(text));
     }
 }

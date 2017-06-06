@@ -35,6 +35,8 @@ public class LoginController extends AbstractController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loginField.setText("");
+        passwordField.setText("");
     }
 
     public void logIn() throws IOException, NoSuchAlgorithmException {

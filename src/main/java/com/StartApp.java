@@ -54,8 +54,6 @@ public class StartApp extends Application{
         if (loginPane == null) {
             loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
             loginScene= new Scene(loginPane, 300,300);
-        }else {
-            resetLoginPage();
         }
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
@@ -86,11 +84,6 @@ public class StartApp extends Application{
         primaryStage.setTitle("Registering system _ Test");
         primaryStage.setResizable(false);
         primaryStage.show();
-    }
-
-    private static void resetLoginPage() {
-        ((TextField)loginScene.lookup("loginField")).setText("");
-        ((PasswordField)loginScene.lookup("passwordField")).setText("");
     }
 
     public static void main(String[] args) {

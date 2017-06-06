@@ -1,7 +1,6 @@
 package com.dto;
 
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -9,6 +8,7 @@ import java.util.List;
  */
 public class QuestionInApp {
 
+    private Integer questionId;
     private String question;
     private String topic;
     private Integer rating;
@@ -16,6 +16,14 @@ public class QuestionInApp {
     private String answer1;
     private String answer2;
     private String answer3;
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
 
     public Integer getRating() {
         return rating;
@@ -58,18 +66,16 @@ public class QuestionInApp {
     }
 
     public void setAnswers(List<Answer> answers, String rightAnswer) throws UnsupportedEncodingException {
-        for (Answer answer : answers) {
-            if(rightAnswer.equals(answer.getEncrypted())){
+        for (int i = 0; i < answers.size(); i++) {
+            Answer answer = answers.get(i);
+            if (rightAnswer.equals(answer.getEncrypted())) {
                 this.rightAnswer = answer.getText();
-                answers.remove(answer);
-                break;
+                this.answer1 = answer.getText();
+            } else if (answer2 == null) {
+                this.answer2 = answer.getText();
+            } else if (answer3 == null) {
+                this.answer3 = answer.getText();
             }
-        }
-        try {
-            this.answer1 = answers.get(0).getText();
-            this.answer2 = answers.get(1).getText();
-            this.answer3 = answers.get(2).getText();
-        }catch(IndexOutOfBoundsException ignored){
         }
     }
 }

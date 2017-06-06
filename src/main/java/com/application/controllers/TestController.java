@@ -38,16 +38,16 @@ public class TestController extends AbstractController implements Initializable{
     private @FXML Label questionNumberLabel;
     private @FXML AnchorPane questionTitleContainer;
 
-    private @FXML TextArea questionTitle;
+    private @FXML Label questionTitle;
 
     private @FXML RadioButton answer1CheckBox;
     private @FXML RadioButton answer2CheckBox;
     private @FXML RadioButton answer3CheckBox;
     private ToggleGroup answersGroup = new ToggleGroup();
 
-    private @FXML TextArea answer1;
-    private @FXML TextArea answer2;
-    private @FXML TextArea answer3;
+    private @FXML Label answer1;
+    private @FXML Label answer2;
+    private @FXML Label answer3;
 
     private @FXML TextField insertedQuestionId;
     private @FXML Button forwardButton;
@@ -68,14 +68,15 @@ public class TestController extends AbstractController implements Initializable{
         initRadioButtons();
     }
 
-
+    //TODO ցիկլիկ հարցերի փոփոխություն
     public void goToNextButton() throws UnsupportedEncodingException {
-        QuestionInApp curr = test.getQuestion(Integer.parseInt(questionNumberLabel.getText())+1);
-        //TODO next
+        questionId = Integer.parseInt(questionNumberLabel.getId()) + 1;
+        displayCurrentQuestion();
     }
 
     public void backToPreviousQuestion(ActionEvent event) {
-        //TODO previous
+        questionId = Integer.parseInt(questionNumberLabel.getId()) - 1;
+        displayCurrentQuestion();
     }
 
     private void showEndPopup() {
@@ -88,13 +89,10 @@ public class TestController extends AbstractController implements Initializable{
     }
 
 
-    public void goToInsertedQuestion() throws UnsupportedEncodingException {
-        test.getQuestion(Integer.parseInt(insertedQuestionId.getText()));
-    }
-
     public void goToQuestion(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
-            //TODO go go ))
+            questionId = Integer.parseInt(insertedQuestionId.getText());
+            displayCurrentQuestion();
         }
     }
 
@@ -106,6 +104,7 @@ public class TestController extends AbstractController implements Initializable{
         }
         timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
         --timeOfExam;
+
         if (timeOfExam<0){
             timer.interrupt();
             showEndPopup();
@@ -141,6 +140,8 @@ public class TestController extends AbstractController implements Initializable{
             answer2CheckBox.setUserData(current.getAnswer2());
             answer3.setText(current.getAnswer3());
             answer3CheckBox.setUserData(current.getAnswer3());
+            questionNumberLabel.setId(questionId.toString());
+            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 6) + " " + questionId.toString());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
