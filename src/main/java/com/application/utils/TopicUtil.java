@@ -57,4 +57,9 @@ public class TopicUtil {
         }
         System.out.println("");
     }
+
+    @Override
+    public String toString() {
+        return topic;
+    }
 }

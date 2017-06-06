@@ -66,14 +66,16 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private TextArea questionArea;
     @FXML private TextArea ans1Area;
     @FXML private TextArea ans2Area;
-    @FXML private TextArea ans3Area;
     @FXML private TextArea rightAnswerArea;
+    @FXML private CheckBox editQuestionCheckBox;
+    @FXML private TextField questionIDField;
+    @FXML private Label questionIDLabel;
     @FXML private Button confirmQuestionButton;
     @FXML private Label questionAddedLabel;
 
-    @FXML private CheckBox editCheckBox;
-    @FXML private TextField iDField;
-    @FXML private Label iDLabel;
+    @FXML private CheckBox editStudentCheckBox;
+    @FXML private TextField studentIDField;
+    @FXML private Label studentIDLabel;
 
     private Properties props = ConfigsLoader.getInstance().getProperties();
     @FXML private TextField questionsCountField;
@@ -99,11 +101,9 @@ public class AdminController extends AbstractController implements Initializable
         initializeCheckBoxes();
         initializeStudentsTableCellFactories();
         initializeQuestionsTableCellFactories();
+        disableStudentEditFields(true);
+        disableQuestionEditFields(true);
         showStudents();
-        showQuestions();
-        courseCheckBox.getSelectionModel().select(null);
-        disableEditFields(true);
-        locateAllConfigs();
     }
 
     @FXML
@@ -135,8 +135,8 @@ public class AdminController extends AbstractController implements Initializable
 
 
     public void addNewStudent() {
-        if (editCheckBox.selectedProperty().get()){
-            if(iDField.getText().equals("") || !iDField.getText().matches("^\\d+$")){
+        if (editStudentCheckBox.selectedProperty().get()){
+            if(studentIDField.getText().equals("") || !studentIDField.getText().matches("^\\d+$")){
                 studentAddedLabel.setText("Սխալ տվյալ. ID");
                 studentAddedLabel.setTextFill(Color.RED);
                 return;
@@ -155,8 +155,8 @@ public class AdminController extends AbstractController implements Initializable
             return;
         }
         studentsService.addOrUpdateStudent(
-                iDField.getText(),firstNameField.getText(), lastNameField.getText(),
-                courseCheckBox.getValue(), groupField.getText(),editCheckBox.selectedProperty().get());
+                studentIDField.getText(),firstNameField.getText(), lastNameField.getText(),
+                courseCheckBox.getValue(), groupField.getText(), editStudentCheckBox.selectedProperty().get());
         studentAddedLabel.setText("Ավելացված է");
         successPopup(studentAddedLabel);
         resetStudentFields();
@@ -164,10 +164,12 @@ public class AdminController extends AbstractController implements Initializable
 
     public void addNewQuestion() {
         String question = questionArea.getText();
-        String[] answers = new String[]{ans1Area.getText(), ans2Area.getText(), ans3Area.getText()};
+        String[] answers = new String[]{ans1Area.getText(), ans2Area.getText()};
         String rightAnswer = rightAnswerArea.getText();
-        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() || answers[0].isEmpty())
+        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() || answers[0].isEmpty()) {
+            System.out.println("Wat es ara");
             return;
+        }
         String topic = topicBox.getValue().getTopic();
         int rating = ratingBox.getValue();
         questionsService.addNewQuestion(question, rating, topic, rightAnswer, answers);
@@ -184,7 +186,12 @@ public class AdminController extends AbstractController implements Initializable
 
     private void initializeCheckBoxes() {
         courseCheckBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
-        ratingBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
+        String [] ratings = ConfigsLoader.getInstance().getProperties().getProperty("test.ratings").split(",");
+        Integer[] ratingsArr = new Integer[ratings.length];
+        for (int i = 0;i< ratings.length;++i){
+            ratingsArr[i] = Integer.valueOf(ratings[i]);
+        }
+        ratingBox.setItems(new ObservableListWrapper<>(Arrays.asList(ratingsArr)));
         topicBox.setItems(new ObservableListWrapper<>(TopicUtil.topics));
     }
 
@@ -223,11 +230,39 @@ public class AdminController extends AbstractController implements Initializable
         timer.start();
     }
 
-    public void unHideEditFields() {
-        if(editCheckBox.selectedProperty().get()){
-            disableEditFields(false);
+    public void unHideStudentEditFields() {
+        if(editStudentCheckBox.selectedProperty().get()){
+            disableStudentEditFields(false);
         }else{
-            disableEditFields(true);
+            disableStudentEditFields(true);
+        }
+    }
+
+    public void unHideQuestionEditFields() {
+        if(editQuestionCheckBox.selectedProperty().get()){
+            disableQuestionEditFields(false);
+        }else{
+            disableQuestionEditFields(true);
+        }
+    }
+
+    private void disableQuestionEditFields(boolean bool) {
+        questionIDField.setDisable(bool);
+        questionIDLabel.setDisable(bool);
+        if(bool){
+            confirmQuestionButton.setText("Ավելացնել");
+        }else {
+            confirmQuestionButton.setText("Փոփոխել");
+        }
+    }
+
+    private void disableStudentEditFields(boolean bool){
+        studentIDField.setDisable(bool);
+        studentIDLabel.setDisable(bool);
+        if(bool){
+            confirmStudentButton.setText("Ավելացնել");
+        }else {
+            confirmStudentButton.setText("Փոփոխել");
         }
     }
 
@@ -238,17 +273,7 @@ public class AdminController extends AbstractController implements Initializable
         groupField.setText("");
     }
 
-    private void disableEditFields(boolean bool){
-        iDField.setDisable(bool);
-        iDLabel.setDisable(bool);
-        if(bool){
-            confirmStudentButton.setText("Ավելացնել");
-        }else {
-            confirmStudentButton.setText("Փոփոխել");
-        }
-    }
-
-    private void locateAllConfigs() {
+    public void locateAllConfigs() {
         testTimeField.setText(props.getProperty("test.timer"));
         questionsCountField.setText(props.getProperty("test.questionsCount"));
 
