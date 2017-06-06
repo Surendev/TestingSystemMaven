@@ -11,23 +11,31 @@
    <children>
       <ToolBar prefHeight="40.0" prefWidth="800.0">
         <items>
-          <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToHomePage" text="HOME" />
-            <Label fx:id="questionNumberLabel" alignment="CENTER" focusTraversable="false" prefHeight="20.0" prefWidth="150.0" text="Հարց N" textAlignment="CENTER" textFill="#a12c2c" translateX="250.0">
-               <font>
+           <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToHomePage" text="HOME" />
+           <Label fx:id="questionsSizeLabel" alignment="BASELINE_LEFT" focusTraversable="false" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակ " textAlignment="LEFT" textFill="#a12c2c" translateX="50.0" >
+              <font>
+                 <Font size="15.0" />
+              </font>
+              <opaqueInsets>
+                 <Insets />
+              </opaqueInsets>
+           </Label>
+           <Label fx:id="questionNumberLabel" alignment="CENTER" focusTraversable="false" prefHeight="20.0" prefWidth="200.0" text="Հարց " textAlignment="RIGHT" textFill="#a12c2c" translateX="25.0">
+              <font>
                   <Font size="15.0" />
                </font>
-               <opaqueInsets>
+              <opaqueInsets>
                   <Insets />
                </opaqueInsets>
-            </Label>
-            <Label fx:id="timerLabel" alignment="CENTER" focusTraversable="false" layoutX="72.0" layoutY="14.0" prefHeight="20.0" prefWidth="150.0" textAlignment="CENTER" textFill="#c63333" translateX="420.0">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </Label>
+           </Label>
+           <Label fx:id="timerLabel" alignment="BASELINE_RIGHT" focusTraversable="false" prefHeight="20.0" prefWidth="200.0" textAlignment="LEFT" textFill="#c63333" translateX="0.0">
+              <font>
+                 <Font size="15.0" />
+              </font>
+              <opaqueInsets>
+                 <Insets />
+              </opaqueInsets>
+           </Label>
         </items>
       </ToolBar>
       <Button fx:id="forwardButton" layoutX="475.0" layoutY="550.0" mnemonicParsing="false" onAction="#goToNextButton" prefHeight="40.0" prefWidth="50.0" text="&gt;" />
@@ -59,6 +67,6 @@
             </AnchorPane>
          </children>
       </VBox>
-      <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="550.0" onKeyPressed="#goToQuestion" prefHeight="40.0" prefWidth="150.0" />
+      <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="550.0" onKeyPressed="#goToQuestion" prefHeight="40.0" prefWidth="150.0" promptText="Նախընտրելի հարց"/>
    </children>
 </Pane>

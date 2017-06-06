@@ -33,14 +33,7 @@ public class Test {
 
     public QuestionInApp getQuestion(int currIndex) throws UnsupportedEncodingException {
         index = currIndex - 1;
-        Question currentQuestion;
-        if (index < 0) {
-            index = questions.size() - 1;
-            currentQuestion = questions.get(index);
-        } else if (index > questions.size() - 1) {
-            index = 0;
-            currentQuestion = questions.get(index);
-        } else currentQuestion = questions.get(index);
+        Question currentQuestion = questions.get(index);
 
         QuestionInApp questionInApp = new QuestionInApp();
         questionInApp.setQuestion(currentQuestion.getQuestion());
@@ -61,5 +54,9 @@ public class Test {
 
     public Map<Integer, Integer> getStudentAnswers() {
         return studentAnswers;
+    }
+
+    public int getQuestionsSize(){
+        return questions.size();
     }
 }

@@ -187,6 +187,14 @@
                               </AnchorPane>
                            </content>
                         </ScrollPane>
+                         <Label fx:id="propsAddedLabel" alignment="CENTER" layoutX="125.0" layoutY="480" prefHeight="32.0" prefWidth="200.0" textFill="#e66768">
+                         <font>
+                             <Font size="20.0" />
+                         </font>
+                         <opaqueInsets>
+                             <Insets />
+                         </opaqueInsets>
+                         </Label>
                         <Button fx:id="savePropsButton" layoutX="522.0" layoutY="480.0" mnemonicParsing="false" onAction="#saveSettingsInPropFIle" prefHeight="32.0" prefWidth="180.0" text="Պահպանել" />
                      </children>
                   </AnchorPane>

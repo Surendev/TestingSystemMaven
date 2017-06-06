@@ -82,6 +82,7 @@ public class AdminController extends AbstractController implements Initializable
     @FXML private VBox countOfQuestionsByRatingVBox;
     @FXML private VBox topicsVBox;
     @FXML private Button savePropsButton;
+    @FXML private Label propsAddedLabel;
 
     @FXML private ScrollPane ratingsPane;
     @FXML private ScrollPane questionCountsPane;
@@ -315,5 +316,8 @@ public class AdminController extends AbstractController implements Initializable
         props.setProperty("test.topics",topics.toString());
 
         ConfigsLoader.getInstance().setProperties(props);
+        propsAddedLabel.setText("Պահպանված է");
+        successPopup(propsAddedLabel);
+
     }
 }

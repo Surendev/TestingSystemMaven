@@ -36,6 +36,7 @@ public class TestController extends AbstractController implements Initializable{
     private @FXML Label timerLabel;
 
     private @FXML Label questionNumberLabel;
+    private @FXML Label questionsSizeLabel;
     private @FXML AnchorPane questionTitleContainer;
 
     private @FXML Label questionTitle;
@@ -71,11 +72,13 @@ public class TestController extends AbstractController implements Initializable{
     //TODO ցիկլիկ հարցերի փոփոխություն
     public void goToNextButton() throws UnsupportedEncodingException {
         questionId = Integer.parseInt(questionNumberLabel.getId()) + 1;
+        if (questionId > test.getQuestionsSize()) questionId = 1;
         displayCurrentQuestion();
     }
 
-    public void backToPreviousQuestion(ActionEvent event) {
+    public void backToPreviousQuestion() {
         questionId = Integer.parseInt(questionNumberLabel.getId()) - 1;
+        if (questionId < 1) questionId = test.getQuestionsSize();
         displayCurrentQuestion();
     }
 
@@ -130,7 +133,7 @@ public class TestController extends AbstractController implements Initializable{
     }
 
     private void displayCurrentQuestion() {
-        QuestionInApp current = null;
+        QuestionInApp current;
         try {
             current = test.getQuestion(questionId);
             questionTitle.setText(current.getQuestion());
@@ -141,7 +144,8 @@ public class TestController extends AbstractController implements Initializable{
             answer3.setText(current.getAnswer3());
             answer3CheckBox.setUserData(current.getAnswer3());
             questionNumberLabel.setId(questionId.toString());
-            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 6) + " " + questionId.toString());
+            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString());
+            questionsSizeLabel.setText("Հարցերի քանակը - " + test.getQuestionsSize());
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
