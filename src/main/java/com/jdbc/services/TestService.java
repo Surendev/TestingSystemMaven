@@ -1,5 +1,6 @@
 package com.jdbc.services;
 
+import com.application.utils.ConfigsLoader;
 import com.application.utils.TestUtil;
 import com.dto.Question;
 import com.dto.Test;
@@ -17,7 +18,16 @@ public class TestService implements TestDAO {
     private TestUtil testUtil = new TestUtil();
     private Random random = new Random();
 
-    private final int[] questionsCountByRating = {6, 2, 2, 1};
+    private final int[] questionsCountByRating;
+
+    public TestService() {
+        String [] countsArr = ConfigsLoader.getInstance().getProperties().getProperty("test.countOfRatings").split(",");
+        int[] counts = new int[countsArr.length];
+        for (int i = 0;i< countsArr.length;++i){
+            counts[i] = Integer.valueOf(countsArr[i]);
+        }
+        questionsCountByRating = counts;
+    }
 
     @Override
     public Test generateTest(QuestionsDAO questionsService) {

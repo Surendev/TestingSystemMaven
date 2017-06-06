@@ -13,9 +13,7 @@ import java.io.IOException;
  */
 public class MainController {
 
-    @FXML Button goToAdminPage;
-    @FXML Button goToTest;
-    @FXML Button exitButton;
+    //todo add main page logo
 
     public void gotToAdminPage(ActionEvent event) throws IOException {
         StartApp.showLoginPage();

@@ -1,6 +1,7 @@
 package com.application.controllers;
 
 import com.StartApp;
+import com.application.utils.ConverteSymbols;
 import com.dto.Question;
 import com.dto.QuestionInApp;
 import com.dto.Test;
@@ -8,19 +9,12 @@ import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
 import javafx.application.Platform;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -37,7 +31,6 @@ public class TestController extends AbstractController implements Initializable{
 
     private @FXML Label questionNumberLabel;
     private @FXML Label questionsSizeLabel;
-    private @FXML AnchorPane questionTitleContainer;
 
     private @FXML Label questionTitle;
 
@@ -51,8 +44,6 @@ public class TestController extends AbstractController implements Initializable{
     private @FXML Label answer3;
 
     private @FXML TextField insertedQuestionId;
-    private @FXML Button forwardButton;
-    private @FXML Button backButton;
 
     private TestDAO testService = new TestService();
 

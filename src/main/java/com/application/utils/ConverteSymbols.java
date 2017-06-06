@@ -9,6 +9,8 @@ public class ConverteSymbols {
     private static StringBuilder toConvert;
 
     public static String converteFromHex(String textToConvert){
+        if (textToConvert==null)
+            return null;
         if (!textToConvert.matches(".*\\\\.*")) {
             return textToConvert;
         }
