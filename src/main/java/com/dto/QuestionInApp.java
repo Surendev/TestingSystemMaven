@@ -1,5 +1,8 @@
 package com.dto;
 
+import com.application.utils.ConverteSymbols;
+import com.application.utils.SecurityUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -42,34 +45,29 @@ public class QuestionInApp {
     }
 
     public String getQuestion() {
-        return question;
+        return ConverteSymbols.converteFromHex(question);
     }
 
     public void setQuestion(String question) {
         this.question = question;
     }
 
-    public String getRightAnswer() {
-        return rightAnswer;
-    }
-
     public String getAnswer1() {
-        return answer1;
+        return ConverteSymbols.converteFromHex(answer1);
     }
 
     public String getAnswer2() {
-        return answer2;
+        return ConverteSymbols.converteFromHex(answer2);
     }
 
     public String getAnswer3() {
-        return answer3;
+        return ConverteSymbols.converteFromHex(answer3);
     }
 
     public void setAnswers(List<Answer> answers, String rightAnswer) throws UnsupportedEncodingException {
-        for (int i = 0; i < answers.size(); i++) {
-            Answer answer = answers.get(i);
+        for (Answer answer : answers) {
             if (rightAnswer.equals(answer.getEncrypted())) {
-                this.rightAnswer = answer.getText();
+                this.rightAnswer = SecurityUtil.encrypt(answer.getText());
                 this.answer1 = answer.getText();
             } else if (answer2 == null) {
                 this.answer2 = answer.getText();

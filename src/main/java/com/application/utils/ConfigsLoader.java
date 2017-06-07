@@ -38,9 +38,6 @@ public class ConfigsLoader {
         }
     }
 
-    private ConfigsLoader(){
-    }
-
     public static ConfigsLoader getInstance(){
         if (instance == null){
             instance = new ConfigsLoader();
@@ -48,5 +45,8 @@ public class ConfigsLoader {
         } else{
             return instance;
         }
+    }
+
+    private ConfigsLoader(){
     }
 }

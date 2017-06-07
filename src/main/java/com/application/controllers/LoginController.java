@@ -71,6 +71,7 @@ public class LoginController extends AbstractController implements Initializable
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Admin Page");
+        stage.setResizable(false);
         stage.show();
     }
 }

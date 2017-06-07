@@ -51,10 +51,8 @@ public class StartApp extends Application{
     }
 
     public static void showLoginPage() throws IOException {
-        if (loginPane == null) {
-            loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
-            loginScene= new Scene(loginPane, 300,300);
-        }
+        loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
+        loginScene= new Scene(loginPane, 300,300);
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
