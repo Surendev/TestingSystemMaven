@@ -39,7 +39,7 @@ public class StudentsService implements StudentsDAO{
         StringBuilder query;
         if(!update) {
             query = new StringBuilder("INSERT INTO students(first_name,last_name,")
-                    .append("course,'group', rating) VALUES(?,?,?,?,?)");
+                    .append("course,'group',rating) VALUES(?,?,?,?,?)");
             return jdbc.update(query.toString(), firstName, lastName, course, group, 0);
         }else{
             query = new StringBuilder("UPDATE students SET ");

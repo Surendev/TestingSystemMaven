@@ -13,7 +13,7 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
-    String addNewQuestion(String question, int rating,String topic, String rightAnswer, String... answers);
+    int addOrUpdateQuestion(boolean update, String id, String question, int rating,String topic, String rightAnswer, String... answers);
 
     List<Answer> getAnswersByQuestionId(int id);
 

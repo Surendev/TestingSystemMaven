@@ -34,61 +34,107 @@ import java.util.*;
 public class AdminController extends AbstractController implements Initializable {
 
 
-    @FXML private Button homeButton;
-    @FXML private TableView<Student> studentsTable;
-    @FXML private TableColumn<Student, String> studentIdCol;
-    @FXML private TableColumn<Student, String> firstNameCol;
-    @FXML private TableColumn<Student, String> lastNameCol;
+    @FXML
+    private Button homeButton;
+    @FXML
+    private TableView<Student> studentsTable;
+    @FXML
+    private TableColumn<Student, String> studentIdCol;
+    @FXML
+    private TableColumn<Student, String> firstNameCol;
+    @FXML
+    private TableColumn<Student, String> lastNameCol;
 
-    @FXML private TableColumn<Student, Integer> courseCol;
-    @FXML private TableColumn<Student, String> groupCol;
-    @FXML private TableColumn<Student, String> middleNameCol;
-    @FXML private TextField firstNameField;
-    @FXML private TableView<QuestionInApp> questionsTable;
-    @FXML private TableColumn<QuestionInApp, String> questionCol;
+    @FXML
+    private TableColumn<Student, Integer> courseCol;
+    @FXML
+    private TableColumn<Student, String> groupCol;
+    @FXML
+    private TableColumn<Student, String> middleNameCol;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TableView<QuestionInApp> questionsTable;
+    @FXML
+    private TableColumn<QuestionInApp, String> questionCol;
 
-    @FXML private TableColumn<QuestionInApp, Integer> questionRatingCol;
+    @FXML
+    private TableColumn<QuestionInApp, Integer> questionRatingCol;
 
-    @FXML private TableColumn<QuestionInApp, String> topicCol;
-    @FXML private TableColumn<QuestionInApp, String> rightAnswerCol;
-    @FXML private TableColumn<QuestionInApp, String> answer1Col;
-    @FXML private TableColumn<QuestionInApp, String> answer2Col;
-    @FXML private TableColumn<QuestionInApp, String> questionId;
-    @FXML private TextField lastNameField;
-    @FXML private ComboBox<Integer> courseCheckBox;
+    @FXML
+    private TableColumn<QuestionInApp, String> topicCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> rightAnswerCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer1Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer2Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> questionId;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private ComboBox<Integer> courseCheckBox;
 
-    @FXML private TextField groupField;
-    @FXML private Label studentAddedLabel;
-    @FXML private ComboBox<Integer> ratingBox;
-    @FXML private ComboBox<TopicUtil> topicBox;
-    @FXML private Button confirmStudentButton;
+    @FXML
+    private TextField groupField;
+    @FXML
+    private Label studentAddedLabel;
+    @FXML
+    private ComboBox<Integer> ratingBox;
+    @FXML
+    private ComboBox<TopicUtil> topicBox;
+    @FXML
+    private Button confirmStudentButton;
 
-    @FXML private TextArea questionArea;
-    @FXML private TextArea ans1Area;
-    @FXML private TextArea ans2Area;
-    @FXML private TextArea rightAnswerArea;
-    @FXML private CheckBox editQuestionCheckBox;
-    @FXML private TextField questionIDField;
-    @FXML private Label questionIDLabel;
-    @FXML private Button confirmQuestionButton;
-    @FXML private Label questionAddedLabel;
+    @FXML
+    private TextArea questionArea;
+    @FXML
+    private TextArea ans1Area;
+    @FXML
+    private TextArea ans2Area;
+    @FXML
+    private TextArea rightAnswerArea;
+    @FXML
+    private CheckBox editQuestionCheckBox;
+    @FXML
+    private TextField questionIDField;
+    @FXML
+    private Label questionIDLabel;
+    @FXML
+    private Button confirmQuestionButton;
+    @FXML
+    private Label questionAddedLabel;
 
-    @FXML private CheckBox editStudentCheckBox;
-    @FXML private TextField studentIDField;
-    @FXML private Label studentIDLabel;
+    @FXML
+    private CheckBox editStudentCheckBox;
+    @FXML
+    private TextField studentIDField;
+    @FXML
+    private Label studentIDLabel;
 
     private Properties props = ConfigsLoader.getInstance().getProperties();
-    @FXML private TextField questionsCountField;
-    @FXML private TextField testTimeField;
-    @FXML private VBox ratingsVBox;
-    @FXML private VBox countOfQuestionsByRatingVBox;
-    @FXML private VBox topicsVBox;
-    @FXML private Button savePropsButton;
-    @FXML private Label propsAddedLabel;
+    @FXML
+    private TextField questionsCountField;
+    @FXML
+    private TextField testTimeField;
+    @FXML
+    private VBox ratingsVBox;
+    @FXML
+    private VBox countOfQuestionsByRatingVBox;
+    @FXML
+    private VBox topicsVBox;
+    @FXML
+    private Button savePropsButton;
+    @FXML
+    private Label propsAddedLabel;
 
-    @FXML private ScrollPane ratingsPane;
-    @FXML private ScrollPane questionCountsPane;
-    @FXML private ScrollPane topicsPane;
+    @FXML
+    private ScrollPane ratingsPane;
+    @FXML
+    private ScrollPane questionCountsPane;
+    @FXML
+    private ScrollPane topicsPane;
 
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
@@ -121,22 +167,22 @@ public class AdminController extends AbstractController implements Initializable
         if (resultFromDB == null) {
             System.err.println("Questions Not Found");
         }
-            try {
-                questionsTable.setItems(
-                        new ObservableListWrapper<>(
-                                QuestionsUtil.getInAppFromQuestions(resultFromDB)));
-            } catch (NullPointerException ignored) {
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+        try {
+            questionsTable.setItems(
+                    new ObservableListWrapper<>(
+                            QuestionsUtil.getInAppFromQuestions(resultFromDB)));
+        } catch (NullPointerException ignored) {
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
 
     }
 
 
     public void addNewStudent() {
-        if (editStudentCheckBox.selectedProperty().get()){
-            if(studentIDField.getText().equals("") || !studentIDField.getText().matches("^\\d+$")){
+        if (editStudentCheckBox.selectedProperty().get()) {
+            if (studentIDField.getText().equals("") || !studentIDField.getText().matches("^\\d+$")) {
                 studentAddedLabel.setText("Սխալ տվյալ. ID");
                 studentAddedLabel.setTextFill(Color.RED);
                 return;
@@ -147,15 +193,14 @@ public class AdminController extends AbstractController implements Initializable
                 studentAddedLabel.setTextFill(Color.RED);
                 return;
             }
-        }else
-        if (firstNameField.getText().length() < 3 || lastNameField.getText().length() < 5 ||
+        } else if (firstNameField.getText().length() < 3 || lastNameField.getText().length() < 5 ||
                 groupField.getText().length() < 5) {
             studentAddedLabel.setText("Սխալ տվյալներ");
             studentAddedLabel.setTextFill(Color.RED);
             return;
         }
         studentsService.addOrUpdateStudent(
-                studentIDField.getText(),firstNameField.getText(), lastNameField.getText(),
+                studentIDField.getText(), firstNameField.getText(), lastNameField.getText(),
                 courseCheckBox.getValue(), groupField.getText(), editStudentCheckBox.selectedProperty().get());
         studentAddedLabel.setText("Ավելացված է");
         successPopup(studentAddedLabel);
@@ -163,17 +208,34 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void addNewQuestion() {
+        if (editQuestionCheckBox.isSelected()){
+            if (questionIDField.getText().equals("") || !questionIDField.getText().matches("^\\d+$")){
+                questionAddedLabel.setText("Սխալ տվյալ․ ID");
+                questionAddedLabel.setTextFill(Color.RED);
+                return;
+            }
+        }
         String question = questionArea.getText();
         String[] answers = new String[]{ans1Area.getText(), ans2Area.getText()};
         String rightAnswer = rightAnswerArea.getText();
-        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[0].isEmpty() || answers[0].isEmpty()) {
-            System.out.println("Wat es ara");
+        questionAddedLabel.setTextFill(Color.RED);
+        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[1].isEmpty()) {
+            questionAddedLabel.setText("Սխալ տվյալներ");
             return;
         }
         String topic = topicBox.getValue().getTopic();
+        if (topic.equals("Ընտրել")) {
+            questionAddedLabel.setText("Սխալ տվյալներ");
+            return;
+        }
         int rating = ratingBox.getValue();
-        questionsService.addNewQuestion(question, rating, topic, rightAnswer, answers);
-
+        if (ratingBox.getValue().equals("Ընտրել")) {
+            questionAddedLabel.setText("Սխալ տվյալներ");
+            return;
+        }
+        boolean update = (editQuestionCheckBox.isSelected()) ? true : false;
+        int id = questionsService.addOrUpdateQuestion(update, questionIDField.getText(), question, rating, topic, rightAnswer, answers);
+        questionAddedLabel.setTextFill(Color.GREEN);
         questionAddedLabel.setText("Ավելացված է");
         successPopup(questionAddedLabel);
 
@@ -186,9 +248,9 @@ public class AdminController extends AbstractController implements Initializable
 
     private void initializeCheckBoxes() {
         courseCheckBox.setItems(new ObservableListWrapper<>(Arrays.asList(1, 2, 3, 4)));
-        String [] ratings = ConfigsLoader.getInstance().getProperties().getProperty("test.ratings").split(",");
+        String[] ratings = ConfigsLoader.getInstance().getProperties().getProperty("test.ratings").split(",");
         Integer[] ratingsArr = new Integer[ratings.length];
-        for (int i = 0;i< ratings.length;++i){
+        for (int i = 0; i < ratings.length; ++i) {
             ratingsArr[i] = Integer.valueOf(ratings[i]);
         }
         ratingBox.setItems(new ObservableListWrapper<>(Arrays.asList(ratingsArr)));
@@ -231,17 +293,17 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void unHideStudentEditFields() {
-        if(editStudentCheckBox.selectedProperty().get()){
+        if (editStudentCheckBox.selectedProperty().get()) {
             disableStudentEditFields(false);
-        }else{
+        } else {
             disableStudentEditFields(true);
         }
     }
 
     public void unHideQuestionEditFields() {
-        if(editQuestionCheckBox.selectedProperty().get()){
+        if (editQuestionCheckBox.selectedProperty().get()) {
             disableQuestionEditFields(false);
-        }else{
+        } else {
             disableQuestionEditFields(true);
         }
     }
@@ -249,19 +311,19 @@ public class AdminController extends AbstractController implements Initializable
     private void disableQuestionEditFields(boolean bool) {
         questionIDField.setDisable(bool);
         questionIDLabel.setDisable(bool);
-        if(bool){
+        if (bool) {
             confirmQuestionButton.setText("Ավելացնել");
-        }else {
+        } else {
             confirmQuestionButton.setText("Փոփոխել");
         }
     }
 
-    private void disableStudentEditFields(boolean bool){
+    private void disableStudentEditFields(boolean bool) {
         studentIDField.setDisable(bool);
         studentIDLabel.setDisable(bool);
-        if(bool){
+        if (bool) {
             confirmStudentButton.setText("Ավելացնել");
-        }else {
+        } else {
             confirmStudentButton.setText("Փոփոխել");
         }
     }
@@ -277,24 +339,24 @@ public class AdminController extends AbstractController implements Initializable
         testTimeField.setText(props.getProperty("test.timer"));
         questionsCountField.setText(props.getProperty("test.questionsCount"));
 
-        int [] ratings =
+        int[] ratings =
                 Arrays.stream(props.getProperty("test.ratings").split(","))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+                        .mapToInt(Integer::parseInt)
+                        .toArray();
         TextField ratingField;
-        for (int rating : ratings){
+        for (int rating : ratings) {
             ratingField = new TextField(String.valueOf(rating));
             ratingField.setPrefWidth(198);
             ratingsVBox.getChildren().add(ratingField);
         }
 
-        int [] countOfQuestionsByRating =
+        int[] countOfQuestionsByRating =
                 Arrays.stream(props.getProperty("test.countOfRatings").split(","))
                         .mapToInt(Integer::parseInt)
                         .toArray();
 
         TextField questionCountField;
-        for (int count : countOfQuestionsByRating){
+        for (int count : countOfQuestionsByRating) {
             questionCountField = new TextField(String.valueOf(count));
             questionCountField.setPrefWidth(198);
             countOfQuestionsByRatingVBox.getChildren().add(questionCountField);
@@ -303,7 +365,7 @@ public class AdminController extends AbstractController implements Initializable
         String[] topics = props.getProperty("test.topics").split(",");
 
         TextField topicField;
-        for (String topic : topics){
+        for (String topic : topics) {
             topicField = new TextField(topic);
             topicField.setPrefWidth(198);
             topicsVBox.getChildren().add(topicField);
@@ -318,27 +380,27 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void saveSettingsInPropFIle() {
-        if(!props.getProperty("test.timer").equals(testTimeField.getText())){
-            props.setProperty("test.timer",testTimeField.getText());
+        if (!props.getProperty("test.timer").equals(testTimeField.getText())) {
+            props.setProperty("test.timer", testTimeField.getText());
         }
-        if (!props.getProperty("test.questionsCount").equals(questionsCountField.getText())){
-            props.setProperty("test.questionsCount",questionsCountField.getText());
+        if (!props.getProperty("test.questionsCount").equals(questionsCountField.getText())) {
+            props.setProperty("test.questionsCount", questionsCountField.getText());
         }
 
         StringBuilder ratings = new StringBuilder();
         ratingsVBox.getChildren().forEach(node -> ratings.append(((TextField) node).getText()).append(","));
-        ratings.delete(ratings.length()-1,ratings.length());
-        props.setProperty("test.ratings",ratings.toString());
+        ratings.delete(ratings.length() - 1, ratings.length());
+        props.setProperty("test.ratings", ratings.toString());
 
         StringBuilder countOfQuestions = new StringBuilder();
         countOfQuestionsByRatingVBox.getChildren().forEach(node -> countOfQuestions.append(((TextField) node).getText()).append(","));
-        countOfQuestions.delete(countOfQuestions.length()-1,countOfQuestions.length());
-        props.setProperty("test.countOfRatings",countOfQuestions.toString());
+        countOfQuestions.delete(countOfQuestions.length() - 1, countOfQuestions.length());
+        props.setProperty("test.countOfRatings", countOfQuestions.toString());
 
         StringBuilder topics = new StringBuilder();
         topicsVBox.getChildren().forEach(node -> topics.append(((TextField) node).getText()).append(","));
-        topics.delete(topics.length()-1,topics.length());
-        props.setProperty("test.topics",topics.toString());
+        topics.delete(topics.length() - 1, topics.length());
+        props.setProperty("test.topics", topics.toString());
 
         ConfigsLoader.getInstance().setProperties(props);
         propsAddedLabel.setText("Պահպանված է");
