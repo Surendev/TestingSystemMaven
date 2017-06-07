@@ -229,7 +229,7 @@ public class AdminController extends AbstractController implements Initializable
             return;
         }
         int rating = ratingBox.getValue();
-        if (ratingBox.getValue().equals("Ընտրել")) {
+        if (ratingBox.getValue().toString().equals("")) {
             questionAddedLabel.setText("Սխալ տվյալներ");
             return;
         }
