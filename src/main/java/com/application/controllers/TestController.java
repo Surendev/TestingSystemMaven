@@ -1,20 +1,22 @@
 package com.application.controllers;
 
 import com.StartApp;
-import com.application.utils.ConverteSymbols;
-import com.dto.Question;
 import com.dto.QuestionInApp;
 import com.dto.Test;
 import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
-import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -24,26 +26,37 @@ import java.util.ResourceBundle;
 /**
  * Created by surik on 2/18/17
  */
-public class TestController extends AbstractController implements Initializable{
+public class TestController extends AbstractController implements Initializable {
 
     private Integer timeOfExam = Integer.valueOf(adminConfigs.getProperty("test.timer"));
-    private @FXML Label timerLabel;
+    private @FXML
+    Label timerLabel;
 
-    private @FXML Label questionNumberLabel;
-    private @FXML Label questionsSizeLabel;
+    private @FXML
+    Label questionNumberLabel;
+    private @FXML
+    Label questionsSizeLabel;
 
-    private @FXML Label questionTitle;
+    private @FXML
+    Label questionTitle;
 
-    private @FXML RadioButton answer1CheckBox;
-    private @FXML RadioButton answer2CheckBox;
-    private @FXML RadioButton answer3CheckBox;
+    private @FXML
+    RadioButton answer1CheckBox;
+    private @FXML
+    RadioButton answer2CheckBox;
+    private @FXML
+    RadioButton answer3CheckBox;
     private ToggleGroup answersGroup = new ToggleGroup();
 
-    private @FXML Label answer1;
-    private @FXML Label answer2;
-    private @FXML Label answer3;
+    private @FXML
+    Label answer1;
+    private @FXML
+    Label answer2;
+    private @FXML
+    Label answer3;
 
-    private @FXML TextField insertedQuestionId;
+    private @FXML
+    TextField insertedQuestionId;
 
     private TestDAO testService = new TestService();
 
@@ -83,51 +96,69 @@ public class TestController extends AbstractController implements Initializable{
     }
 
     @FXML
-    private void qualifyTest(){
-
+    private void qualifyTest() {
+        System.exit(0);
     }
 
 
     public void goToQuestion(KeyEvent keyEvent) {
-        if(keyEvent.getCode().equals(KeyCode.ENTER)){
+        if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             questionId = Integer.parseInt(insertedQuestionId.getText());
             displayCurrentQuestion();
         }
     }
 
 
-    private final void updateTimer() {
-
-        if(timeOfExam/60 < 3){
-            timerLabel.setTextFill(Color.RED);
-        }
-        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
-        --timeOfExam;
-
-        if (timeOfExam<0){
-            timer.interrupt();
-            qualifyTest();
-            showEndPopup();
-        }
-    }
-
+//    private final void updateTimer() {
+//
+//        if(timeOfExam/60 < 3){
+//            timerLabel.setTextFill(Color.RED);
+//        }
+//        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
+//        --timeOfExam;
+//
+//        if (timeOfExam<0){
+//            timer.interrupt();
+//            qualifyTest();
+//            showEndPopup();
+//        }
+//    }
 
 
     //region Initialization
-    private void initializeTimer(){
-        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
-        timer = new Thread(() ->
-            Platform.runLater(() -> {
-                try {
-                    updateTimer();
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            })
+    private void initializeTimer() {
+//        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
+//        timer = new Thread(() ->
+//            Platform.runLater(() -> {
+//                try {
+//                    updateTimer();
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            })
+//        );
+//        timer.start();
+        int[] time = {0, 20};
+        timerLabel.setText(((time[0] < 10) ? "0" : "") + time[0] + " ր․ " + ((time[1]<10)? "0" : "") + time[1] + " վրկ․");
+        Timeline timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1000),
+                        ae -> {
+                            if (time[1] < 0) {
+                                time[0]--;
+                                time[1] = 60;
+                            }
+                            time[1]--;
+                            timerLabel.setText(((time[0] < 10) ? "0" : "") + time[0] + " ր․ " + ((time[1]<10)? "0" : "") + time[1] + " վրկ․");
+                            if (time[0] == 0 && time[1] == 0) qualifyTest();
+                        }
+                )
         );
-        timer.start();
+        timeline.setCycleCount(time[0] * 60 + time[1]);
+        timeline.play();
     }
+
 
     private void displayCurrentQuestion() {
         QuestionInApp current;
