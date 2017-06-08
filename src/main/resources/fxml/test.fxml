@@ -36,6 +36,7 @@
                  <Insets />
               </opaqueInsets>
            </Label>
+           <Button fx:id="endTestButton" mnemonicParsing="false" alignment="BASELINE_RIGHT" onAction="#qualifyTest" text="Հաստատել" />
         </items>
       </ToolBar>
       <Button fx:id="forwardButton" layoutX="475.0" layoutY="550.0" mnemonicParsing="false" onAction="#goToNextButton" prefHeight="40.0" prefWidth="50.0" text="&gt;" />

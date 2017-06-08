@@ -48,7 +48,7 @@ public class TestService implements TestDAO {
         return lastSorted;
     }
 
-    private void generateQuestionsListByCount(int countOfQuestion, List<Question> lastSorted, List<Question> chosenFromListByTopic) {
+    private void generateQuestionsListByCount(double countOfQuestion, List<Question> lastSorted, List<Question> chosenFromListByTopic) {
 
         if (countOfQuestion > chosenFromListByTopic.size())
             throw new NoSuchElementException("there is no such questions in base");
