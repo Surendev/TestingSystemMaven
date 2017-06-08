@@ -31,7 +31,7 @@ public class ConfigsLoader {
 
     public void setProperties(Properties newProps){
         String path = ConfigsLoader.class.getResource(FILE_PATH).getFile();
-        Path configLocation = Paths.get(System.getProperty( "os.name" ).contains( "indow" ) ? path.substring(1) : path);
+        Path configLocation = Paths.get(System.getProperty("os.name").contains("indow")? path.substring(1) : path);
         try (OutputStream out = Files.newOutputStream(configLocation)){
             newProps.store(out,"");
         } catch (IOException e) {

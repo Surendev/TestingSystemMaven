@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class TestUtil{
 
-    public final int[] ratings = {1, 2, 3, 4};
+    public final int[] ratings;
     private QuestionsDAO questionsService;
 
     // here is saving all questions by ratings
@@ -22,6 +22,12 @@ public class TestUtil{
             new ClassPathXmlApplicationContext("/spring_context.xml");
 
     public TestUtil() {
+        String[] ratingsArr = ConfigsLoader.getInstance().getProperties().getProperty("test.ratings").split(",");
+        int[] ratings = new int[ratingsArr.length];
+        for (int i = 0; i < ratingsArr.length; i++) {
+            ratings[i] = Integer.valueOf(ratingsArr[i]);
+        }
+        this.ratings = ratings;
         questionsService = context.getBean("questionsService", QuestionsService.class);
         fillQuestionsFromDB();
     }

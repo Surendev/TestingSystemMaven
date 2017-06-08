@@ -82,6 +82,11 @@ public class TestController extends AbstractController implements Initializable{
         StartApp.showMainPage();
     }
 
+    @FXML
+    private void qualifyTest(){
+
+    }
+
 
     public void goToQuestion(KeyEvent keyEvent) {
         if(keyEvent.getCode().equals(KeyCode.ENTER)){
@@ -101,6 +106,7 @@ public class TestController extends AbstractController implements Initializable{
 
         if (timeOfExam<0){
             timer.interrupt();
+            qualifyTest();
             showEndPopup();
         }
     }
