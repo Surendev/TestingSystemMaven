@@ -329,6 +329,7 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     private void resetStudentFields() {
+        studentIDField.setText("");
         firstNameField.setText("");
         lastNameField.setText("");
         courseCheckBox.getSelectionModel().select(-1);
