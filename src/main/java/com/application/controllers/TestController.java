@@ -16,8 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -29,6 +31,7 @@ import java.util.ResourceBundle;
 public class TestController extends AbstractController implements Initializable {
 
     private Integer timeOfExam = Integer.valueOf(adminConfigs.getProperty("test.timer"));
+    Timeline timeline;
     private @FXML
     Label timerLabel;
 
@@ -97,6 +100,7 @@ public class TestController extends AbstractController implements Initializable 
 
     @FXML
     private void qualifyTest() {
+        timeline.stop();
         System.exit(0);
     }
 
@@ -109,49 +113,28 @@ public class TestController extends AbstractController implements Initializable 
     }
 
 
-//    private final void updateTimer() {
-//
-//        if(timeOfExam/60 < 3){
-//            timerLabel.setTextFill(Color.RED);
-//        }
-//        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
-//        --timeOfExam;
-//
-//        if (timeOfExam<0){
-//            timer.interrupt();
-//            qualifyTest();
-//            showEndPopup();
-//        }
-//    }
-
-
     //region Initialization
     private void initializeTimer() {
-//        timerLabel.setText(timeOfExam / 60 + ":" + timeOfExam % 60);
-//        timer = new Thread(() ->
-//            Platform.runLater(() -> {
-//                try {
-//                    updateTimer();
-//                    Thread.sleep(1000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            })
-//        );
-//        timer.start();
-        int[] time = {0, 20};
-        timerLabel.setText(((time[0] < 10) ? "0" : "") + time[0] + " ր․ " + ((time[1]<10)? "0" : "") + time[1] + " վրկ․");
-        Timeline timeline = new Timeline(
+        Integer[] time = {0, 10};
+        timerLabel.setTextFill(Color.DARKGREEN);
+        timerLabel.setText(time[0] + " ր․ " + ((time[1] < 10) ? "0" : "") + time[1] + " վրկ․");
+        timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(1000),
                         ae -> {
-                            if (time[1] < 0) {
+                            if (time[0] <= 19) timerLabel.setTextFill(Color.ORANGE);
+                            if (time[0] <= 18) timerLabel.setTextFill(Color.DARKRED);
+
+                            if (time[1] <= 0) {
                                 time[0]--;
                                 time[1] = 60;
                             }
                             time[1]--;
-                            timerLabel.setText(((time[0] < 10) ? "0" : "") + time[0] + " ր․ " + ((time[1]<10)? "0" : "") + time[1] + " վրկ․");
-                            if (time[0] == 0 && time[1] == 0) qualifyTest();
+                            timerLabel.setText(time[0] + " ր․ " + ((time[1] < 10) ? "0" : "") + time[1] + " վրկ․");
+                            if (time[0] == 0 && time[1] == 0) {
+                                Toolkit.getDefaultToolkit().beep();
+                                qualifyTest();
+                            }
                         }
                 )
         );
@@ -185,6 +168,6 @@ public class TestController extends AbstractController implements Initializable 
         answer2CheckBox.setToggleGroup(answersGroup);
         answer3CheckBox.setToggleGroup(answersGroup);
     }
-    //endregion
+    //region
 
 }
