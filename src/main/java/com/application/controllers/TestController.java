@@ -101,7 +101,7 @@ public class TestController extends AbstractController implements Initializable 
     @FXML
     private void qualifyTest() {
         timeline.stop();
-        System.exit(0);
+//        System.exit(0);
     }
 
 
