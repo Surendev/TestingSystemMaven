@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -72,6 +73,7 @@ public class LoginController extends AbstractController implements Initializable
         stage.setScene(scene);
         stage.setTitle("Admin Page");
         stage.setResizable(false);
+        stage.getIcons().add(new Image("/icons/TestIcon.png"));
         stage.show();
     }
 }

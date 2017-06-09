@@ -79,6 +79,7 @@ public class StartApp extends Application{
             registrationScene = new Scene(registrationPane, 500, 600);
         }
         primaryStage.setScene(registrationScene);
+        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Registering system _ Test");
         primaryStage.setResizable(false);
         primaryStage.show();

@@ -3,6 +3,7 @@ package com.jdbc.dao;
 import com.dto.Answer;
 import com.dto.Question;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
-    int addOrUpdateQuestion(boolean update, String id, String question, int rating,String topic, String rightAnswer, String... answers);
+    int addOrUpdateQuestion(boolean update, String id, String question, Integer rating,String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException;
 
     List<Answer> getAnswersByQuestionId(int id);
 

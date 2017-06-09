@@ -30,13 +30,12 @@ public class QuestionsService implements QuestionsDAO {
         return jdbc.query(query, new Object[]{rating}, new QuestionRowMapper());
     }
 
-    public int addOrUpdateQuestion(boolean update, String id, String question, int rating, String topic, String rightAnswer, String... answers) {
+    public int addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException {
         StringBuilder query;
         int questionId;
         if (!update) {
             query = new StringBuilder("INSERT INTO questions(question,rating,topic,answer) VALUES(?,?,?,?)");
-            questionId = jdbc.update(query.toString(), question, rating, topic, rightAnswer);
-            if (questionId != 1) return questionId;
+            questionId = jdbc.update(query.toString(), question, rating, topic, SecurityUtil.encrypt(rightAnswer));
             query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
             for (String each : answers) {
                 jdbc.update(query.toString(), each, questionId);
@@ -48,17 +47,22 @@ public class QuestionsService implements QuestionsDAO {
                 query.append(question.equals("") ? "" : "question='" + question + "'")
                         .append(rating == 0 ? "" : "rating='" + rating + "'")
                         .append(topic.equals("") ? "" : "topic='" + topic + "'")
-                        .append(rightAnswer.equals("") ? "" : "answer=" + SecurityUtil.encrypt(rightAnswer) + "'")
-                        .append("WHERE id=" + id);
+                        .append(rightAnswer.equals("") ? "" : "answer='" + SecurityUtil.encrypt(rightAnswer) + "' ")
+                        .append(" WHERE id=").append(id);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            questionId = jdbc.update(query.toString());
-            if (questionId != 1) return questionId;
-            query = new StringBuilder("UPDATE answers SET ");
-            for (int i = 0; i < answers.length; i++){
-                query.append(answers[0].equals("") ? "" : "text='" + answers[0] + "'")
-                     .append("WHERE to_question=" + questionId);
+            if(query.indexOf("WHERE")-query.lastIndexOf("T") > 2){
+                questionId = jdbc.update(query.toString());
+            }else{
+                questionId = Integer.valueOf(id);
+            }
+            for (String answer : answers) {
+                if(answer.isEmpty())
+                    continue;
+                query = new StringBuilder("UPDATE answers SET ");
+                query.append(answer.equals("") ? "" : "text='" + answer + "'")
+                        .append(" WHERE to_question=").append(id);
                 jdbc.update(query.toString());
             }
 

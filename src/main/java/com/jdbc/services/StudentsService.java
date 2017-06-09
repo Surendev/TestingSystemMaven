@@ -6,8 +6,6 @@ import com.jdbc.mappers.StudentRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,19 +33,20 @@ public class StudentsService implements StudentsDAO{
     }
 
     @Override
-    public int addOrUpdateStudent(String id,String firstName, String lastName, Integer course, String group, boolean update) {
+    public int addOrUpdateStudent(String id, String firstName, String lastName, String middleName, Integer course, String group, boolean update) {
         StringBuilder query;
         if(!update) {
-            query = new StringBuilder("INSERT INTO students(first_name,last_name,")
+            query = new StringBuilder("INSERT INTO students(first_name,last_name,middleName")
                     .append("course,'group',rating) VALUES(?,?,?,?,?)");
-            return jdbc.update(query.toString(), firstName, lastName, course, group, 0);
+            return jdbc.update(query.toString(), firstName, lastName, middleName, course, group, 0);
         }else{
             query = new StringBuilder("UPDATE students SET ");
-            query   .append(firstName.equals("") ? "" : "first_name='" + firstName + "'")
-                    .append(lastName.equals("") ? "" :  (query.charAt(query.length()-1)!=' '? "," : "") + "last_name='" + lastName + "'")
-                    .append(course==null ? "" : (query.charAt(query.length()-1)!=' '? "," : "" )+ "course=" + course )
-                    .append(group.equals("") ? "" : (query.charAt(query.length()-1)!=' '? "," : "") + "'group'='" + group + "'")
-                    .append(" WHERE id=" + id);
+            query.append(firstName.equals("") ? "" : "first_name='" + firstName + "'")
+                    .append(lastName.equals("") ? "" : (query.charAt(query.length() - 1) != ' ' ? "," : "") + "last_name='" + lastName + "'")
+                    .append(middleName.equals("") ? "" : (query.charAt(query.length() - 1) != ' ' ? "," : "") + "middle_name='" + middleName + "'")
+                    .append(course == null ? "" : (query.charAt(query.length() - 1) != ' ' ? "," : "") + "course=" + course)
+                    .append(group.equals("") ? "" : (query.charAt(query.length() - 1) != ' ' ? "," : "") + "'group'='" + group + "'")
+                    .append(" WHERE id=").append(id);
             return jdbc.update(query.toString());
         }
 
