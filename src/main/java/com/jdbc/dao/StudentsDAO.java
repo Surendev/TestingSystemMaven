@@ -15,5 +15,7 @@ public interface StudentsDAO {
 
     Student getStudentById(String id);
 
+    boolean deleteStudentByID(String id);
+
     List<String> getGroups();
 }

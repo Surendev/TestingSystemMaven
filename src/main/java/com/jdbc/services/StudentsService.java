@@ -27,6 +27,12 @@ public class StudentsService implements StudentsDAO{
     }
 
     @Override
+    public boolean deleteStudentByID(String id) {
+        String query = "DELETE FROM students WHERE id=" + id;
+        return jdbc.update(query) == 1;
+    }
+
+    @Override
     public List<String> getGroups() {
         final String query = "SELECT DISTINCT \"group\" FROM students";
         return jdbc.query(query,(resultSet, i) -> resultSet.getString(1));
@@ -36,9 +42,9 @@ public class StudentsService implements StudentsDAO{
     public int addOrUpdateStudent(String id, String firstName, String lastName, String middleName, Integer course, String group, boolean update) {
         StringBuilder query;
         if(!update) {
-            query = new StringBuilder("INSERT INTO students(first_name,last_name,middleName")
-                    .append("course,'group',rating) VALUES(?,?,?,?,?)");
-            return jdbc.update(query.toString(), firstName, lastName, middleName, course, group, 0);
+            query = new StringBuilder("INSERT INTO students(first_name,last_name,middle_Name,")
+                    .append("course,'group') VALUES(?,?,?,?,?)");
+            return jdbc.update(query.toString(), firstName, lastName, middleName, course, group);
         }else{
             query = new StringBuilder("UPDATE students SET ");
             query.append(firstName.equals("") ? "" : "first_name='" + firstName + "'")

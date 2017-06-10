@@ -78,7 +78,8 @@
                                 <Font size="14.0" />
                             </font>
                          </Label>
-                         <CheckBox fx:id="editStudentCheckBox" layoutX="76.0" layoutY="190.0" mnemonicParsing="false" onAction="#unHideStudentEditFields" text="Փոփոխություն" />
+                         <CheckBox fx:id="editStudentCheckBox" layoutX="76.0" layoutY="180.0" mnemonicParsing="false" onAction="#unHideStudentEditFields" text="Փոփոխություն" />
+                         <CheckBox fx:id="deleteStudentCheckBox" layoutX="76.0" layoutY="210.0" mnemonicParsing="false" onAction="#unHideStudentEditFields" text="Ջնջել" />
                          <TextField fx:id="studentIDField" layoutX="35.0" layoutY="256.0" prefWidth="200.0" />
                          <Label fx:id="studentIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="238.0" prefWidth="100.0" text="ID" />
                      </children>
@@ -97,7 +98,7 @@
                         <Label alignment="CENTER" layoutX="661.0" layoutY="150.0" prefHeight="20.0" prefWidth="100.0" text="Արժեք" />
                         <ComboBox fx:id="ratingBox" layoutX="636.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
                         <ComboBox fx:id="topicBox" layoutX="636.0" layoutY="70.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
-                        <Button fx:id="confirmQuestionButton" layoutX="300.0" layoutY="400.0" mnemonicParsing="false" onAction="#addOrUpdateQuestion" prefHeight="30.0" prefWidth="200.0" text="Ավելացնել" textAlignment="CENTER" textFill="#45ae3b" />
+                        <Button fx:id="confirmQuestionButton" layoutX="300.0" layoutY="400.0" mnemonicParsing="false" onAction="#addNewQuestion" prefHeight="30.0" prefWidth="200.0" text="Ավելացնել" textAlignment="CENTER" textFill="#45ae3b" />
                         <TextArea fx:id="questionArea" layoutX="225.0" layoutY="45.0" prefHeight="70.0" prefWidth="387.0" />
                         <TextArea fx:id="rightAnswerArea" layoutX="225.0" layoutY="145.0" prefHeight="70.0" prefWidth="388.0" />
                         <TextArea fx:id="ans1Area" layoutX="225.0" layoutY="280.0" prefHeight="70.0" prefWidth="270.0" />
@@ -107,9 +108,10 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="questionIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="185.0" prefWidth="100.0" text="ID" />
+                        <Label fx:id="questionIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="200.0" prefWidth="100.0" text="ID" />
                         <TextField fx:id="questionIDField" layoutX="7.0" layoutY="203.0" prefWidth="200.0" />
-                        <CheckBox fx:id="editQuestionCheckBox" layoutX="54.0" layoutY="142.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Փոփոխություն" />
+                        <CheckBox fx:id="editQuestionCheckBox" layoutX="54.0" layoutY="132.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Փոփոխություն" />
+                        <CheckBox fx:id="deleteQuestionCheckBox" layoutX="54.0" layoutY="162.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Ջնջել" />
                      </children></AnchorPane>
                </content>
             </Tab>

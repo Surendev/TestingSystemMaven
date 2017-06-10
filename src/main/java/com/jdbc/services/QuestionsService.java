@@ -30,6 +30,12 @@ public class QuestionsService implements QuestionsDAO {
         return jdbc.query(query, new Object[]{rating}, new QuestionRowMapper());
     }
 
+    @Override
+    public boolean deleteQuestionById(String id) {
+        String query = "DELETE FROM questions WHERE id=" + id;
+        return jdbc.update(query) == 1;
+    }
+
     public int addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException {
         StringBuilder query;
         int questionId;

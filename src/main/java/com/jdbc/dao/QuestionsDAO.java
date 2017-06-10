@@ -14,7 +14,9 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
-    int addOrUpdateQuestion(boolean update, String id, String question, Integer rating,String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException;
+    boolean deleteQuestionById(String id);
+
+    int addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException;
 
     List<Answer> getAnswersByQuestionId(int id);
 
