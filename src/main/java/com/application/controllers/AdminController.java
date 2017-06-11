@@ -206,7 +206,7 @@ public class AdminController extends AbstractController implements Initializable
             return;
         }
         studentsService.addOrUpdateStudent(
-                studentIDField.getText().trim(), firstNameField.getText().trim(), middleNameField.getText().trim(),lastNameField.getText().trim(),
+                studentIDField.getText().trim(), firstNameField.getText().trim(), middleNameField.getText().trim(), lastNameField.getText().trim(),
                 courseCheckBox.getValue(), groupField.getText().trim(), editStudentCheckBox.selectedProperty().get());
         studentAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է");
         successPopup(studentAddedLabel);
@@ -250,9 +250,9 @@ public class AdminController extends AbstractController implements Initializable
                 questionAddedLabel.setTextFill(Color.RED);
                 return;
             }
-        }else {
+        } else {
             if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() ||
-                answers[1].isEmpty() || topic.isEmpty() || rating==0) {
+                    answers[1].isEmpty() || topic.equals("") || rating == 0) {
                 questionAddedLabel.setText("Սխալ տվյալներ");
                 return;
             }

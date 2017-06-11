@@ -17,6 +17,7 @@ public interface QuestionsDAO {
 
     void addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException, SQLException;
 
+
     List<Answer> getAnswersByQuestionId(Long id);
 
     Map<Question,List<Answer>> getAllQuestions();

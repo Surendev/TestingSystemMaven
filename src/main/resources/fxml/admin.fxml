@@ -109,9 +109,9 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="questionIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="185.0" prefWidth="100.0" text="ID" />
+                        <Label fx:id="questionIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="200.0" prefWidth="100.0" text="ID" />
                         <TextField fx:id="questionIDField" layoutX="7.0" layoutY="203.0" prefWidth="200.0" />
-                        <CheckBox fx:id="editQuestionCheckBox" layoutX="54.0" layoutY="142.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Փոփոխություն" />
+                        <CheckBox fx:id="editQuestionCheckBox" layoutX="54.0" layoutY="132.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Փոփոխություն" />
                         <Button fx:id="delQuestionButton" layoutX="57.0" layoutY="258.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="20.0" prefWidth="100.0" text="Ջնջել" />
                      </children></AnchorPane>
                </content>

@@ -16,6 +16,8 @@ public interface StudentsDAO {
 
     Student getStudentById(String id);
 
+    boolean deleteStudentByID(String id);
+
     List<String> getGroups();
 
     void deleteStudent(Long studentId) throws SQLException;
