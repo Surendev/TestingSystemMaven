@@ -3,6 +3,7 @@ package com.dto;
 
 import com.jdbc.dao.QuestionsDAO;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,9 +19,9 @@ public class Test {
 
     private List<Question> questions = new ArrayList<>();
     private List<Answer> wrongAnswers = new ArrayList<>();
-    private Map<Integer,Integer> studentAnswers = new HashMap<>();
+    private Map<Integer, Integer> studentAnswers = new HashMap<>();
 
-    public Test(Map<Integer,List<Question>> questions, QuestionsDAO service){
+    public Test(Map<Integer, List<Question>> questions, QuestionsDAO service) {
         for (Integer pair : questions.keySet()) {
             this.questions.addAll(questions.get(pair));
         }
@@ -30,8 +31,8 @@ public class Test {
 
     }
 
-    public QuestionInApp getQuestion(int currIndex) {
-        index = currIndex-1;
+    public QuestionInApp getQuestion(int currIndex) throws UnsupportedEncodingException {
+        index = currIndex - 1;
         Question currentQuestion = questions.get(index);
 
         QuestionInApp questionInApp = new QuestionInApp();
@@ -40,18 +41,22 @@ public class Test {
         questionInApp.setRating(currentQuestion.getRating());
 
         List<Answer> tempList = new ArrayList<>();
-        for(int i = index; i < index + 3; i++){
+        for (int i = index; i < index + 3; i++) {
             tempList.add(wrongAnswers.get(i));
         }
         questionInApp.setAnswers(tempList, currentQuestion.getAnswer());
         return questionInApp;
     }
 
-    public void markAnswerToQuestion(int answerIndex){
+    public void markAnswerToQuestion(int answerIndex) {
         studentAnswers.put(index, answerIndex);
     }
 
     public Map<Integer, Integer> getStudentAnswers() {
         return studentAnswers;
+    }
+
+    public int getQuestionsSize(){
+        return questions.size();
     }
 }

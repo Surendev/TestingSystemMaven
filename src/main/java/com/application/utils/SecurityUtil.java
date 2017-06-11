@@ -1,5 +1,8 @@
 package com.application.utils;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -8,21 +11,12 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SecurityUtil {
 
-    public static final String justString = "adminchik";
+    public static final String justString = "a4afabe8a097e70dca13b92e5ab00b36ea3711feae56f540f5ab71bc57914eaa";
 
-    public static String encrypt(String plainText) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        if(digest==null){
-            return null;
-        }
-        digest.update(plainText.getBytes());
-        return new String(digest.digest());
+    public static String encrypt(String plainText) throws UnsupportedEncodingException {
+        return DigestUtils.sha256Hex(plainText);
     }
+
 
 
 }

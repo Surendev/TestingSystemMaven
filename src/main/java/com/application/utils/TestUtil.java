@@ -12,8 +12,7 @@ import java.util.Map;
 
 public class TestUtil{
 
-    public final int[] ratings = {1, 2, 3, 4};
-    private TopicUtil[] topics = TopicUtil.values();
+    public final int[] ratings;
     private QuestionsDAO questionsService;
 
     // here is saving all questions by ratings
@@ -23,6 +22,12 @@ public class TestUtil{
             new ClassPathXmlApplicationContext("/spring_context.xml");
 
     public TestUtil() {
+        String[] ratingsArr = ConfigsLoader.getInstance().getProperties().getProperty("test.ratings").split(",");
+        int[] ratings = new int[ratingsArr.length];
+        for (int i = 0; i < ratingsArr.length; i++) {
+            ratings[i] = Integer.valueOf(ratingsArr[i]);
+        }
+        this.ratings = ratings;
         questionsService = context.getBean("questionsService", QuestionsService.class);
         fillQuestionsFromDB();
     }
@@ -37,7 +42,7 @@ public class TestUtil{
     public List<Question> chooseFromListByTopics(int rating) {
         List<Question> questionsOfTopic = new ArrayList<>();
 
-        for (TopicUtil eachTopic : topics) {
+        for (TopicUtil eachTopic : TopicUtil.topics) {
 
             String topic = eachTopic.getTopic();
 
@@ -51,13 +56,5 @@ public class TestUtil{
         return questionsOfTopic;
     }
 
-    public void setTopics(String [] topics){
-
-        this.topics = new TopicUtil[topics.length];
-
-        for (int i=0;i<topics.length;i++){
-            this.topics[i] = TopicUtil.valueOf(topics[i]);
-        }
-    }
 
 }

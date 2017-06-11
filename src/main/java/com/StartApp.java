@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 
 
@@ -33,6 +34,7 @@ public class StartApp extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         StartApp.primaryStage = primaryStage;
+        StartApp.primaryStage.setResizable(false);
         showMainPage();
     }
 
@@ -44,19 +46,17 @@ public class StartApp extends Application{
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("Testing System");
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
     public static void showLoginPage() throws IOException {
-        if (loginPane == null) {
-            loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
-            loginScene= new Scene(loginPane, 300,300);
-        }else {
-//            resetLoginPage();
-        }
+        loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
+        loginScene= new Scene(loginPane, 300,300);
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
     }
@@ -69,6 +69,7 @@ public class StartApp extends Application{
         primaryStage.setScene(testScene);
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Testing System _ Test");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
@@ -78,16 +79,16 @@ public class StartApp extends Application{
             registrationScene = new Scene(registrationPane, 500, 600);
         }
         primaryStage.setScene(registrationScene);
+        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Registering system _ Test");
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
-    private static void resetLoginPage() {
-        ((TextField)loginScene.lookup("loginField")).setText("");
-        ((PasswordField)loginScene.lookup("passwordField")).setText("");
-    }
+
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+

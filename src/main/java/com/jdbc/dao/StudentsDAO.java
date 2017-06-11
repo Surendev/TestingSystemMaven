@@ -2,6 +2,7 @@ package com.jdbc.dao;
 
 import com.dto.Student;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -9,10 +10,13 @@ import java.util.List;
  */
 public interface StudentsDAO {
 
-    int addOrUpdateStudent(String id,String firstName, String lastName, Integer course, String group, boolean update);
+    int addOrUpdateStudent(String id, String firstName, String lastName, String middleName, Integer course, String group, boolean update);
 
     List<Student> getAllStudents();
 
     Student getStudentById(String id);
 
+    List<String> getGroups();
+
+    void deleteStudent(Long studentId) throws SQLException;
 }

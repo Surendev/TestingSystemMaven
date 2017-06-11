@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -12,7 +14,7 @@
    <children>
       <HBox layoutY="550.0" prefHeight="50.0" prefWidth="800.0">
          <children>
-            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="49.0" prefWidth="159.0" textAlignment="CENTER">
+            <Button fx:id="homeButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToMainPage" prefHeight="49.0" prefWidth="159.0" textAlignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
@@ -27,13 +29,12 @@
                      <children>
                         <TableView fx:id="studentsTable" prefHeight="517.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
-                            <TableColumn fx:id="firstNameCol" prefWidth="145.0" text="Անուն" />
+                              <TableColumn fx:id="studentIdCol" prefWidth="20.0" text="ID" />
+                              <TableColumn fx:id="firstNameCol" prefWidth="145.0" text="Անուն" />
                               <TableColumn fx:id="lastNameCol" prefWidth="145.0" text="Ազգանուն" />
-                            <TableColumn fx:id="ratingCol" minWidth="0.0" text="ՄՈԳ" />
+                              <TableColumn fx:id="middleNameCol" prefWidth="145.0" text="Հայրանուն" />
                               <TableColumn fx:id="courseCol" minWidth="0.0" text="Կուրս" />
                               <TableColumn fx:id="groupCol" prefWidth="110.0" text="Խումբ" />
-                              <TableColumn fx:id="firstExamCol" prefWidth="120.0" text="Առաջին Միջ." />
-                              <TableColumn fx:id="secondExamCol" prefWidth="120.0" text="Երկրորդ Միջ." />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -45,13 +46,13 @@
                         <children>
                             <TableView fx:id="questionsTable" prefHeight="517.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
+                                    <TableColumn fx:id="questionId" prefWidth="20.0" text="ID" />
                                     <TableColumn fx:id="questionCol" prefWidth="145.0" text="Հարց" />
                                     <TableColumn fx:id="questionRatingCol" prefWidth="145.0" text="Արժեք" />
                                     <TableColumn fx:id="topicCol" minWidth="0.0" text="Թեմա" />
                                     <TableColumn fx:id="rightAnswerCol" minWidth="0.0" text="Ճիշտ Պատասխան" />
                                     <TableColumn fx:id="answer1Col" prefWidth="110.0" text="Պատասխան 1" />
                                     <TableColumn fx:id="answer2Col" prefWidth="120.0" text="Պատասխան 2" />
-                                    <TableColumn fx:id="answer3Col" prefWidth="120.0" text="Պատասխան 3" />
                                 </columns>
                             </TableView>
                         </children></AnchorPane>
@@ -62,23 +63,26 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="firstNameLabel" alignment="CENTER" layoutX="330.0" layoutY="96.0" prefHeight="20.0" prefWidth="100.0" text="Անուն" />
-                        <Label fx:id="lastNameLabel" alignment="CENTER" layoutX="330.0" layoutY="166.0" prefHeight="20.0" prefWidth="100.0" text="Ազգանուն" />
-                        <TextField fx:id="firstNameField" layoutX="280.0" layoutY="116.0" prefWidth="200.0" />
-                        <TextField fx:id="lastNameField" layoutX="280.0" layoutY="186.0" prefWidth="200.0" />
-                        <Label fx:id="courseLabel" alignment="CENTER" layoutX="330.0" layoutY="236.0" prefHeight="20.0" prefWidth="100.0" text="Կուրս" />
-                        <ComboBox fx:id="courseCheckBox" layoutX="280.0" layoutY="256.0" prefWidth="200.0" promptText="Ընտրել" />
-                        <Label fx:id="groupLabel" alignment="CENTER" layoutX="330.0" layoutY="306.0" prefHeight="20.0" prefWidth="100.0" text="Խումբ" />
-                        <TextField fx:id="groupField" layoutX="280.0" layoutY="326.0" prefWidth="200.0" />
-                        <Button fx:id="confirmStudentButton" layoutX="308.0" layoutY="396.0" mnemonicParsing="false" onAction="#addNewStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#58c978" />
-                        <Label fx:id="studentAddedLabel" alignment="CENTER" layoutX="478.0" layoutY="226.0" prefHeight="20.0" prefWidth="300.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                        <CheckBox fx:id="editCheckBox" layoutX="76.0" layoutY="190.0" mnemonicParsing="false" onAction="#unHideEditFields" text="Փոփոխություն" />
-                        <TextField fx:id="iDField" layoutX="35.0" layoutY="256.0" prefWidth="200.0" />
-                        <Label fx:id="iDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="238.0" prefWidth="100.0" text="ID" />
+                        <Label fx:id="firstNameLabel" alignment="CENTER" layoutX="280.0" layoutY="30.0" prefHeight="20.0" prefWidth="200.0" text="Անուն" />
+                         <Label fx:id="middleNameLabel" alignment="CENTER" layoutX="280.0" layoutY="90.0" prefHeight="20.0" prefWidth="200.0" text="Հայրանուն" />
+                         <Label fx:id="lastNameLabel" alignment="CENTER" layoutX="280.0" layoutY="150.0" prefHeight="20.0" prefWidth="200.0" text="Ազգանուն" />
+                         <TextField fx:id="firstNameField" layoutX="280.0" layoutY="50.0" prefWidth="200.0" />
+                         <TextField fx:id="middleNameField" layoutX="280.0" layoutY="110.0" prefWidth="200.0" />
+                         <TextField fx:id="lastNameField" layoutX="280.0" layoutY="170.0" prefWidth="200.0" />
+                         <Label fx:id="courseLabel" alignment="CENTER" layoutX="280.0" layoutY="210.0" prefHeight="20.0" prefWidth="200.0" text="Կուրս" />
+                         <ComboBox fx:id="courseCheckBox" layoutX="280.0" layoutY="230.0" prefWidth="200.0" promptText="Ընտրել" />
+                         <Label fx:id="groupLabel" alignment="CENTER" layoutX="280.0" layoutY="270.0" prefHeight="20.0" prefWidth="200.0" text="Խումբ" />
+                         <TextField fx:id="groupField" layoutX="280.0" layoutY="290.0" prefWidth="200.0" />
+                         <Button fx:id="confirmStudentButton" layoutX="305.0" layoutY="348.0" mnemonicParsing="false" onAction="#addOrUpdateStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#58c978" />
+                         <Label fx:id="studentAddedLabel" alignment="CENTER" layoutX="180.0" layoutY="430.0" prefHeight="20.0" prefWidth="400.0">
+                             <font>
+                                <Font size="14.0" />
+                            </font>
+                         </Label>
+                         <CheckBox fx:id="editStudentCheckBox" layoutX="75.0" layoutY="150.0" mnemonicParsing="false" onAction="#unHideStudentEditFields" text="Փոփոխություն" />
+                         <TextField fx:id="studentIDField" layoutX="34.0" layoutY="216.0" prefWidth="200.0" />
+                         <Label fx:id="studentIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="198.0" prefWidth="100.0" text="ID" />
+                        <Button fx:id="delStudentButton" layoutX="75.0" layoutY="258.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="20.0" prefWidth="100.0" text="Ջնջել" />
                      </children>
                   </AnchorPane>
             </content>
@@ -87,27 +91,125 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="100.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Հարց" />
-                        <Label alignment="CENTER" layoutX="450.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Թեմա" />
-                        <Label alignment="CENTER" layoutX="75.0" layoutY="150.0" prefHeight="20.0" prefWidth="150.0" text="Ճիշտ Պատասխան" />
-                        <Label alignment="CENTER" layoutX="75.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 1" />
-                        <Label alignment="CENTER" layoutX="325.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 2" />
-                        <Label alignment="CENTER" layoutX="575.0" layoutY="250.0" prefHeight="20.0" prefWidth="150.0" text="Պատասխան 3" />
-                        <Label alignment="CENTER" layoutX="450.0" layoutY="150.0" prefHeight="20.0" prefWidth="100.0" text="Արժեք" />
-                        <ComboBox fx:id="ratingBox" layoutX="425.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
-                        <ComboBox fx:id="topicBox" layoutX="425.0" layoutY="70.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
-                        <Button fx:id="confirmQuestionButton" layoutX="300.0" layoutY="400.0" mnemonicParsing="false" onAction="#addNewQuestion" prefHeight="30.0" prefWidth="200.0" text="Ավելացնել" textAlignment="CENTER" textFill="#45ae3b" />
-                        <TextArea fx:id="questionArea" layoutY="70.0" prefHeight="70.0" prefWidth="300.0" />
-                        <TextArea fx:id="rightAnswerArea" layoutY="170.0" prefHeight="70.0" prefWidth="300.0" />
-                        <TextArea fx:id="ans1Area" layoutX="10.0" layoutY="270.0" prefHeight="70.0" prefWidth="250.0" />
-                        <TextArea fx:id="ans2Area" layoutX="290.0" layoutY="270.0" prefHeight="70.0" prefWidth="250.0" />
-                        <TextArea fx:id="ans3Area" layoutX="560.0" layoutY="270.0" prefHeight="70.0" prefWidth="230.0" />
-                        <Label fx:id="questionAddedLabel" alignment="CENTER" layoutX="250.0" layoutY="464.0" prefHeight="20.0" prefWidth="300.0">
+                        <Label alignment="CENTER" layoutX="369.0" layoutY="25.0" prefHeight="20.0" prefWidth="100.0" text="Հարց" />
+                        <Label alignment="CENTER" layoutX="661.0" layoutY="50.0" prefHeight="20.0" prefWidth="100.0" text="Թեմա" />
+                        <Label alignment="CENTER" layoutX="344.0" layoutY="125.0" prefHeight="20.0" prefWidth="150.0" text="Ճիշտ Պատասխան" />
+                        <Label alignment="CENTER" layoutX="300.0" layoutY="260.0" prefHeight="20.0" prefWidth="150.0" text="Սխալ պատասխան 1" />
+                        <Label alignment="CENTER" layoutX="580.0" layoutY="260.0" prefHeight="20.0" prefWidth="150.0" text="Սխալ պատասխան 2" />
+                        <Label alignment="CENTER" layoutX="661.0" layoutY="150.0" prefHeight="20.0" prefWidth="100.0" text="Արժեք" />
+                        <ComboBox fx:id="ratingBox" layoutX="636.0" layoutY="170.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
+                        <ComboBox fx:id="topicBox" layoutX="636.0" layoutY="70.0" prefHeight="30.0" prefWidth="150.0" promptText="Ընտրել" />
+                        <Button fx:id="confirmQuestionButton" layoutX="300.0" layoutY="400.0" mnemonicParsing="false" onAction="#addOrUpdateQuestion" prefHeight="30.0" prefWidth="200.0" text="Ավելացնել" textAlignment="CENTER" textFill="#45ae3b" />
+                        <TextArea fx:id="questionArea" layoutX="225.0" layoutY="45.0" prefHeight="70.0" prefWidth="387.0" />
+                        <TextArea fx:id="rightAnswerArea" layoutX="225.0" layoutY="145.0" prefHeight="70.0" prefWidth="388.0" />
+                        <TextArea fx:id="ans1Area" layoutX="225.0" layoutY="280.0" prefHeight="70.0" prefWidth="270.0" />
+                        <TextArea fx:id="ans2Area" layoutX="510.0" layoutY="280.0" prefHeight="70.0" prefWidth="270.0" />
+                        <Label fx:id="questionAddedLabel" alignment="CENTER" layoutX="200.0" layoutY="457.0" prefHeight="20.0" prefWidth="400.0">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <Label fx:id="questionIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="185.0" prefWidth="100.0" text="ID" />
+                        <TextField fx:id="questionIDField" layoutX="7.0" layoutY="203.0" prefWidth="200.0" />
+                        <CheckBox fx:id="editQuestionCheckBox" layoutX="54.0" layoutY="132.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Փոփոխություն" />
+                        <Button fx:id="delQuestionButton" layoutX="57.0" layoutY="258.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="20.0" prefWidth="100.0" text="Ջնջել" />
                      </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="configs" closable="false" onSelectionChanged="#showAllConfigs" text="Կարգավորումներ">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="116.0" layoutY="52.0" prefHeight="20.0" prefWidth="220.0" text="Թեստի տևողություն, րոպե" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="countLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="508.0" layoutY="52.0" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակ" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="testTimeField" alignment="CENTER" layoutX="126.0" layoutY="85.0" prefHeight="20.0" prefWidth="200.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <TextField fx:id="questionsCountField" alignment="CENTER" layoutX="508.0" layoutY="87.0" prefHeight="20.0" prefWidth="200.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                        </TextField>
+                        <Label fx:id="ratingsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Հարցի Արժեք" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="questionsCountLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="227.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակը" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField alignment="CENTER" layoutX="26.0" layoutY="215.0" mouseTransparent="true" prefHeight="20.0" prefWidth="200.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </TextField>
+                        <Label fx:id="topicsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="510.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Թեմաներ" textAlignment="CENTER">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ScrollPane fx:id="ratingsPane" hbarPolicy="NEVER" layoutX="27.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                           <content>
+                              <VBox fx:id="ratingsVBox" prefHeight="319.0" prefWidth="200.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="questionCountsPane" hbarPolicy="NEVER" layoutX="227.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                           <content>
+                              <VBox fx:id="countOfQuestionsByRatingVBox" prefHeight="319.0" prefWidth="200.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="topicsPane" hbarPolicy="NEVER" layoutX="512.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                           <content>
+                              <VBox fx:id="topicsVBox" prefHeight="319.0" prefWidth="200.0" />
+                           </content>
+                        </ScrollPane>
+                         <Label fx:id="propsAddedLabel" alignment="CENTER" layoutX="125.0" layoutY="480" prefHeight="32.0" prefWidth="200.0" textFill="#e66768">
+                         <font>
+                             <Font size="20.0" />
+                         </font>
+                         <opaqueInsets>
+                             <Insets />
+                         </opaqueInsets>
+                         </Label>
+                        <Button fx:id="savePropsButton" layoutX="522.0" layoutY="480.0" mnemonicParsing="false" onAction="#saveSettingsInPropFIle" prefHeight="32.0" prefWidth="180.0" text="Պահպանել" />
+                        <Button fx:id="addQuestionsRating" contentDisplay="CENTER" layoutX="427.0" layoutY="146.0" mnemonicParsing="false" onAction="#addQuestionCountField" prefHeight="32.0" prefWidth="32.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="addTopicButton" contentDisplay="CENTER" layoutX="712.0" layoutY="146.0" mnemonicParsing="false" onAction="#addTopicField" prefHeight="32.0" prefWidth="32.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>

@@ -5,6 +5,7 @@ import com.StartApp;
 import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class TestLogInController extends AbstractController implements Initializable{
 
-    StudentsDAO studentsService;
+    private StudentsDAO studentsService;
 
     private @FXML TextField firstNameField;
     private @FXML TextField middleNameField;
@@ -31,7 +32,7 @@ public class TestLogInController extends AbstractController implements Initializ
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentsService = context.getBean("studentsService", StudentsDAO.class);
-        groupBox.setItems(FXCollections.observableArrayList("Հ420-1","Հ420-2"));
+        groupBox.setItems(FXCollections.observableArrayList(studentsService.getGroups()));
     }
 
     public void checkAuthentication() throws IOException {
@@ -85,5 +86,10 @@ public class TestLogInController extends AbstractController implements Initializ
                 reset();
             }
         });
+    }
+
+    public void goToHome() throws IOException {
+        errLabel.getScene().getWindow().hide();
+        StartApp.showMainPage();
     }
 }
