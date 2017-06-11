@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -72,15 +73,16 @@
                          <ComboBox fx:id="courseCheckBox" layoutX="280.0" layoutY="230.0" prefWidth="200.0" promptText="Ընտրել" />
                          <Label fx:id="groupLabel" alignment="CENTER" layoutX="280.0" layoutY="270.0" prefHeight="20.0" prefWidth="200.0" text="Խումբ" />
                          <TextField fx:id="groupField" layoutX="280.0" layoutY="290.0" prefWidth="200.0" />
-                         <Button fx:id="confirmStudentButton" layoutX="305.0" layoutY="348.0" mnemonicParsing="false" onAction="#addNewStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#58c978" />
+                         <Button fx:id="confirmStudentButton" layoutX="305.0" layoutY="348.0" mnemonicParsing="false" onAction="#addOrUpdateStudent" prefHeight="30.0" prefWidth="150.0" text="Ավելացնել" textFill="#58c978" />
                          <Label fx:id="studentAddedLabel" alignment="CENTER" layoutX="180.0" layoutY="430.0" prefHeight="20.0" prefWidth="400.0">
                              <font>
                                 <Font size="14.0" />
                             </font>
                          </Label>
-                         <CheckBox fx:id="editStudentCheckBox" layoutX="76.0" layoutY="190.0" mnemonicParsing="false" onAction="#unHideStudentEditFields" text="Փոփոխություն" />
-                         <TextField fx:id="studentIDField" layoutX="35.0" layoutY="256.0" prefWidth="200.0" />
-                         <Label fx:id="studentIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="85.0" layoutY="238.0" prefWidth="100.0" text="ID" />
+                         <CheckBox fx:id="editStudentCheckBox" layoutX="75.0" layoutY="150.0" mnemonicParsing="false" onAction="#unHideStudentEditFields" text="Փոփոխություն" />
+                         <TextField fx:id="studentIDField" layoutX="34.0" layoutY="216.0" prefWidth="200.0" />
+                         <Label fx:id="studentIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="84.0" layoutY="198.0" prefWidth="100.0" text="ID" />
+                        <Button fx:id="delStudentButton" layoutX="75.0" layoutY="258.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="20.0" prefWidth="100.0" text="Ջնջել" />
                      </children>
                   </AnchorPane>
             </content>
@@ -110,10 +112,11 @@
                         <Label fx:id="questionIDLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="185.0" prefWidth="100.0" text="ID" />
                         <TextField fx:id="questionIDField" layoutX="7.0" layoutY="203.0" prefWidth="200.0" />
                         <CheckBox fx:id="editQuestionCheckBox" layoutX="54.0" layoutY="142.0" mnemonicParsing="false" onAction="#unHideQuestionEditFields" text="Փոփոխություն" />
+                        <Button fx:id="delQuestionButton" layoutX="57.0" layoutY="258.0" mnemonicParsing="false" onAction="#deleteQuestion" prefHeight="20.0" prefWidth="100.0" text="Ջնջել" />
                      </children></AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="configs" closable="false" onSelectionChanged="#locateAllConfigs" text="Կարգավորումներ">
+            <Tab fx:id="configs" closable="false" onSelectionChanged="#showAllConfigs" text="Կարգավորումներ">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -163,31 +166,19 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <ScrollPane fx:id="ratingsPane" layoutX="27.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <VBox fx:id="ratingsVBox" layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </ScrollPane>
-                        <ScrollPane fx:id="questionCountsPane" layoutX="227.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0">
+                        <ScrollPane fx:id="ratingsPane" hbarPolicy="NEVER" layoutX="27.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0" vbarPolicy="ALWAYS">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <VBox fx:id="countOfQuestionsByRatingVBox" layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
-                                 </children>
-                              </AnchorPane>
+                              <VBox fx:id="ratingsVBox" prefHeight="319.0" prefWidth="200.0" />
                            </content>
                         </ScrollPane>
-                        <ScrollPane fx:id="topicsPane" layoutX="512.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0">
+                        <ScrollPane fx:id="questionCountsPane" hbarPolicy="NEVER" layoutX="227.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0" vbarPolicy="ALWAYS">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <VBox fx:id="topicsVBox" layoutY="7.0" prefHeight="300.0" prefWidth="200.0" />
-                                 </children>
-                              </AnchorPane>
+                              <VBox fx:id="countOfQuestionsByRatingVBox" prefHeight="319.0" prefWidth="200.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane fx:id="topicsPane" hbarPolicy="NEVER" layoutX="512.0" layoutY="146.0" prefHeight="320.0" prefWidth="200.0" vbarPolicy="ALWAYS">
+                           <content>
+                              <VBox fx:id="topicsVBox" prefHeight="319.0" prefWidth="200.0" />
                            </content>
                         </ScrollPane>
                          <Label fx:id="propsAddedLabel" alignment="CENTER" layoutX="125.0" layoutY="480" prefHeight="32.0" prefWidth="200.0" textFill="#e66768">
@@ -199,6 +190,24 @@
                          </opaqueInsets>
                          </Label>
                         <Button fx:id="savePropsButton" layoutX="522.0" layoutY="480.0" mnemonicParsing="false" onAction="#saveSettingsInPropFIle" prefHeight="32.0" prefWidth="180.0" text="Պահպանել" />
+                        <Button fx:id="addQuestionsRating" contentDisplay="CENTER" layoutX="427.0" layoutY="146.0" mnemonicParsing="false" onAction="#addQuestionCountField" prefHeight="32.0" prefWidth="32.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="addTopicButton" contentDisplay="CENTER" layoutX="712.0" layoutY="146.0" mnemonicParsing="false" onAction="#addTopicField" prefHeight="32.0" prefWidth="32.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icons/plus.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </AnchorPane>
                </content>

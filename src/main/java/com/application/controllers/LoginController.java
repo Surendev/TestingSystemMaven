@@ -68,7 +68,7 @@ public class LoginController extends AbstractController implements Initializable
 
     private void showAdminPage() throws IOException {
         Pane pane = FXMLLoader.load(getClass().getResource("/fxml/admin.fxml"));
-        Scene scene = new Scene(pane, 800,600);
+        Scene scene = new Scene(pane, 800,590);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Admin Page");

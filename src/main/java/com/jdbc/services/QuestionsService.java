@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,49 +31,46 @@ public class QuestionsService implements QuestionsDAO {
         return jdbc.query(query, new Object[]{rating}, new QuestionRowMapper());
     }
 
-    public int addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException {
+    public void addOrUpdateQuestion(boolean update, String id, String question,
+                                    Integer rating, String topic, String newRightAnswer, String... answers)
+            throws UnsupportedEncodingException, SQLException {
         StringBuilder query;
         int questionId;
         if (!update) {
             query = new StringBuilder("INSERT INTO questions(question,rating,topic,answer) VALUES(?,?,?,?)");
-            questionId = jdbc.update(query.toString(), question, rating, topic, SecurityUtil.encrypt(rightAnswer));
+            jdbc.update(query.toString(), question, rating, topic, SecurityUtil.encrypt(newRightAnswer));
             query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
+            questionId = this.getQuestionIdByRightAnswer(SecurityUtil.encrypt(newRightAnswer));
             for (String each : answers) {
                 jdbc.update(query.toString(), each, questionId);
             }
-            jdbc.update(query.toString(), rightAnswer, questionId);
+            jdbc.update(query.toString(), newRightAnswer, questionId);
         } else {
-            query = new StringBuilder("UPDATE questions SET ");
-            try {
+
+            if(question.isEmpty() && rating == 0 && topic.isEmpty()){
+                questionId = Integer.valueOf(id);
+            }else{
+                query = new StringBuilder("UPDATE questions SET ");
                 query.append(question.equals("") ? "" : "question='" + question + "'")
                         .append(rating == 0 ? "" : "rating='" + rating + "'")
                         .append(topic.equals("") ? "" : "topic='" + topic + "'")
-                        .append(rightAnswer.equals("") ? "" : "answer='" + SecurityUtil.encrypt(rightAnswer) + "' ")
                         .append(" WHERE id=").append(id);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            if(query.indexOf("WHERE")-query.lastIndexOf("T") > 2){
+
                 questionId = jdbc.update(query.toString());
-            }else{
-                questionId = Integer.valueOf(id);
-            }
-            for (String answer : answers) {
-                if(answer.isEmpty())
-                    continue;
-                query = new StringBuilder("UPDATE answers SET ");
-                query.append(answer.equals("") ? "" : "text='" + answer + "'")
-                        .append(" WHERE to_question=").append(id);
-                jdbc.update(query.toString());
             }
 
+            if(!newRightAnswer.isEmpty()){
+                query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
+                jdbc.update(String.valueOf(query), newRightAnswer,questionId);
+                query = new StringBuilder("UPDATE questions SET answer = ? WHERE id=?");
+                jdbc.update(String.valueOf(query), SecurityUtil.encrypt(newRightAnswer),questionId);
+            }
         }
 
-        return questionId;
     }
 
     @Override
-    public List<Answer> getAnswersByQuestionId(int id) {
+    public List<Answer> getAnswersByQuestionId(Long id) {
         String query = "SELECT * FROM answers WHERE to_question=?";
         return jdbc.query(query, new Object[]{id}, new AnswerRowMapper());
     }
@@ -94,5 +92,21 @@ public class QuestionsService implements QuestionsDAO {
         return result;
     }
 
+    @Override
+    public void deleteQuestion(Long questionId) throws SQLException {
+        final String query = "DELETE FROM questions WHERE id = ?";
+        if(jdbc.update(query,questionId) <= 0){
+            throw new SQLException("Չի ստացվել ջնջել հարցը id:" + questionId);
+        }
+    }
 
+    @Override
+    public Integer getQuestionIdByRightAnswer(String answer){
+        if(answer.isEmpty() || answer.length()!=64){
+            return null;
+        }
+        final String query = "SELECT id FROM questions WHERE answer=?";
+
+        return jdbc.queryForObject(query,new Object[]{answer},(resultSet, i) -> resultSet.getInt("id"));
+    }
 }

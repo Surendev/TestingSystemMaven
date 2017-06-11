@@ -11,9 +11,18 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Answer {
 
+    private Long id;
     private String text;
     private Integer toQuestion;
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getText() {
         return text;

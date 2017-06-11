@@ -1,4 +1,7 @@
 DROP TABLE IF EXISTS students;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS students;
 CREATE TABLE students
 (
   id                 INTEGER PRIMARY KEY NOT NULL,
@@ -12,6 +15,7 @@ CREATE TABLE students
 
 CREATE TABLE answers
 (
+  id          INTEGER PRIMARY KEY  AUTOINCREMENT,
   text        TEXT    NOT NULL,
   to_question INTEGER NOT NULL,
   CONSTRAINT answers_to_question FOREIGN KEY (to_question) REFERENCES questions (id)

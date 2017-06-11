@@ -6,6 +6,7 @@ import com.jdbc.mappers.StudentRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -34,13 +35,12 @@ public class StudentsService implements StudentsDAO{
 
     @Override
     public int addOrUpdateStudent(String id, String firstName, String lastName, String middleName, Integer course, String group, boolean update) {
-        StringBuilder query;
         if(!update) {
-            query = new StringBuilder("INSERT INTO students(first_name,last_name,middleName")
-                    .append("course,'group',rating) VALUES(?,?,?,?,?)");
-            return jdbc.update(query.toString(), firstName, lastName, middleName, course, group, 0);
+            String query = "INSERT INTO students(first_name,last_name,middle_name,"
+                    + " course,'group') VALUES(?,?,?,?,?)";
+            return jdbc.update(query, firstName, lastName, middleName, course, group);
         }else{
-            query = new StringBuilder("UPDATE students SET ");
+            StringBuilder query = new StringBuilder("UPDATE students SET ");
             query.append(firstName.equals("") ? "" : "first_name='" + firstName + "'")
                     .append(lastName.equals("") ? "" : (query.charAt(query.length() - 1) != ' ' ? "," : "") + "last_name='" + lastName + "'")
                     .append(middleName.equals("") ? "" : (query.charAt(query.length() - 1) != ' ' ? "," : "") + "middle_name='" + middleName + "'")
@@ -58,5 +58,13 @@ public class StudentsService implements StudentsDAO{
         String query = "SELECT * FROM students";
         List<Student> studentsList = jdbc.query(query, new StudentRowMapper());
         return studentsList.size() == 0 ? null : studentsList;
+    }
+
+    @Override
+    public void deleteStudent(Long studentId) throws SQLException {
+        final String query = "DELETE FROM students WHERE id = ?";
+        if(jdbc.update(query,studentId) <= 0){
+            throw new SQLException("Չի ստացվել ջնջել Ուսանողին id id:" + studentId);
+        }
     }
 }

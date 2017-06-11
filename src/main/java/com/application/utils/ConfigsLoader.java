@@ -32,8 +32,10 @@ public class ConfigsLoader {
     public void setProperties(Properties newProps){
         String path = ConfigsLoader.class.getResource(FILE_PATH).getFile();
         Path configLocation = Paths.get(System.getProperty("os.name").contains("indow")? path.substring(1) : path);
-        try (OutputStream out = Files.newOutputStream(configLocation)){
-            newProps.store(out,"");
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(configLocation.toString()), "UTF8"))){
+
+            newProps.store(writer,"");
         } catch (IOException e) {
             System.out.println("file not found \n" + e.getMessage());
         }

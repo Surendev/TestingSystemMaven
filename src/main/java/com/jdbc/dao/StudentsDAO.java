@@ -2,6 +2,7 @@ package com.jdbc.dao;
 
 import com.dto.Student;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface StudentsDAO {
     Student getStudentById(String id);
 
     List<String> getGroups();
+
+    void deleteStudent(Long studentId) throws SQLException;
 }

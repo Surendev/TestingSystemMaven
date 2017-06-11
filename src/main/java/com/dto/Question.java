@@ -5,17 +5,17 @@ package com.dto;
  */
 public class Question {
 
-    private int id;
+    private Long id;
     private String question;
     private int rating;
     private String topic;
     private String answer;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

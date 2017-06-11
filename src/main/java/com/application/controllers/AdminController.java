@@ -2,6 +2,7 @@ package com.application.controllers;
 
 import com.StartApp;
 import com.application.utils.ConfigsLoader;
+import com.application.utils.QuestionsHelper;
 import com.application.utils.QuestionsUtil;
 import com.application.utils.TopicUtil;
 import com.dto.Answer;
@@ -14,18 +15,22 @@ import com.jdbc.services.QuestionsService;
 import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -69,6 +74,7 @@ public class AdminController extends AbstractController implements Initializable
     @FXML     private CheckBox editStudentCheckBox;
     @FXML     private TextField studentIDField;
     @FXML     private Label studentAddedLabel;
+    @FXML     private Button delStudentButton;
     //endregion
 
     //region Question update tab
@@ -82,6 +88,7 @@ public class AdminController extends AbstractController implements Initializable
     @FXML     private Label questionIDLabel;
     @FXML     private Button confirmQuestionButton;
     @FXML     private Label questionAddedLabel;
+    @FXML     private Button delQuestionButton;
     //endregion
 
 
@@ -94,10 +101,6 @@ public class AdminController extends AbstractController implements Initializable
     @FXML     private VBox countOfQuestionsByRatingVBox;
     @FXML     private VBox topicsVBox;
     @FXML     private Label propsAddedLabel;
-
-    @FXML     private ScrollPane ratingsPane;
-    @FXML     private ScrollPane questionCountsPane;
-    @FXML     private ScrollPane topicsPane;
     //endregion
 
 
@@ -115,93 +118,6 @@ public class AdminController extends AbstractController implements Initializable
         disableStudentEditFields(true);
         disableQuestionEditFields(true);
         showStudents();
-    }
-
-    @FXML
-    private void showStudents() {
-        try {
-            studentsTable.setItems(new ObservableListWrapper<>(studentsService.getAllStudents()));
-        } catch (NullPointerException e) {
-            System.out.println("Null");
-        }
-    }
-
-    @FXML
-    private void showQuestions() {
-        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
-        if (resultFromDB == null) {
-            System.err.println("Questions Not Found");
-        }
-        try {
-            questionsTable.setItems(
-                    new ObservableListWrapper<>(
-                            QuestionsUtil.getInAppFromQuestions(resultFromDB)));
-        } catch (NullPointerException ignored) {
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-
-    @FXML
-    private void addNewStudent() {
-        boolean update = editStudentCheckBox.selectedProperty().get();
-        if (update) {
-            if (studentIDField.getText().equals("") || !studentIDField.getText().matches("^\\d+$")) {
-                studentAddedLabel.setText("Սխալ տվյալ. ID");
-                studentAddedLabel.setTextFill(Color.RED);
-                return;
-            }
-        } else if (firstNameField.getText().length() < 3 || lastNameField.getText().length() < 5 ||
-                groupField.getText().length() < 5 && courseCheckBox.getSelectionModel().getSelectedIndex() == -1) {
-            studentAddedLabel.setText("Սխալ տվյալներ");
-            studentAddedLabel.setTextFill(Color.RED);
-            return;
-        }
-        studentsService.addOrUpdateStudent(
-                studentIDField.getText().trim(), firstNameField.getText().trim(), middleNameField.getText().trim(),lastNameField.getText().trim(),
-                courseCheckBox.getValue(), groupField.getText().trim(), editStudentCheckBox.selectedProperty().get());
-        studentAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է");
-        successPopup(studentAddedLabel);
-        resetStudentFields();
-    }
-
-    @FXML
-    private void addOrUpdateQuestion() throws UnsupportedEncodingException {
-        String question = questionArea.getText();
-        String[] answers = new String[]{ans1Area.getText(), ans2Area.getText()};
-        String rightAnswer = rightAnswerArea.getText();
-        questionAddedLabel.setTextFill(Color.RED);
-        String topic = topicBox.getValue() == null ? "" : topicBox.getValue().getTopic();
-        Integer rating = ratingBox.getValue() == null ? 0 : ratingBox.getValue();
-
-        boolean update = editQuestionCheckBox.isSelected();
-        if (update) {
-            if (questionIDField.getText().equals("") || !questionIDField.getText().matches("^\\d+$")) {
-                questionAddedLabel.setText("Սխալ տվյալ․ ID");
-                questionAddedLabel.setTextFill(Color.RED);
-                return;
-            }
-        }else {
-            if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() ||
-                answers[1].isEmpty() || topic.isEmpty() || rating==0) {
-                questionAddedLabel.setText("Սխալ տվյալներ");
-                return;
-            }
-        }
-
-        int id = questionsService.addOrUpdateQuestion(update, questionIDField.getText(), question, rating, topic, rightAnswer, answers);
-        questionAddedLabel.setTextFill(Color.GREEN);
-        questionAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է ID:" + id);
-        successPopup(questionAddedLabel);
-
-    }
-
-    public void goToMainPage() throws IOException {
-        homeButton.getScene().getWindow().hide();
-        StartApp.showMainPage();
     }
 
     private void initializeCheckBoxes() {
@@ -232,6 +148,147 @@ public class AdminController extends AbstractController implements Initializable
         answer1Col.setCellValueFactory(new PropertyValueFactory<>("answer2"));
         answer2Col.setCellValueFactory(new PropertyValueFactory<>("answer3"));
         questionId.setCellValueFactory(new PropertyValueFactory<>("questionId"));
+
+        questionsTable.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                QuestionInApp clickedQuestion = questionsTable.getSelectionModel().getSelectedItem();
+                try {
+                    QuestionsHelper.showQuestionOnNewPage(clickedQuestion);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    @FXML
+    private void showStudents() {
+        try {
+            studentsTable.setItems(new ObservableListWrapper<>(studentsService.getAllStudents()));
+        } catch (NullPointerException e) {
+            System.out.println("Null");
+        }
+    }
+
+    @FXML
+    private void showQuestions() {
+        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
+        if (resultFromDB == null) {
+            System.err.println("Questions Not Found");
+        }
+        try {
+            questionsTable.setItems(
+                    new ObservableListWrapper<>(
+                            QuestionsUtil.getInAppFromQuestions(resultFromDB)));
+        } catch (NullPointerException ignored) {
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    @FXML
+    private void addOrUpdateStudent() {
+        boolean update = editStudentCheckBox.selectedProperty().get();
+        if (update) {
+            if (studentIDField.getText().equals("") || !studentIDField.getText().matches("^\\d+$")) {
+                studentAddedLabel.setText("Սխալ տվյալ. ID");
+                studentAddedLabel.setTextFill(Color.RED);
+                return;
+            }
+        } else if (firstNameField.getText().length() < 3 || lastNameField.getText().length() < 5 ||
+                groupField.getText().length() < 5 && courseCheckBox.getSelectionModel().getSelectedIndex() == -1) {
+            studentAddedLabel.setText("Սխալ տվյալներ");
+            studentAddedLabel.setTextFill(Color.RED);
+            return;
+        }
+        studentsService.addOrUpdateStudent(
+                studentIDField.getText().trim(), firstNameField.getText().trim(), middleNameField.getText().trim(),lastNameField.getText().trim(),
+                courseCheckBox.getValue(), groupField.getText().trim(), editStudentCheckBox.selectedProperty().get());
+        studentAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է");
+        successPopup(studentAddedLabel);
+        resetStudentFields();
+    }
+
+
+    @FXML
+    private void deleteStudent() {
+        String id = studentIDField.getText();
+        if (id == null || id.isEmpty() || !id.matches("^\\d+$")){
+            studentAddedLabel.setText("Սխալ տվյալ. ID");
+            studentAddedLabel.setTextFill(Color.RED);
+            return;
+        }
+
+        try {
+            studentsService.deleteStudent(Long.valueOf(id));
+        } catch (SQLException e) {
+            studentAddedLabel.setText(e.getMessage());
+            studentAddedLabel.setTextFill(Color.RED);
+        }
+        studentAddedLabel.setTextFill(Color.GREEN);
+        studentAddedLabel.setText("Ջնջված է");
+        successPopup(studentAddedLabel);
+    }
+
+    @FXML
+    private void addOrUpdateQuestion() throws UnsupportedEncodingException, SQLException {
+        String question = questionArea.getText();
+        String[] answers = new String[]{ans1Area.getText(), ans2Area.getText()};
+        String rightAnswer = rightAnswerArea.getText();
+        questionAddedLabel.setTextFill(Color.RED);
+        String topic = topicBox.getValue() == null ? "" : topicBox.getValue().getTopic();
+        Integer rating = ratingBox.getValue() == null ? 0 : ratingBox.getValue();
+
+        boolean update = editQuestionCheckBox.isSelected();
+        if (update) {
+            if (questionIDField.getText().equals("") || !questionIDField.getText().matches("^\\d+$")) {
+                questionAddedLabel.setText("Սխալ տվյալ․ ID");
+                questionAddedLabel.setTextFill(Color.RED);
+                return;
+            }
+        }else {
+            if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() ||
+                answers[1].isEmpty() || topic.isEmpty() || rating==0) {
+                questionAddedLabel.setText("Սխալ տվյալներ");
+                return;
+            }
+        }
+
+        questionsService.addOrUpdateQuestion(update, questionIDField.getText(), question, rating, topic, rightAnswer, answers);
+        questionAddedLabel.setTextFill(Color.GREEN);
+        questionAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է");
+        successPopup(questionAddedLabel);
+        this.resetQuestionFields();
+    }
+
+
+    public void deleteQuestion() {
+        String id = questionIDField.getText();
+        if (id == null || id.isEmpty() || !id.matches("^\\d{1,5}$")){
+            questionAddedLabel.setText("Սխալ տվյալ. ID");
+            questionAddedLabel.setTextFill(Color.RED);
+            return;
+        }
+
+        try {
+            questionsService.deleteQuestion(Long.valueOf(id));
+            questionAddedLabel.setTextFill(Color.GREEN);
+            questionAddedLabel.setText("Ջնջված է");
+        } catch (SQLException e) {
+            questionAddedLabel.setText(e.getMessage());
+            questionAddedLabel.setTextFill(Color.RED);
+        }
+
+        successPopup(questionAddedLabel);
+    }
+
+    public void goToMainPage() throws IOException {
+        homeButton.getScene().getWindow().hide();
+        StartApp.showMainPage();
     }
 
     private void successPopup(Label inLabel) {
@@ -240,7 +297,7 @@ public class AdminController extends AbstractController implements Initializable
 
             @Override
             public void handle(long now) {
-                opacity -= 0.001;
+                opacity -= 0.008;
                 inLabel.opacityProperty().set(opacity);
                 if (opacity <= 0) {
                     stop();
@@ -269,6 +326,9 @@ public class AdminController extends AbstractController implements Initializable
     private void disableQuestionEditFields(boolean bool) {
         questionIDField.setDisable(bool);
         questionIDLabel.setDisable(bool);
+        delQuestionButton.setDisable(bool);
+        ans1Area.setDisable(!bool);
+        ans2Area.setDisable(!bool);
         if (bool) {
             confirmQuestionButton.setText("Ավելացնել");
         } else {
@@ -279,6 +339,7 @@ public class AdminController extends AbstractController implements Initializable
     private void disableStudentEditFields(boolean bool) {
         studentIDField.setDisable(bool);
         studentIDLabel.setDisable(bool);
+        delStudentButton.setDisable(bool);
         if (bool) {
             confirmStudentButton.setText("Ավելացնել");
         } else {
@@ -296,7 +357,21 @@ public class AdminController extends AbstractController implements Initializable
         groupField.setText("");
     }
 
-    public void locateAllConfigs() {
+    private void resetQuestionFields() {
+        questionArea.setText("");
+        rightAnswerArea.setText("");
+        ans1Area.setText("");
+        ans2Area.setText("");
+        topicBox.getSelectionModel().select(-1);
+        ratingBox.getSelectionModel().select(-1);
+    }
+
+    public void showAllConfigs() {
+        ratingsVBox.getChildren().clear();
+        countOfQuestionsByRatingVBox.getChildren().clear();
+        topicsVBox.getChildren().clear();
+
+
         testTimeField.setText(props.getProperty("test.timer"));
         questionsCountField.setText(props.getProperty("test.questionsCount"));
 
@@ -307,7 +382,7 @@ public class AdminController extends AbstractController implements Initializable
         TextField ratingField;
         for (int rating : ratings) {
             ratingField = new TextField(String.valueOf(rating));
-            ratingField.setPrefWidth(198);
+            ratingField.setMaxWidth(180);
             ratingsVBox.getChildren().add(ratingField);
         }
 
@@ -319,7 +394,7 @@ public class AdminController extends AbstractController implements Initializable
         TextField questionCountField;
         for (int count : countOfQuestionsByRating) {
             questionCountField = new TextField(String.valueOf(count));
-            questionCountField.setPrefWidth(198);
+            questionCountField.setMaxWidth(180);
             countOfQuestionsByRatingVBox.getChildren().add(questionCountField);
         }
 
@@ -328,16 +403,10 @@ public class AdminController extends AbstractController implements Initializable
         TextField topicField;
         for (String topic : topics) {
             topicField = new TextField(topic);
-            topicField.setPrefWidth(198);
+            topicField.setMaxWidth(180);
             topicsVBox.getChildren().add(topicField);
         }
 
-        ratingsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        ratingsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        topicsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        topicsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        questionCountsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        questionCountsPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     }
 
     public void saveSettingsInPropFIle() {
@@ -367,5 +436,20 @@ public class AdminController extends AbstractController implements Initializable
         propsAddedLabel.setText("Պահպանված է");
         successPopup(propsAddedLabel);
 
+    }
+
+    public void addQuestionCountField() {
+        TextField ratingField = new TextField();
+        ratingField.setMaxWidth(180);
+        ratingsVBox.getChildren().add(ratingField);
+        TextField questionCountField = new TextField();
+        questionCountField.setMaxWidth(180);
+        countOfQuestionsByRatingVBox.getChildren().add(questionCountField);
+    }
+
+    public void addTopicField() {
+        TextField newField = new TextField();
+        newField.setMaxWidth(180);
+        topicsVBox.getChildren().add(newField);
     }
 }

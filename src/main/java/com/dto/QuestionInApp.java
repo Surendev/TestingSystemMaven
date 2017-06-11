@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class QuestionInApp {
 
-    private Integer questionId;
+    private Long questionId;
     private String question;
     private String topic;
     private Integer rating;
@@ -20,11 +20,11 @@ public class QuestionInApp {
     private String answer2;
     private String answer3;
 
-    public Integer getQuestionId() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setQuestionId(Integer questionId) {
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
     }
 
@@ -75,5 +75,19 @@ public class QuestionInApp {
                 this.answer3 = answer.getText();
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionInApp{" +
+                "questionId=" + questionId +
+                ", question='" + question + '\'' +
+                ", topic='" + topic + '\'' +
+                ", rating=" + rating +
+                ", rightAnswer='" + rightAnswer + '\'' +
+                ", answer1='" + answer1 + '\'' +
+                ", answer2='" + answer2 + '\'' +
+                ", answer3='" + answer3 + '\'' +
+                '}';
     }
 }
