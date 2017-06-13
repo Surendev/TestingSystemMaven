@@ -34,6 +34,7 @@ public class QuestionsHelper {
         controller.IDLabel.setText(String.valueOf(clickedQuestion.getQuestionId()));
         controller.questionLabel.setText(String.valueOf(clickedQuestion.getQuestion()));
         controller.topicLabel.setText(String.valueOf(clickedQuestion.getTopic()));
+        controller.ratingLabel.setText(String.valueOf(clickedQuestion.getRating()));
         controller.rightAnswerLabel.setText(String.valueOf(clickedQuestion.getAnswer1()));
         controller.answer1Label.setText(String.valueOf(clickedQuestion.getAnswer2()));
         controller.answer2Label.setText(String.valueOf(clickedQuestion.getAnswer3()));

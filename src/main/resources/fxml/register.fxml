@@ -36,7 +36,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField id="5" fx:id="idField" layoutX="125.0" layoutY="409.0" prefHeight="20.0" prefWidth="250.0" />
+      <TextField id="5" fx:id="idField" layoutX="125.0" layoutY="409.0" prefHeight="20.0" prefWidth="250.0"  />
       <Label alignment="CENTER" layoutX="125.0" layoutY="313.0" prefHeight="20.0" prefWidth="250.0" text="Խումբ">
          <font>
             <Font size="15.0" />

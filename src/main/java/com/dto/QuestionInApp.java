@@ -64,10 +64,22 @@ public class QuestionInApp {
         return ConverteSymbols.converteFromHex(answer3);
     }
 
+    public void setAnswer1(String answer1) {
+        this.answer1 = answer1;
+    }
+
+    public void setAnswer2(String answer2) {
+        this.answer2 = answer2;
+    }
+
+    public void setAnswer3(String answer3) {
+        this.answer3 = answer3;
+    }
+
     public void setAnswers(List<Answer> answers, String rightAnswer) throws UnsupportedEncodingException {
         for (Answer answer : answers) {
             if (rightAnswer.equals(answer.getEncrypted())) {
-                this.rightAnswer = SecurityUtil.encrypt(answer.getText());
+                this.rightAnswer = answer.getEncrypted();
                 this.answer1 = answer.getText();
             } else if (answer2 == null) {
                 this.answer2 = answer.getText();
@@ -76,7 +88,16 @@ public class QuestionInApp {
             }
         }
     }
-
+    public int getRightIndex() {
+        try {
+            if (SecurityUtil.encrypt(answer1).equals(rightAnswer)) return 1;
+            else if (SecurityUtil.encrypt(answer2).equals(rightAnswer)) return 2;
+            else return  3;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
     @Override
     public String toString() {
         return "QuestionInApp{" +

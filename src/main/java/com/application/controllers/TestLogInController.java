@@ -47,6 +47,7 @@ public class TestLogInController extends AbstractController implements Initializ
             errLabel.setTextFill(Color.RED);
         }else{
             StartApp.showTestPage();
+            resetTestLoginFields();
         }
     }
 
@@ -90,6 +91,16 @@ public class TestLogInController extends AbstractController implements Initializ
 
     public void goToHome() throws IOException {
         errLabel.getScene().getWindow().hide();
+        resetTestLoginFields();
         StartApp.showMainPage();
+    }
+    private void resetTestLoginFields(){
+        firstNameField.clear();
+        middleNameField.clear();
+        lastNameField.clear();
+        groupBox.getSelectionModel().clearSelection();
+        idField.clear();
+        errLabel.setText("");
+        reset();
     }
 }

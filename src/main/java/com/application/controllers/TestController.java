@@ -65,31 +65,49 @@ public class TestController extends AbstractController implements Initializable 
 
     private Integer questionId = 1;
     private Test test;
+    private int[] chosenAnswers;
+    private QuestionInApp current;
+    private boolean[] setRandomAccess;
 
-    private Thread timer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
-        initializeTimer();
-        displayCurrentQuestion();
+        chosenAnswers = new int[test.getQuestionsSize()];
         initRadioButtons();
+        displayCurrentQuestion();
+        initializeTimer();
+
+    }
+    private void rollbackRadioButtons(){
+        if (answer1CheckBox.isSelected()) chosenAnswers[questionId-1] = 1;
+        else if (answer2CheckBox.isSelected()) chosenAnswers[questionId-1] = 2;
+        else if (answer3CheckBox.isSelected()) chosenAnswers[questionId-1] = 3;
+        else chosenAnswers[questionId-1] = 0;
+
     }
 
     //TODO ցիկլիկ հարցերի փոփոխություն
     public void goToNextButton() throws UnsupportedEncodingException {
+        rollbackRadioButtons();
         questionId = Integer.parseInt(questionNumberLabel.getId()) + 1;
         if (questionId > test.getQuestionsSize()) questionId = 1;
         displayCurrentQuestion();
     }
 
     public void backToPreviousQuestion() {
+        rollbackRadioButtons();
         questionId = Integer.parseInt(questionNumberLabel.getId()) - 1;
         if (questionId < 1) questionId = test.getQuestionsSize();
         displayCurrentQuestion();
     }
 
+    @FXML
     private void showEndPopup() {
+        timeline.stop();
+        test.markAnswerToQuestion(chosenAnswers);
+       double result = test.qualifyTest();
+       questionsSizeLabel.setText(result + "");
 
     }
 
@@ -100,8 +118,7 @@ public class TestController extends AbstractController implements Initializable 
 
     @FXML
     private void qualifyTest() {
-        timeline.stop();
-//        System.exit(0);
+
     }
 
 
@@ -115,7 +132,7 @@ public class TestController extends AbstractController implements Initializable 
 
     //region Initialization
     private void initializeTimer() {
-        Integer[] time = {0, 10};
+        Integer[] time = {timeOfExam, 10};
         timerLabel.setTextFill(Color.DARKGREEN);
         timerLabel.setText(time[0] + " ր․ " + ((time[1] < 10) ? "0" : "") + time[1] + " վրկ․");
         timeline = new Timeline(
@@ -123,7 +140,7 @@ public class TestController extends AbstractController implements Initializable 
                         Duration.millis(1000),
                         ae -> {
                             if (time[0] <= 19) timerLabel.setTextFill(Color.ORANGE);
-                            if (time[0] <= 18) timerLabel.setTextFill(Color.DARKRED);
+                            if (time[0] <= 5) timerLabel.setTextFill(Color.DARKRED);
 
                             if (time[1] <= 0) {
                                 time[0]--;
@@ -133,7 +150,7 @@ public class TestController extends AbstractController implements Initializable 
                             timerLabel.setText(time[0] + " ր․ " + ((time[1] < 10) ? "0" : "") + time[1] + " վրկ․");
                             if (time[0] == 0 && time[1] == 0) {
                                 Toolkit.getDefaultToolkit().beep();
-                                qualifyTest();
+                                showEndPopup();
                             }
                         }
                 )
@@ -142,21 +159,19 @@ public class TestController extends AbstractController implements Initializable 
         timeline.play();
     }
 
-
     private void displayCurrentQuestion() {
-        QuestionInApp current;
         try {
             current = test.getQuestion(questionId);
             questionTitle.setText(current.getQuestion());
             answer1.setText(current.getAnswer1());
-            answer1CheckBox.setUserData(current.getAnswer1());
             answer2.setText(current.getAnswer2());
-            answer2CheckBox.setUserData(current.getAnswer2());
             answer3.setText(current.getAnswer3());
-            answer3CheckBox.setUserData(current.getAnswer3());
             questionNumberLabel.setId(questionId.toString());
             questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString());
             questionsSizeLabel.setText("Հարցերի քանակը - " + test.getQuestionsSize());
+            answer1CheckBox.setSelected(chosenAnswers[questionId - 1] == 1);
+            answer2CheckBox.setSelected(chosenAnswers[questionId - 1] == 2);
+            answer3CheckBox.setSelected(chosenAnswers[questionId - 1] == 3);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
