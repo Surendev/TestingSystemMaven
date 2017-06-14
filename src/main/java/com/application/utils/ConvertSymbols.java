@@ -3,12 +3,12 @@ package com.application.utils;
 /**
  * Created by surik on 4/23/17
  */
-public class ConverteSymbols {
+public class ConvertSymbols {
 
     private static StringBuilder buffer;
     private static StringBuilder toConvert;
 
-    public static String converteFromHex(String textToConvert){
+    public static String convertFromHex(String textToConvert){
         if (textToConvert==null)
             return null;
         if (!textToConvert.matches(".*\\\\.*")) {

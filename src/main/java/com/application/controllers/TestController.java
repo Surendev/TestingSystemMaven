@@ -118,6 +118,9 @@ public class TestController extends AbstractController implements Initializable 
 
     private void disableTest(){
         timeline.stop();
+        questionNumberLabel.setVisible(false);
+        questionsSizeLabel.setVisible(false);
+        timerLabel.setVisible(false);
         answer1CheckBox.setDisable(true);
         answer2CheckBox.setDisable(true);
         answer3CheckBox.setDisable(true);
@@ -186,6 +189,7 @@ public class TestController extends AbstractController implements Initializable 
             answer3.setText(current.getAnswer3());
             questionNumberLabel.setId(questionId.toString());
             questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString() + " - " + test.getCurrentRating(questionId) + " միավոր");
+            questionsSizeLabel.setTextFill(Color.DARKGOLDENROD);
             questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
             answer1CheckBox.setSelected(chosenAnswers[questionId - 1] == 1);
             answer2CheckBox.setSelected(chosenAnswers[questionId - 1] == 2);

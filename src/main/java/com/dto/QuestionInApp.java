@@ -1,6 +1,6 @@
 package com.dto;
 
-import com.application.utils.ConverteSymbols;
+import com.application.utils.ConvertSymbols;
 import com.application.utils.SecurityUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -45,7 +45,7 @@ public class QuestionInApp {
     }
 
     public String getQuestion() {
-        return ConverteSymbols.converteFromHex(question);
+        return ConvertSymbols.convertFromHex(question);
     }
 
     public void setQuestion(String question) {
@@ -53,15 +53,15 @@ public class QuestionInApp {
     }
 
     public String getAnswer1() {
-        return ConverteSymbols.converteFromHex(answer1);
+        return ConvertSymbols.convertFromHex(answer1);
     }
 
     public String getAnswer2() {
-        return ConverteSymbols.converteFromHex(answer2);
+        return ConvertSymbols.convertFromHex(answer2);
     }
 
     public String getAnswer3() {
-        return ConverteSymbols.converteFromHex(answer3);
+        return ConvertSymbols.convertFromHex(answer3);
     }
 
     public void setAnswer1(String answer1) {

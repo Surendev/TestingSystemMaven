@@ -24,7 +24,7 @@ public class TopicUtil {
     }
     private  String topic;
 
-    TopicUtil(String topic) {
+    public TopicUtil(String topic) {
         this.topic = topic;
     }
 
@@ -42,7 +42,7 @@ public class TopicUtil {
             int i=1;
             while ((s = reader.readLine()) != null) {
                 fileString.append("UPDATE questions SET answer='")
-                    .append(SecurityUtil.encrypt(ConverteSymbols.converteFromHex(s)))
+                    .append(SecurityUtil.encrypt(ConvertSymbols.convertFromHex(s)))
                     .append("'").append(" WHERE id=").append(i).append("\n");
                 ++i;
             }

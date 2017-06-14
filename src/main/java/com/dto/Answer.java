@@ -1,6 +1,6 @@
 package com.dto;
 
-import com.application.utils.ConverteSymbols;
+import com.application.utils.ConvertSymbols;
 import com.application.utils.SecurityUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -40,7 +40,18 @@ public class Answer {
         this.toQuestion = toQuestion;
     }
 
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", toQuestion=" + toQuestion +
+                '}';
+    }
+
     public String getEncrypted() throws UnsupportedEncodingException {
-        return SecurityUtil.encrypt(ConverteSymbols.converteFromHex(text));
+        return SecurityUtil.encrypt(ConvertSymbols.convertFromHex(text));
+
+
     }
 }

@@ -59,12 +59,19 @@ public class QuestionsService implements QuestionsDAO {
                 questionId = jdbc.update(query.toString());
             }
 
-            if(!newRightAnswer.isEmpty()){
-                query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
-                jdbc.update(String.valueOf(query), newRightAnswer,questionId);
+            if(!newRightAnswer.isEmpty() && !answers[0].isEmpty() && !answers[1].isEmpty()){
                 query = new StringBuilder("UPDATE questions SET answer = ? WHERE id=?");
                 jdbc.update(String.valueOf(query), SecurityUtil.encrypt(newRightAnswer),questionId);
+                for (int i = 0; i < 3; i++) {
+                    jdbc.update("DELETE FROM answers WHERE to_question=?", questionId);
+                }
+                query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
+                jdbc.update(String.valueOf(query), newRightAnswer,questionId);
+                jdbc.update("INSERT INTO answers(text, to_question) VALUES(?,?)", answers[0], questionId);
+                jdbc.update("INSERT INTO answers(text, to_question) VALUES(?,?)", answers[1], questionId);
             }
+
+
         }
 
     }

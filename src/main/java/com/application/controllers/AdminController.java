@@ -1,10 +1,7 @@
 package com.application.controllers;
 
 import com.StartApp;
-import com.application.utils.ConfigsLoader;
-import com.application.utils.QuestionsHelper;
-import com.application.utils.QuestionsUtil;
-import com.application.utils.TopicUtil;
+import com.application.utils.*;
 import com.dto.Answer;
 import com.dto.Question;
 import com.dto.QuestionInApp;
@@ -16,14 +13,12 @@ import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -39,78 +34,126 @@ import java.util.*;
 public class AdminController extends AbstractController implements Initializable {
 
 
-    @FXML     private Button homeButton;
+    public Button confirmIdButton;
+    @FXML
+    private Button homeButton;
 
     //region Students tab
-    @FXML     private TableView<Student> studentsTable;
-    @FXML     private TableColumn<Student, String> studentIdCol;
-    @FXML     private TableColumn<Student, String> firstNameCol;
-    @FXML     private TableColumn<Student, String> lastNameCol;
-    @FXML     private TableColumn<Student, Integer> courseCol;
-    @FXML     private TableColumn<Student, String> groupCol;
-    @FXML     private TableColumn<Student, String> middleNameCol;
+    @FXML
+    private TableView<Student> studentsTable;
+    @FXML
+    private TableColumn<Student, String> studentIdCol;
+    @FXML
+    private TableColumn<Student, String> firstNameCol;
+    @FXML
+    private TableColumn<Student, String> lastNameCol;
+    @FXML
+    private TableColumn<Student, Integer> courseCol;
+    @FXML
+    private TableColumn<Student, String> groupCol;
+    @FXML
+    private TableColumn<Student, String> middleNameCol;
     //endregion
 
     //region Questions tab
-    @FXML     private TableView<QuestionInApp> questionsTable;
-    @FXML     private TableColumn<QuestionInApp, String> questionCol;
-    @FXML     private TableColumn<QuestionInApp, Integer> questionRatingCol;
-    @FXML     private TableColumn<QuestionInApp, String> topicCol;
-    @FXML     private TableColumn<QuestionInApp, String> rightAnswerCol;
-    @FXML     private TableColumn<QuestionInApp, String> answer1Col;
-    @FXML     private TableColumn<QuestionInApp, String> answer2Col;
-    @FXML     private TableColumn<QuestionInApp, String> questionId;
+    @FXML
+    private TableView<QuestionInApp> questionsTable;
+    @FXML
+    private TableColumn<QuestionInApp, String> questionCol;
+    @FXML
+    private TableColumn<QuestionInApp, Integer> questionRatingCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> topicCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> rightAnswerCol;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer1Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> answer2Col;
+    @FXML
+    private TableColumn<QuestionInApp, String> questionId;
     //endregion
 
     //region Student update tab
-    @FXML     private Label studentIDLabel;
-    @FXML     private TextField firstNameField;
-    @FXML     private TextField lastNameField;
-    @FXML private TextField middleNameField;
-    @FXML     private TextField groupField;
-    @FXML     private ComboBox<Integer> courseCheckBox;
-    @FXML     private ComboBox<Integer> ratingBox;
-    @FXML     private Button confirmStudentButton;
-    @FXML     private CheckBox editStudentCheckBox;
-    @FXML     private TextField studentIDField;
-    @FXML     private Label studentAddedLabel;
-    @FXML     private Button delStudentButton;
+    @FXML
+    private Label studentIDLabel;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField middleNameField;
+    @FXML
+    private TextField groupField;
+    @FXML
+    private ComboBox<Integer> courseCheckBox;
+    @FXML
+    private ComboBox<Integer> ratingBox;
+    @FXML
+    private Button confirmStudentButton;
+    @FXML
+    private CheckBox editStudentCheckBox;
+    @FXML
+    private TextField studentIDField;
+    @FXML
+    private Label studentAddedLabel;
+    @FXML
+    private Button delStudentButton;
     //endregion
 
     //region Question update tab
-    @FXML     private TextArea questionArea;
-    @FXML     private TextArea ans1Area;
-    @FXML     private TextArea ans2Area;
-    @FXML     private TextArea rightAnswerArea;
-    @FXML     private ComboBox<TopicUtil> topicBox;
-    @FXML     private CheckBox editQuestionCheckBox;
-    @FXML     private TextField questionIDField;
-    @FXML     private Label questionIDLabel;
-    @FXML     private Button confirmQuestionButton;
-    @FXML     private Label questionAddedLabel;
-    @FXML     private Button delQuestionButton;
+    @FXML
+    private TextArea questionArea;
+    @FXML
+    private TextArea ans1Area;
+    @FXML
+    private TextArea ans2Area;
+    @FXML
+    private TextArea rightAnswerArea;
+    @FXML
+    private ComboBox<TopicUtil> topicBox;
+    @FXML
+    private CheckBox editQuestionCheckBox;
+    @FXML
+    private TextField questionIDField;
+    @FXML
+    private Label questionIDLabel;
+    @FXML
+    private Button confirmQuestionButton;
+    @FXML
+    private Label questionAddedLabel;
+    @FXML
+    private Button delQuestionButton;
     //endregion
 
 
     //region Configs tab
     private Properties props = ConfigsLoader.getInstance().getProperties();
 
-    @FXML     private Label countLabel;
-    @FXML     private TextField testTimeField;
-    @FXML     private VBox ratingsVBox;
-    @FXML     private VBox countOfQuestionsByRatingVBox;
-    @FXML     private VBox topicsVBox;
-    @FXML     private Label propsAddedLabel;
+    @FXML
+    private Label countLabel;
+    @FXML
+    private TextField testTimeField;
+    @FXML
+    private VBox ratingsVBox;
+    @FXML
+    private VBox countOfQuestionsByRatingVBox;
+    @FXML
+    private VBox topicsVBox;
+    @FXML
+    private Label propsAddedLabel;
     //endregion
 
 
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
+    private Map<Question, List<Answer>> resultFromDB;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         studentsService = context.getBean("studentsService", StudentsService.class);
         questionsService = context.getBean("questionsService", QuestionsService.class);
+        resultFromDB = questionsService.getAllQuestions();
         homeButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/home.png"))));
         initializeCheckBoxes();
         initializeStudentsTableCellFactories();
@@ -173,7 +216,7 @@ public class AdminController extends AbstractController implements Initializable
 
     @FXML
     private void showQuestions() {
-        Map<Question, List<Answer>> resultFromDB = questionsService.getAllQuestions();
+        resultFromDB = questionsService.getAllQuestions();
         if (resultFromDB == null) {
             System.err.println("Questions Not Found");
         }
@@ -217,7 +260,7 @@ public class AdminController extends AbstractController implements Initializable
     @FXML
     private void deleteStudent() {
         String id = studentIDField.getText();
-        if (id == null || id.isEmpty() || !id.matches("^\\d+$")){
+        if (id == null || id.isEmpty() || !id.matches("^\\d+$")) {
             studentAddedLabel.setText("Սխալ տվյալ. ID");
             studentAddedLabel.setTextFill(Color.RED);
             return;
@@ -268,7 +311,7 @@ public class AdminController extends AbstractController implements Initializable
 
     public void deleteQuestion() {
         String id = questionIDField.getText();
-        if (id == null || id.isEmpty() || !id.matches("^\\d{1,5}$")){
+        if (id == null || id.isEmpty() || !id.matches("^\\d{1,5}$")) {
             questionAddedLabel.setText("Սխալ տվյալ. ID");
             questionAddedLabel.setTextFill(Color.RED);
             return;
@@ -326,9 +369,8 @@ public class AdminController extends AbstractController implements Initializable
     private void disableQuestionEditFields(boolean bool) {
         questionIDField.setDisable(bool);
         questionIDLabel.setDisable(bool);
+        confirmQuestionButton.setDisable(!bool);
         delQuestionButton.setDisable(bool);
-        ans1Area.setDisable(!bool);
-        ans2Area.setDisable(!bool);
         if (bool) {
             confirmQuestionButton.setText("Ավելացնել");
         } else {
@@ -463,5 +505,31 @@ public class AdminController extends AbstractController implements Initializable
         TextField newField = new TextField();
         newField.setMaxWidth(180);
         topicsVBox.getChildren().add(newField);
+    }
+
+    public void confirmID(ActionEvent actionEvent) {
+        confirmQuestionButton.setDisable(false);
+        Question question = null;
+        for (Question next : resultFromDB.keySet()){
+            if (Objects.equals(next.getId(), Long.valueOf(questionIDField.getText()))) question = next;
+        }
+        questionArea.setText(ConvertSymbols.convertFromHex(question.getQuestion()));
+        topicBox.setValue(new TopicUtil(question.getTopic()));
+        ratingBox.setValue(question.getRating());
+        List<Answer> answerList = resultFromDB.get(question);
+        System.out.println(answerList);
+        for (Answer next : answerList){
+            try {
+                if (question.getAnswer().equals(next.getEncrypted())) {
+                    rightAnswerArea.setText(ConvertSymbols.convertFromHex(next.getText()));
+                    answerList.remove(next);
+                    break;
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        ans1Area.setText(ConvertSymbols.convertFromHex(answerList.get(0).getText()));
+        ans2Area.setText(ConvertSymbols.convertFromHex(answerList.get(1).getText()));
     }
 }
