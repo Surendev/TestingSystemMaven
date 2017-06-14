@@ -138,14 +138,6 @@
                               <Cursor fx:constant="TEXT" />
                            </cursor>
                         </TextField>
-                        <TextField fx:id="questionsCountField" alignment="CENTER" layoutX="508.0" layoutY="87.0" prefHeight="20.0" prefWidth="200.0">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="TEXT" />
-                           </cursor>
-                        </TextField>
                         <Label fx:id="ratingsLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="126.0" prefHeight="20.0" prefWidth="200.0" text="Հարցի Արժեք" textAlignment="CENTER">
                            <font>
                               <Font size="15.0" />
@@ -181,7 +173,7 @@
                               <VBox fx:id="topicsVBox" prefHeight="319.0" prefWidth="200.0" />
                            </content>
                         </ScrollPane>
-                         <Label fx:id="propsAddedLabel" alignment="CENTER" layoutX="125.0" layoutY="480" prefHeight="32.0" prefWidth="200.0" textFill="#e66768">
+                         <Label fx:id="propsAddedLabel" alignment="CENTER" layoutX="125.0" layoutY="480" prefHeight="32.0" prefWidth="200.0" textFill="darkgreen">
                          <font>
                              <Font size="20.0" />
                          </font>

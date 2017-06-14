@@ -27,17 +27,19 @@ public class Test {
         for (Question pair : this.questions) {
             wrongAnswers.addAll(service.getAnswersByQuestionId(pair.getId()));
         }
-        for (int i = 0; i < questions.size(); i++) {
+        for (int i = 0; i < this.questions.size(); i++) {
+            int j = i * 3;
             QuestionInApp questionInApp = new QuestionInApp();
+            questionInApp.setQuestionId(this.questions.get(i).getId());
             questionInApp.setQuestion(this.questions.get(i).getQuestion());
             questionInApp.setRating(this.questions.get(i).getRating());
             questionInApp.setTopic(this.questions.get(i).getTopic());
             try {
-                questionInApp.setAnswers(wrongAnswers.subList(i, i + 3), this.questions.get(i).getAnswer());
+                questionInApp.setAnswers(wrongAnswers.subList(j, j + 3), this.questions.get(i).getAnswer());
+                appQuestions.add(setRandomAnswers(questionInApp));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            appQuestions.add(setRandomAnswers(questionInApp));
         }
     }
 
@@ -53,8 +55,12 @@ public class Test {
         return studentAnswers;
     }
 
-    public int getQuestionsSize(){
+    public int getAppQuestionsSize(){
         return questions.size();
+    }
+
+    public int getCurrentRating(int id){
+        return appQuestions.get(id - 1).getRating();
     }
 
     private QuestionInApp setRandomAnswers(QuestionInApp appQuestion){
@@ -103,13 +109,16 @@ public class Test {
         return appQuestion;
     }
 
-    public double qualifyTest(){
+    public double[] qualifyTest(){
         double result = 0.0;
+        double maxRate = 0.0;
         for (int i = 0; i < studentAnswers.size(); i++) {
-            if (appQuestions.get(i).getRightIndex() == studentAnswers.get(i))
+            if (appQuestions.get(i).getRightIndex() == studentAnswers.get(i)){
                 result+=appQuestions.get(i).getRating();
+            }
+            maxRate += appQuestions.get(i).getRating();
         }
-        return result;
+        return new double[] {result, maxRate};
     }
 
 }

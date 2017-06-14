@@ -95,7 +95,7 @@ public class AdminController extends AbstractController implements Initializable
     //region Configs tab
     private Properties props = ConfigsLoader.getInstance().getProperties();
 
-    @FXML     private TextField questionsCountField;
+    @FXML     private Label countLabel;
     @FXML     private TextField testTimeField;
     @FXML     private VBox ratingsVBox;
     @FXML     private VBox countOfQuestionsByRatingVBox;
@@ -373,7 +373,6 @@ public class AdminController extends AbstractController implements Initializable
 
 
         testTimeField.setText(props.getProperty("test.timer"));
-        questionsCountField.setText(props.getProperty("test.questionsCount"));
 
         int[] ratings =
                 Arrays.stream(props.getProperty("test.ratings").split(","))
@@ -391,6 +390,11 @@ public class AdminController extends AbstractController implements Initializable
                         .mapToInt(Integer::parseInt)
                         .toArray();
 
+        int countsSummary = 0;
+        for (int next : countOfQuestionsByRating) {
+            countsSummary += next;
+        }
+        countLabel.setText("Հարցերի քանակը - " + countsSummary);
         TextField questionCountField;
         for (int count : countOfQuestionsByRating) {
             questionCountField = new TextField(String.valueOf(count));
@@ -413,9 +417,7 @@ public class AdminController extends AbstractController implements Initializable
         if (!props.getProperty("test.timer").equals(testTimeField.getText())) {
             props.setProperty("test.timer", testTimeField.getText());
         }
-        if (!props.getProperty("test.questionsCount").equals(questionsCountField.getText())) {
-            props.setProperty("test.questionsCount", questionsCountField.getText());
-        }
+
 
         StringBuilder ratings = new StringBuilder();
         ratingsVBox.getChildren().forEach(node -> ratings.append(((TextField) node).getText()).append(","));
@@ -432,7 +434,17 @@ public class AdminController extends AbstractController implements Initializable
         topics.delete(topics.length() - 1, topics.length());
         props.setProperty("test.topics", topics.toString());
 
+        String[] countsString = countOfQuestions.toString().split(",");
+        int[] counts = new int[countsString.length];
+        for (int i = 0; i < counts.length; i++) {
+            counts[i] = Integer.valueOf(countsString[i]);
+        }
+
+        if (!props.getProperty("test.questionsCount").equals(countLabel.getText())) {
+            props.setProperty("test.questionsCount", String.valueOf(Arrays.stream(counts).sum()));
+        }
         ConfigsLoader.getInstance().setProperties(props);
+        countLabel.setText("Հարցերի քանակը - " + Arrays.stream(counts).sum());
         propsAddedLabel.setText("Պահպանված է");
         successPopup(propsAddedLabel);
 

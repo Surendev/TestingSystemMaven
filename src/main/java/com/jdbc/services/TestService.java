@@ -23,7 +23,7 @@ public class TestService implements TestDAO {
     public TestService() {
         String [] countsArr = ConfigsLoader.getInstance().getProperties().getProperty("test.countOfRatings").split(",");
         int[] counts = new int[countsArr.length];
-        for (int i = 0;i< countsArr.length;++i){
+        for (int i = 0;i < countsArr.length;++i){
             counts[i] = Integer.valueOf(countsArr[i]);
         }
         questionsCountByRating = counts;
@@ -32,7 +32,7 @@ public class TestService implements TestDAO {
     @Override
     public Test generateTest(QuestionsDAO questionsService) {
         Map<Integer, List<Question>> testMap = new TreeMap<>();
-        for (int i = 1; i < questionsCountByRating.length; i++){
+        for (int i = 0; i < questionsCountByRating.length; i++){
             testMap.put(testUtil.ratings[i],
                     generateFinalQuestionsByCount(testUtil.ratings[i], questionsCountByRating[i]));
         }

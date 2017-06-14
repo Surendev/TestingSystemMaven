@@ -10,13 +10,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.*;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -30,8 +31,13 @@ import java.util.ResourceBundle;
  */
 public class TestController extends AbstractController implements Initializable {
 
+    @FXML private Button forwardButton;
+    @FXML private Button backButton;
+
     private Integer timeOfExam = Integer.valueOf(adminConfigs.getProperty("test.timer"));
+
     Timeline timeline;
+
     private @FXML
     Label timerLabel;
 
@@ -67,13 +73,12 @@ public class TestController extends AbstractController implements Initializable 
     private Test test;
     private int[] chosenAnswers;
     private QuestionInApp current;
-    private boolean[] setRandomAccess;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
-        chosenAnswers = new int[test.getQuestionsSize()];
+        chosenAnswers = new int[test.getAppQuestionsSize()];
         initRadioButtons();
         displayCurrentQuestion();
         initializeTimer();
@@ -87,38 +92,51 @@ public class TestController extends AbstractController implements Initializable 
 
     }
 
-    //TODO ցիկլիկ հարցերի փոփոխություն
     public void goToNextButton() throws UnsupportedEncodingException {
         rollbackRadioButtons();
         questionId = Integer.parseInt(questionNumberLabel.getId()) + 1;
-        if (questionId > test.getQuestionsSize()) questionId = 1;
+        if (questionId > test.getAppQuestionsSize()) questionId = 1;
         displayCurrentQuestion();
     }
 
     public void backToPreviousQuestion() {
         rollbackRadioButtons();
         questionId = Integer.parseInt(questionNumberLabel.getId()) - 1;
-        if (questionId < 1) questionId = test.getQuestionsSize();
+        if (questionId < 1) questionId = test.getAppQuestionsSize();
         displayCurrentQuestion();
     }
 
     @FXML
     private void showEndPopup() {
+       disableTest();
+       double[] result = test.qualifyTest();
+       questionTitle.setFont(javafx.scene.text.Font.font(25));
+       questionTitle.setTextFill(Color.BLACK);
+       questionTitle.setText("Դուք հավաքել եք " + result[0] + " միավոր " + result[1] + "-ից");
+
+    }
+
+    private void disableTest(){
         timeline.stop();
+        answer1CheckBox.setDisable(true);
+        answer2CheckBox.setDisable(true);
+        answer3CheckBox.setDisable(true);
+        answer1CheckBox.setVisible(false);
+        answer2CheckBox.setVisible(false);
+        answer3CheckBox.setVisible(false);
+        answer1.setText("");
+        answer2.setText("");
+        answer3.setText("");
+        insertedQuestionId.setDisable(true);
+        insertedQuestionId.setVisible(false);
         test.markAnswerToQuestion(chosenAnswers);
-       double result = test.qualifyTest();
-       questionsSizeLabel.setText(result + "");
-
+        forwardButton.setDisable(true);
+        backButton.setDisable(true);
+        forwardButton.setVisible(false);
+        backButton.setVisible(false);
     }
-
     public void goToHomePage() throws IOException {
-
         StartApp.showMainPage();
-    }
-
-    @FXML
-    private void qualifyTest() {
-
     }
 
 
@@ -132,7 +150,7 @@ public class TestController extends AbstractController implements Initializable 
 
     //region Initialization
     private void initializeTimer() {
-        Integer[] time = {timeOfExam, 10};
+        Integer[] time = {timeOfExam, 0};
         timerLabel.setTextFill(Color.DARKGREEN);
         timerLabel.setText(time[0] + " ր․ " + ((time[1] < 10) ? "0" : "") + time[1] + " վրկ․");
         timeline = new Timeline(
@@ -167,8 +185,8 @@ public class TestController extends AbstractController implements Initializable 
             answer2.setText(current.getAnswer2());
             answer3.setText(current.getAnswer3());
             questionNumberLabel.setId(questionId.toString());
-            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString());
-            questionsSizeLabel.setText("Հարցերի քանակը - " + test.getQuestionsSize());
+            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString() + " - " + test.getCurrentRating(questionId) + " միավոր");
+            questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
             answer1CheckBox.setSelected(chosenAnswers[questionId - 1] == 1);
             answer2CheckBox.setSelected(chosenAnswers[questionId - 1] == 2);
             answer3CheckBox.setSelected(chosenAnswers[questionId - 1] == 3);

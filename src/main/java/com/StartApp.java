@@ -62,10 +62,9 @@ public class StartApp extends Application{
     }
 
     public static void showTestPage() throws IOException{
-        if(testPane == null) {
             testPane = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
             testScene = new Scene(testPane, 800,600);
-        }
+
         primaryStage.setScene(testScene);
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Testing System _ Test");
