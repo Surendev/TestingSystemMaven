@@ -5,10 +5,10 @@ import com.StartApp;
 import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -18,16 +18,23 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TestLogInController extends AbstractController implements Initializable{
+public class TestLogInController extends AbstractController implements Initializable {
 
+    public Button confirmButton;
     private StudentsDAO studentsService;
 
-    private @FXML TextField firstNameField;
-    private @FXML TextField middleNameField;
-    private @FXML TextField lastNameField;
-    private @FXML ComboBox<String> groupBox;
-    private @FXML TextField idField;
-    private @FXML Label errLabel;
+    private @FXML
+    TextField firstNameField;
+    private @FXML
+    TextField middleNameField;
+    private @FXML
+    TextField lastNameField;
+    private @FXML
+    ComboBox<String> groupBox;
+    private @FXML
+    TextField idField;
+    private @FXML
+    Label errLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,16 +43,16 @@ public class TestLogInController extends AbstractController implements Initializ
     }
 
     public void checkAuthentication() throws IOException {
-        if(!isValidEnteredValues()){
+        if (!isValidEnteredValues()) {
             return;
         }
         Student studentFromDB = studentsService.getStudentById(idField.getText());
-        if(!studentFromDB.getFirstName().equals(firstNameField.getText()) ||
-            !studentFromDB.getLastName().equals(lastNameField.getText()) ||
-            !studentFromDB.getGroup().equals(groupBox.getValue())) {
+        if (!studentFromDB.getFirstName().equals(firstNameField.getText()) ||
+                !studentFromDB.getLastName().equals(lastNameField.getText()) ||
+                !studentFromDB.getGroup().equals(groupBox.getValue())) {
             errLabel.setText("Ուսանողի տվյալները չեն համապատասխանում");
             errLabel.setTextFill(Color.RED);
-        }else{
+        } else {
             StartApp.showTestPage();
             resetTestLoginFields();
         }
@@ -53,37 +60,39 @@ public class TestLogInController extends AbstractController implements Initializ
 
     private boolean isValidEnteredValues() {
         String value;
-        if((value=firstNameField.getText()).equals("") || value.matches("[^a-zA-z0-9_]")){
-            setErrorToView(firstNameField,"Անունը");
+        if ((value = firstNameField.getText()).equals("") || value.matches("[^a-zA-z0-9_]")) {
+            setErrorToView(firstNameField, "Անունը");
             return false;
         }
-        if((value=lastNameField.getText()).equals("") || value.matches("\\W")){
-            setErrorToView(lastNameField,"Ազգանունը");
-            return false;
-        }if((value=middleNameField.getText()).equals("") || value.matches("\\W")){
-            setErrorToView(middleNameField,"Հայրանունը");
-            return false;
-        }if((value=idField.getText()).equals("") || !value.matches("\\d+")){
-            setErrorToView(idField,"Հերթական համարը");
+        if ((value = lastNameField.getText()).equals("") || value.matches("\\W")) {
+            setErrorToView(lastNameField, "Ազգանունը");
             return false;
         }
-        if(groupBox.getSelectionModel().getSelectedIndex() == -1){
-            setErrorToView(groupBox,"Ընտրեք ձեր խումբը");
+        if ((value = middleNameField.getText()).equals("") || value.matches("\\W")) {
+            setErrorToView(middleNameField, "Հայրանունը");
+            return false;
+        }
+        if ((value = idField.getText()).equals("") || !value.matches("\\d+")) {
+            setErrorToView(idField, "Հերթական համարը");
+            return false;
+        }
+        if (groupBox.getSelectionModel().getSelectedIndex() == -1) {
+            setErrorToView(groupBox, "Ընտրեք ձեր խումբը");
             return false;
         }
         return true;
     }
 
-    private void reset(){
+    private void reset() {
         errLabel.setText("Լրացրեք ձեր տվյալները ԱՆՍԽԱԼ");
         errLabel.setTextFill(Color.GREEN);
     }
 
-    private void setErrorToView(Node node, String errMsg){
+    private void setErrorToView(Node node, String errMsg) {
         errLabel.setText(errMsg + " սխալ է ներմուծված");
         errLabel.setTextFill(Color.RED);
         node.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue){
+            if (newValue) {
                 reset();
             }
         });
@@ -94,7 +103,8 @@ public class TestLogInController extends AbstractController implements Initializ
         resetTestLoginFields();
         StartApp.showMainPage();
     }
-    private void resetTestLoginFields(){
+
+    private void resetTestLoginFields() {
         firstNameField.clear();
         middleNameField.clear();
         lastNameField.clear();

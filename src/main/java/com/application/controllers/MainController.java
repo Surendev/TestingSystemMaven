@@ -36,8 +36,8 @@ public class MainController {
 
     public void initialMouse(MouseEvent mouseEvent) {
         goToAdminPage.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> goToAdminPage.setTextFill(Color.RED));
-        goToTest.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> goToTest.setTextFill(Color.RED));
         goToAdminPage.addEventFilter(MouseEvent.MOUSE_EXITED, event -> goToAdminPage.setTextFill(Color.BLACK));
+        goToTest.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> goToTest.setTextFill(Color.RED));
         goToTest.addEventFilter(MouseEvent.MOUSE_EXITED, event -> goToTest.setTextFill(Color.BLACK));
     }
 }

@@ -6,9 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.MainController"  style="-fx-background-image: url('/icons/system-testing1_main.png')">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" onMouseMoved="#initialMouse" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.MainController"  style="-fx-background-image: url('/icons/system-testing1_main.png')">
    <left>
-      <Button fx:id="goToAdminPage" mnemonicParsing="false" onMouseMoved="#initialMouse" onAction="#gotToAdminPage" prefWidth="100.0" text="Admin Page" BorderPane.alignment="CENTER" >
+      <Button fx:id="goToAdminPage" mnemonicParsing="false" onAction="#gotToAdminPage" prefWidth="100.0" text="Admin Page" BorderPane.alignment="CENTER" >
          <BorderPane.margin>
             <Insets left="10.0" />
          </BorderPane.margin>

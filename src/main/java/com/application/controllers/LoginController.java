@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -32,6 +34,7 @@ public class LoginController extends AbstractController implements Initializable
     private @FXML TextField loginField;
     private @FXML TextField passwordField;
     private @FXML Button logIn;
+    private @FXML Button cancel;
     private @FXML Label errLabel;
 
     @Override
@@ -75,5 +78,17 @@ public class LoginController extends AbstractController implements Initializable
         stage.setResizable(false);
         stage.getIcons().add(new Image("/icons/TestIcon.png"));
         stage.show();
+    }
+
+    public void initialMouse(MouseEvent mouseEvent) {
+        logIn.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
+            logIn.setStyle("-fx-border-color: floralwhite;-fx-background-color: brown; -fx-border-width: 0 0 4px 0");
+        });
+        cancel.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
+            cancel.setStyle("-fx-border-color: floralwhite;-fx-background-color: brown; -fx-border-width: 0 0 4px 0");
+        });
+
+        logIn.addEventFilter(MouseEvent.MOUSE_EXITED, event -> logIn.setStyle("-fx-background-color: brown"));
+        cancel.addEventFilter(MouseEvent.MOUSE_EXITED, event -> cancel.setStyle("-fx-background-color: brown"));
     }
 }
