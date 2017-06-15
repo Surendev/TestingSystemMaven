@@ -63,6 +63,8 @@ public class Test {
         return appQuestions.get(id - 1).getRating();
     }
 
+    public String getCurrentTopic(int id){return appQuestions.get(id - 1).getTopic();}
+
     private QuestionInApp setRandomAnswers(QuestionInApp appQuestion){
         Random random = new Random();
         int r = random.nextInt(6);

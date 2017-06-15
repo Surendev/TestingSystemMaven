@@ -12,7 +12,7 @@
       <ToolBar prefHeight="40.0" prefWidth="800.0">
         <items>
            <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToHomePage" text="HOME" />
-           <Label fx:id="questionsSizeLabel" alignment="BASELINE_LEFT" focusTraversable="false" prefHeight="20.0" prefWidth="200.0" text="Հարցերի քանակ " textAlignment="LEFT" textFill="#a12c2c" translateX="50.0">
+           <Label fx:id="questionsSizeLabel" prefHeight="20.0" prefWidth="180.0" text="Հարցերի քանակ " textAlignment="CENTER" textFill="#a12c2c" translateX="5.0">
               <font>
                  <Font size="15.0" />
               </font>
@@ -20,7 +20,7 @@
                  <Insets />
               </opaqueInsets>
            </Label>
-           <Label fx:id="questionNumberLabel" alignment="CENTER" focusTraversable="false" prefHeight="20.0" prefWidth="200.0" text="Հարց " textAlignment="RIGHT" textFill="#a12c2c" translateX="25.0">
+           <Label fx:id="questionNumberLabel" prefHeight="20.0" prefWidth="300.0" text="Հարց " textAlignment="RIGHT" textFill="#a12c2c" translateX="5.0">
               <font>
                   <Font size="15.0" />
                </font>
@@ -28,7 +28,7 @@
                   <Insets />
                </opaqueInsets>
            </Label>
-           <Label fx:id="timerLabel" alignment="BASELINE_RIGHT" focusTraversable="false" prefHeight="20.0" prefWidth="200.0" textAlignment="LEFT" textFill="#c63333" translateX="0.0">
+           <Label fx:id="timerLabel" prefHeight="20.0" prefWidth="100.0" textAlignment="CENTER" textFill="#c63333" translateX="5.0">
               <font>
                  <Font size="15.0" />
               </font>

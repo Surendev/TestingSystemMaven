@@ -8,6 +8,7 @@ import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -188,7 +189,8 @@ public class TestController extends AbstractController implements Initializable 
             answer2.setText(current.getAnswer2());
             answer3.setText(current.getAnswer3());
             questionNumberLabel.setId(questionId.toString());
-            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString() + " - " + test.getCurrentRating(questionId) + " միավոր");
+            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString() +
+                    " | " + test.getCurrentRating(questionId) + " միավոր" + " | " + test.getCurrentTopic(questionId));
             questionsSizeLabel.setTextFill(Color.DARKGOLDENROD);
             questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
             answer1CheckBox.setSelected(chosenAnswers[questionId - 1] == 1);

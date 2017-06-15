@@ -517,7 +517,6 @@ public class AdminController extends AbstractController implements Initializable
         topicBox.setValue(new TopicUtil(question.getTopic()));
         ratingBox.setValue(question.getRating());
         List<Answer> answerList = resultFromDB.get(question);
-        System.out.println(answerList);
         for (Answer next : answerList){
             try {
                 if (question.getAnswer().equals(next.getEncrypted())) {
