@@ -1,6 +1,5 @@
 package com;
 
-import com.application.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,17 +16,13 @@ import java.io.IOException;
  * This is where application begin.
  * At begin it loads {@code login.fxml}
  * and prompt user to enter admins login and password
-*/
-public class StartApp extends Application{
+ */
+public class StartApp extends Application {
 
     private static Stage primaryStage;
     private static BorderPane mainLayout;
-    private static Pane loginPane;
-    private static Pane testPane;
     private static Pane registrationPane;
     private static Scene mainScene;
-    private static Scene loginScene;
-    private static Scene testScene;
     private static Scene registrationScene;
 
     @Override
@@ -38,9 +33,9 @@ public class StartApp extends Application{
     }
 
     public static void showMainPage() throws IOException {
-        if(mainLayout==null) {
+        if (mainLayout == null) {
             mainLayout = FXMLLoader.load(StartApp.class.getResource("/fxml/main.fxml"));
-            mainScene = new Scene(mainLayout,300,300);
+            mainScene = new Scene(mainLayout, 300, 300);
         }
         primaryStage.setScene(mainScene);
         primaryStage.setTitle("Testing System");
@@ -50,8 +45,8 @@ public class StartApp extends Application{
     }
 
     public static void showLoginPage() throws IOException {
-        loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
-        loginScene= new Scene(loginPane, 300,300);
+        Pane loginPane = FXMLLoader.load(StartApp.class.getResource("/fxml/login.fxml"));
+        Scene loginScene = new Scene(loginPane, 300, 300);
         primaryStage.setScene(loginScene);
         primaryStage.setTitle("Testing System Login");
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
@@ -60,19 +55,8 @@ public class StartApp extends Application{
 
     }
 
-    public static void showTestPage() throws IOException{
-            testPane = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
-            testScene = new Scene(testPane, 800,600);
-
-        primaryStage.setScene(testScene);
-        primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
-        primaryStage.setTitle("Testing System _ Test");
-        primaryStage.setResizable(false);
-        primaryStage.show();
-    }
-
-    public static void showRegistrationPage() throws IOException{
-        if (registrationPane == null){
+    public static void showRegistrationPage() throws IOException {
+        if (registrationPane == null) {
             registrationPane = FXMLLoader.load(StartApp.class.getResource("/fxml/register.fxml"));
             registrationScene = new Scene(registrationPane, 500, 600);
         }
@@ -82,7 +66,6 @@ public class StartApp extends Application{
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-
 
 
     public static void main(String[] args) {

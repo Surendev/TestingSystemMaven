@@ -8,17 +8,21 @@ import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.css.PseudoClass;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
@@ -32,12 +36,19 @@ import java.util.ResourceBundle;
  */
 public class TestController extends AbstractController implements Initializable {
 
-    @FXML private Button forwardButton;
-    @FXML private Button backButton;
+    public Button closeButton;
+    public Button minimizeButton;
+    public Pane pane;
+    private Stage stage;
+    private double[] xy;
+    @FXML
+    private Button forwardButton;
+    @FXML
+    private Button backButton;
 
     private Integer timeOfExam = Integer.valueOf(adminConfigs.getProperty("test.timer"));
 
-    Timeline timeline;
+    private Timeline timeline;
 
     private @FXML
     Label timerLabel;
@@ -73,35 +84,40 @@ public class TestController extends AbstractController implements Initializable 
     private Integer questionId = 1;
     private Test test;
     private int[] chosenAnswers;
-    private QuestionInApp current;
+    private boolean examPassed = false;
+    private int[] rights;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
         chosenAnswers = new int[test.getAppQuestionsSize()];
+        for (int i = 0; i < chosenAnswers.length; i++) {
+            chosenAnswers[i] = 1;
+        }
+        questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
+        rights = new int[chosenAnswers.length];
         initRadioButtons();
         displayCurrentQuestion();
         initializeTimer();
-
     }
-    private void rollbackRadioButtons(){
-        if (answer1CheckBox.isSelected()) chosenAnswers[questionId-1] = 1;
-        else if (answer2CheckBox.isSelected()) chosenAnswers[questionId-1] = 2;
-        else if (answer3CheckBox.isSelected()) chosenAnswers[questionId-1] = 3;
-        else chosenAnswers[questionId-1] = 0;
+
+    private void rollbackRadioButtons() {
+        if (answer1CheckBox.isSelected()) chosenAnswers[questionId - 1] = 1;
+        else if (answer2CheckBox.isSelected()) chosenAnswers[questionId - 1] = 2;
+        else if (answer3CheckBox.isSelected()) chosenAnswers[questionId - 1] = 3;
 
     }
 
     public void goToNextButton() throws UnsupportedEncodingException {
-        rollbackRadioButtons();
+        if (!examPassed) rollbackRadioButtons();
         questionId = Integer.parseInt(questionNumberLabel.getId()) + 1;
         if (questionId > test.getAppQuestionsSize()) questionId = 1;
         displayCurrentQuestion();
     }
 
     public void backToPreviousQuestion() {
-        rollbackRadioButtons();
+        if (!examPassed) rollbackRadioButtons();
         questionId = Integer.parseInt(questionNumberLabel.getId()) - 1;
         if (questionId < 1) questionId = test.getAppQuestionsSize();
         displayCurrentQuestion();
@@ -109,37 +125,28 @@ public class TestController extends AbstractController implements Initializable 
 
     @FXML
     private void showEndPopup() {
-       disableTest();
-       double[] result = test.qualifyTest();
-       questionTitle.setFont(javafx.scene.text.Font.font(25));
-       questionTitle.setTextFill(Color.BLACK);
-       questionTitle.setText("Դուք հավաքել եք " + result[0] + " միավոր " + result[1] + "-ից");
-
+        disableTest();
+        test.markAnswerToQuestion(chosenAnswers);
+        double[] result = test.qualifyTest(rights);
+        questionsSizeLabel.setText("Դուք հավաքել եք");
+        questionNumberLabel.setText(result[0] + " միավոր " + result[1] + "-ից");
+        examPassed = true;
     }
 
-    private void disableTest(){
+    private void disableTest() {
         timeline.stop();
-        questionNumberLabel.setVisible(false);
-        questionsSizeLabel.setVisible(false);
-        timerLabel.setVisible(false);
+        Toolkit.getDefaultToolkit().beep();
         answer1CheckBox.setDisable(true);
         answer2CheckBox.setDisable(true);
         answer3CheckBox.setDisable(true);
         answer1CheckBox.setVisible(false);
         answer2CheckBox.setVisible(false);
         answer3CheckBox.setVisible(false);
-        answer1.setText("");
-        answer2.setText("");
-        answer3.setText("");
-        insertedQuestionId.setDisable(true);
-        insertedQuestionId.setVisible(false);
-        test.markAnswerToQuestion(chosenAnswers);
-        forwardButton.setDisable(true);
-        backButton.setDisable(true);
-        forwardButton.setVisible(false);
-        backButton.setVisible(false);
     }
+
     public void goToHomePage() throws IOException {
+        stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
         StartApp.showMainPage();
     }
 
@@ -147,6 +154,7 @@ public class TestController extends AbstractController implements Initializable 
     public void goToQuestion(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             questionId = Integer.parseInt(insertedQuestionId.getText());
+            if (!examPassed) rollbackRadioButtons();
             displayCurrentQuestion();
         }
     }
@@ -183,22 +191,32 @@ public class TestController extends AbstractController implements Initializable 
 
     private void displayCurrentQuestion() {
         try {
-            current = test.getQuestion(questionId);
+            QuestionInApp current = test.getQuestion(questionId);
             questionTitle.setText(current.getQuestion());
             answer1.setText(current.getAnswer1());
             answer2.setText(current.getAnswer2());
             answer3.setText(current.getAnswer3());
             questionNumberLabel.setId(questionId.toString());
-            questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString() +
-                    " | " + test.getCurrentRating(questionId) + " միավոր" + " | " + test.getCurrentTopic(questionId));
-            questionsSizeLabel.setTextFill(Color.DARKGOLDENROD);
-            questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
-            answer1CheckBox.setSelected(chosenAnswers[questionId - 1] == 1);
-            answer2CheckBox.setSelected(chosenAnswers[questionId - 1] == 2);
-            answer3CheckBox.setSelected(chosenAnswers[questionId - 1] == 3);
+            if (!examPassed) {
+                questionNumberLabel.setText(questionNumberLabel.getText().substring(0, 5) + " " + questionId.toString() +
+                        " | " + test.getCurrentRating(questionId) + " միավոր" + " | " + test.getCurrentTopic(questionId));
+                answer1CheckBox.setSelected(chosenAnswers[questionId - 1] == 1);
+                answer2CheckBox.setSelected(chosenAnswers[questionId - 1] == 2);
+                answer3CheckBox.setSelected(chosenAnswers[questionId - 1] == 3);
+            }
+            if (examPassed) showDifference();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    private void showDifference(){
+        stage = (Stage) questionNumberLabel.getScene().getWindow();
+        Label current;
+        current = (Label) stage.getScene().getRoot().lookup("#answer" + chosenAnswers[questionId - 1]);
+        current.setTextFill(Color.RED);
+        current = (Label) stage.getScene().getRoot().lookup("#answer" + rights[questionId]);
+        current.setTextFill(Color.GREEN);
     }
 
 
@@ -206,6 +224,55 @@ public class TestController extends AbstractController implements Initializable 
         answer1CheckBox.setToggleGroup(answersGroup);
         answer2CheckBox.setToggleGroup(answersGroup);
         answer3CheckBox.setToggleGroup(answersGroup);
+    }
+
+    @FXML
+    private void handlePrintScreen(KeyEvent keyEvent) {
+        if (keyEvent.getCode().equals(KeyCode.PRINTSCREEN)) {
+            Clipboard.getSystemClipboard().clear();
+            Stage stage = (Stage) questionNumberLabel.getScene().getWindow();
+            stage.setIconified(true);
+        }
+    }
+
+    public void hideStage() {
+//        stage = (Stage) questionNumberLabel.getScene().getWindow();
+//        stage.setIconified(true);
+    }
+
+    public void minimize() {
+        stage = (Stage) questionNumberLabel.getScene().getWindow();
+        stage.setIconified(true);
+    }
+
+    public void close() {
+        stage = (Stage) questionNumberLabel.getScene().getWindow();
+        Platform.exit();
+    }
+
+    public void changeDirection(MouseEvent mouseEvent) {
+        stage.setX(mouseEvent.getScreenX() - xy[0]);
+        stage.setY(mouseEvent.getScreenY() - xy[1]);
+    }
+
+    public void fixDirection(MouseEvent mouseEvent) {
+        stage = (Stage) questionNumberLabel.getScene().getWindow();
+        if (mouseEvent.getSceneY() <= 20){
+            xy = new double[2];
+            xy[0] = mouseEvent.getSceneX();
+            xy[1] = mouseEvent.getSceneY();
+        }
+    }
+
+    public void decorateButtons() {
+        closeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> closeButton.setStyle("-fx-background-image: url(icons/close.png)"));
+        closeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> closeButton.setStyle("-fx-background-image: url(icons/close_1.png); -fx-background-color: Background"));
+        minimizeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize.png)"));
+        minimizeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize_1.png); -fx-background-color: Background"));
+    }
+
+    public void resetCoords() {
+        xy = null;
     }
     //region
 

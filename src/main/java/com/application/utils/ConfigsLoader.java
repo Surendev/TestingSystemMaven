@@ -15,9 +15,10 @@ public class ConfigsLoader {
 
     private static ConfigsLoader instance;
     private static final String FILE_PATH = "/admin/configs.properties";
+
     public Properties getProperties(){
         String path = ConfigsLoader.class.getResource(FILE_PATH).getFile();
-        Path configLocation = Paths.get(System.getProperty( "os.name" ).contains( "indow" ) ? path.substring(1) : path);
+        Path configLocation = Paths.get(System.getProperty( "os.name" ).contains( "indow" ) ?  path.contains("file:/") ? path.substring(6) : path.substring(1) : path);
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(configLocation.toString()), "UTF8"))) {
             Properties config = new Properties();

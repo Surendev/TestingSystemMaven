@@ -92,7 +92,7 @@ public class QuestionInApp {
         try {
             if (SecurityUtil.encrypt(answer1).equals(rightAnswer)) return 1;
             else if (SecurityUtil.encrypt(answer2).equals(rightAnswer)) return 2;
-            else return  3;
+            else return 3;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return 0;

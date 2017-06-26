@@ -4,15 +4,25 @@ package com.application.controllers;
 import com.StartApp;
 import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,12 +45,7 @@ public class TestLogInController extends AbstractController implements Initializ
     TextField idField;
     private @FXML
     Label errLabel;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        studentsService = context.getBean("studentsService", StudentsDAO.class);
-        groupBox.setItems(FXCollections.observableArrayList(studentsService.getGroups()));
-    }
+    private Timeline timeline;
 
     public void checkAuthentication() throws IOException {
         if (!isValidEnteredValues()) {
@@ -53,9 +58,17 @@ public class TestLogInController extends AbstractController implements Initializ
             errLabel.setText("Ուսանողի տվյալները չեն համապատասխանում");
             errLabel.setTextFill(Color.RED);
         } else {
-            StartApp.showTestPage();
+            showTestPage();
             resetTestLoginFields();
+            errLabel.getScene().getWindow().hide();
         }
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        studentsService = context.getBean("studentsService", StudentsDAO.class);
+        groupBox.setItems(FXCollections.observableArrayList(studentsService.getGroups()));
     }
 
     private boolean isValidEnteredValues() {
@@ -104,6 +117,17 @@ public class TestLogInController extends AbstractController implements Initializ
         StartApp.showMainPage();
     }
 
+    private void showTestPage() throws IOException{
+        Pane testPane = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
+        Scene testScene = new Scene(testPane, 800, 620);
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(testScene);
+        stage.getIcons().add(new Image("/icons/TestIcon.png"));
+//        stage.setTitle("Testing System _ Test");
+        stage.setResizable(false);
+        stage.show();
+    }
     private void resetTestLoginFields() {
         firstNameField.clear();
         middleNameField.clear();
@@ -112,5 +136,31 @@ public class TestLogInController extends AbstractController implements Initializ
         idField.clear();
         errLabel.setText("");
         reset();
+    }
+
+    public void initMouse(MouseEvent mouseEvent) {
+        confirmButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
+            int[] ints = {1};
+            timeline = new Timeline(new KeyFrame(Duration.millis(3),
+                    event1 -> {
+                        confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/1.png'); -fx-rotate: " + ints[0]);
+                        ++ints[0];
+                        if (ints[0] == 92) {
+                            confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/2.png')");
+                        }
+                        if (ints[0] > 92) {
+                            confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/3.png')");
+                            confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/4.png')");
+                            timeline.stop();
+                        }
+
+                    }));
+            timeline.setCycleCount(93);
+            timeline.play();
+        });
+        confirmButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> {
+            timeline.stop();
+            confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: Background");
+        });
     }
 }

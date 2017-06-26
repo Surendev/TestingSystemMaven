@@ -5,25 +5,22 @@ import com.jdbc.dao.QuestionsDAO;
 
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by surik on 2/5/17
  */
 public class Test {
 
-    private int index;
-
 
     private List<QuestionInApp> appQuestions = new ArrayList<>();
     private List<Question> questions = new ArrayList<>();
-    private List<Answer> wrongAnswers = new ArrayList<>();
     private List<Integer> studentAnswers = new ArrayList<>();
 
     public Test(Map<Integer, List<Question>> questions, QuestionsDAO service) {
         for (Integer pair : questions.keySet()) {
             this.questions.addAll(questions.get(pair));
         }
+        List<Answer> wrongAnswers = new ArrayList<>();
         for (Question pair : this.questions) {
             wrongAnswers.addAll(service.getAnswersByQuestionId(pair.getId()));
         }
@@ -44,7 +41,7 @@ public class Test {
     }
 
     public QuestionInApp getQuestion(int currIndex) throws UnsupportedEncodingException {
-        index = currIndex - 1;
+        int index = currIndex - 1;
         return appQuestions.get(index);
     }
 
@@ -111,13 +108,14 @@ public class Test {
         return appQuestion;
     }
 
-    public double[] qualifyTest(){
+    public double[] qualifyTest(int[] array){
         double result = 0.0;
         double maxRate = 0.0;
         for (int i = 0; i < studentAnswers.size(); i++) {
             if (appQuestions.get(i).getRightIndex() == studentAnswers.get(i)){
                 result+=appQuestions.get(i).getRating();
             }
+            array[i] = appQuestions.get(i).getRightIndex();
             maxRate += appQuestions.get(i).getRating();
         }
         return new double[] {result, maxRate};

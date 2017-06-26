@@ -1,85 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.TestController">
-   <children>
-      <ToolBar prefHeight="40.0" prefWidth="800.0">
-        <items>
-           <Button fx:id="homeButton" mnemonicParsing="false" onAction="#goToHomePage" text="HOME" />
-           <Label fx:id="questionsSizeLabel" prefHeight="20.0" prefWidth="180.0" text="Հարցերի քանակ " textAlignment="CENTER" textFill="#a12c2c" translateX="5.0">
-              <font>
-                 <Font size="15.0" />
-              </font>
-              <opaqueInsets>
-                 <Insets />
-              </opaqueInsets>
-           </Label>
-           <Label fx:id="questionNumberLabel" prefHeight="20.0" prefWidth="300.0" text="Հարց " textAlignment="RIGHT" textFill="#a12c2c" translateX="5.0">
-              <font>
-                  <Font size="15.0" />
-               </font>
-              <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-           </Label>
-           <Label fx:id="timerLabel" prefHeight="20.0" prefWidth="100.0" textAlignment="CENTER" textFill="#c63333" translateX="5.0">
-              <font>
-                 <Font size="15.0" />
-              </font>
-              <opaqueInsets>
-                 <Insets />
-              </opaqueInsets>
-           </Label>
-           <Button fx:id="endTestButton" mnemonicParsing="false" alignment="BASELINE_RIGHT" onAction="#showEndPopup" text="Հաստատել" />
-        </items>
-      </ToolBar>
-      <Button fx:id="forwardButton" layoutX="475.0" layoutY="550.0" mnemonicParsing="false" onAction="#goToNextButton" prefHeight="40.0" prefWidth="50.0" text="&gt;" />
-      <Button fx:id="backButton" layoutX="275.0" layoutY="550.0" mnemonicParsing="false" onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;" />
-      <VBox layoutY="40.0" prefHeight="500.0" prefWidth="800.0">
-         <children>
-            <AnchorPane fx:id="questionTitleContainer" prefHeight="170.0" prefWidth="800.0">
-               <children>
-                  <Label fx:id="questionTitle" alignment="CENTER" prefHeight="170.0" prefWidth="800.0" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane prefHeight="110.0" prefWidth="800.0">
-               <children>
-                  <RadioButton fx:id="answer1CheckBox" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" />
-                  <Label fx:id="answer1" alignment="CENTER" layoutX="100.0" prefHeight="110.0" prefWidth="700.0" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="210.0" prefHeight="110.0" prefWidth="800.0">
-               <children>
-                  <RadioButton fx:id="answer2CheckBox" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" />
-                  <Label fx:id="answer2" alignment="CENTER" layoutX="100.0" prefHeight="110.0" prefWidth="700.0" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="320.0" prefHeight="110.0" prefWidth="800.0">
-               <children>
-                  <RadioButton fx:id="answer3CheckBox" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" />
-                  <Label fx:id="answer3" alignment="CENTER" layoutX="100.0" prefHeight="110.0" prefWidth="700.0" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font size="14.0" />
-                     </font></Label>
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
-      <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="550.0" onKeyPressed="#goToQuestion" prefHeight="40.0" prefWidth="150.0" promptText="Նախընտրելի հարց" />
-   </children>
+<?import javafx.scene.text.*?>
+<Pane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      onKeyPressed="#handlePrintScreen" onMouseDragged="#changeDirection" onMouseExited="#hideStage"
+      onMouseMoved="#decorateButtons" onMousePressed="#fixDirection" onMouseReleased="#resetCoords" prefHeight="620.0"
+      prefWidth="800.0" style="-fx-background-color: white" xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.TestController">
+    <Label prefHeight="20.0" prefWidth="45"
+           style="-fx-background-image: url('icons/TestIcon_1.png'); -fx-background-repeat: no-repeat"
+           text="      Test"/>
+    <Button fx:id="minimizeButton" contentDisplay="RIGHT" layoutX="720.0" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" onAction="#minimize" prefHeight="20.0" prefWidth="40.0"
+            style="-fx-background-image: url('icons/minimize_1.png'); -fx-background-color: Background"/>
+    <Button fx:id="closeButton" cache="true" contentDisplay="RIGHT" layoutX="760.0" maxHeight="-Infinity"
+            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#close" prefHeight="20.0"
+            prefWidth="40.0" style="-fx-background-image: url('icons/close_1.png'); -fx-background-color: Background">
+        <opaqueInsets>
+            <Insets/>
+        </opaqueInsets>
+    </Button>
+    <ToolBar layoutY="20.0" prefHeight="40.0" prefWidth="800.0">
+        <Button mnemonicParsing="false" onAction="#goToHomePage" text="HOME"/>
+        <Label fx:id="questionsSizeLabel" prefHeight="20.0" prefWidth="180.0" text="Հարցերի քանակ "
+               textAlignment="CENTER" textFill="darkgoldenrod" translateX="5.0">
+            <font>
+                <Font size="15.0"/>
+            </font>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </Label>
+        <Label fx:id="questionNumberLabel" prefHeight="20.0" prefWidth="360.0" style="-fx-text-alignment: center"
+               text="Հարց " textFill="#a12c2c" translateX="5.0">
+            <font>
+                <Font size="15.0"/>
+            </font>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </Label>
+        <Label fx:id="timerLabel" prefHeight="20.0" prefWidth="100.0" textAlignment="CENTER" textFill="#c63333"
+               translateX="5.0">
+            <font>
+                <Font size="15.0"/>
+            </font>
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+        </Label>
+        <Button alignment="BASELINE_RIGHT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                onAction="#showEndPopup" text="Հաստատել"/>
+    </ToolBar>
+    <Button fx:id="forwardButton" layoutX="475.0" layoutY="570.0" mnemonicParsing="false" onAction="#goToNextButton"
+            prefHeight="40.0" prefWidth="50.0" text="&gt;"/>
+    <Button fx:id="backButton" layoutX="275.0" layoutY="570.0" mnemonicParsing="false"
+            onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;"/>
+    <VBox layoutY="60.0" prefHeight="500.0" prefWidth="800.0">
+        <AnchorPane prefHeight="170.0" prefWidth="800.0">
+            <Label fx:id="questionTitle" alignment="CENTER" prefHeight="170.0" prefWidth="800.0" textAlignment="CENTER"
+                   wrapText="true">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </AnchorPane>
+        <AnchorPane prefHeight="110.0" prefWidth="800.0">
+            <RadioButton fx:id="answer1CheckBox" layoutX="50.0" layoutY="50.0" mnemonicParsing="false"/>
+            <Label fx:id="answer1" alignment="CENTER" layoutX="100.0" prefHeight="110.0" prefWidth="700.0"
+                   textAlignment="CENTER" wrapText="true">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="210.0" prefHeight="110.0" prefWidth="800.0">
+            <RadioButton fx:id="answer2CheckBox" layoutX="50.0" layoutY="50.0" mnemonicParsing="false"/>
+            <Label fx:id="answer2" alignment="CENTER" layoutX="100.0" prefHeight="110.0" prefWidth="700.0"
+                   textAlignment="CENTER" wrapText="true">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </AnchorPane>
+        <AnchorPane layoutX="10.0" layoutY="320.0" prefHeight="110.0" prefWidth="800.0">
+            <RadioButton fx:id="answer3CheckBox" layoutX="50.0" layoutY="50.0" mnemonicParsing="false"/>
+            <Label fx:id="answer3" alignment="CENTER" layoutX="100.0" prefHeight="110.0" prefWidth="700.0"
+                   textAlignment="CENTER" wrapText="true">
+                <font>
+                    <Font size="14.0"/>
+                </font>
+            </Label>
+        </AnchorPane>
+    </VBox>
+    <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="570.0"
+               onKeyPressed="#goToQuestion" prefHeight="40.0" prefWidth="150.0" promptText="Նախընտրելի հարց"/>
 </Pane>
