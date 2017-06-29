@@ -27,6 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -156,6 +157,7 @@ public class TestController extends AbstractController implements Initializable 
 
     public void goToHomePage() throws IOException {
         stage = (Stage) closeButton.getScene().getWindow();
+        timeline.pause();
         Button ok = new Button("Այո");
         ok.setLayoutX(10.0);
         ok.setLayoutY(90.0);
@@ -174,12 +176,15 @@ public class TestController extends AbstractController implements Initializable 
         confirmLabel.setTextAlignment(TextAlignment.CENTER);
 
         Pane confirmPane = new Pane(confirmLabel, ok, cancel);
+        confirmPane.setStyle("-fx-background-color: white");
         Scene confirmScene = new Scene(confirmPane, 240, 140);
         Stage confirmStage = new Stage();
         confirmStage.setScene(confirmScene);
         confirmStage.getIcons().add(new Image("/icons/TestIcon.png"));
         confirmStage.setTitle(" log out");
         confirmStage.setResizable(false);
+        confirmStage.initModality(Modality.WINDOW_MODAL);
+        confirmStage.initOwner(stage);
         confirmStage.show();
         ok.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
             stage.close();
@@ -189,14 +194,17 @@ public class TestController extends AbstractController implements Initializable 
                 e.printStackTrace();
             }
         });
-        cancel.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> confirmStage.close());
+        cancel.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            timeline.play();
+            confirmStage.close();
+        });
     }
 
 
     public void goToQuestion(KeyEvent keyEvent) {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             String questionNumber = insertedQuestionId.getText().trim();
-            questionId = Integer.parseInt(questionNumber.matches("-?\\d+(\\.\\d+)?") ? questionNumber : "1");
+            questionId = Integer.parseInt(questionNumber.matches("-?\\d+(\\.\\d+)?") ? questionNumber : questionId.toString());
             if (!examPassed) rollbackRadioButtons();
             displayCurrentQuestion();
         }
