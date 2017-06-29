@@ -103,7 +103,7 @@ public class QuestionsService implements QuestionsDAO {
     public void deleteQuestion(Long questionId) throws SQLException {
         final String query = "DELETE FROM questions WHERE id = ?";
         if(jdbc.update(query,questionId) <= 0){
-            throw new SQLException("Չի ստացվել ջնջել հարցը id:" + questionId);
+            throw new SQLException("Չի ստացվել ջնջել հարցը ID: " + questionId);
         }
     }
 

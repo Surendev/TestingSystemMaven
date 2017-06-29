@@ -2,7 +2,6 @@ package com.application.controllers;
 
 import com.StartApp;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -19,19 +18,19 @@ public class MainController {
 
     //todo add main page logo
 
-    public void gotToAdminPage(ActionEvent event) throws IOException {
+    public void gotToAdminPage() throws IOException {
         StartApp.showLoginPage();
     }
 
-    public void goToTestPage(ActionEvent event) throws IOException {
+    public void goToTestPage() throws IOException {
         StartApp.showRegistrationPage();
     }
 
-    public void exitFromApp(ActionEvent event) {
+    public void exitFromApp() {
         Platform.exit();
     }
 
-    public void initialMouse(MouseEvent mouseEvent) {
+    public void initialMouse() {
         goToAdminPage.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> goToAdminPage.setTextFill(Color.RED));
         goToAdminPage.addEventFilter(MouseEvent.MOUSE_EXITED, event -> goToAdminPage.setTextFill(Color.BLACK));
         goToTest.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> goToTest.setTextFill(Color.RED));

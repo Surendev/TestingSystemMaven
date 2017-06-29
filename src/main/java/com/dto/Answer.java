@@ -25,11 +25,11 @@ public class Answer {
     }
 
     public String getText() {
-        return text;
+        return text.trim();
     }
 
     public void setText(String text) {
-        this.text = text;
+        this.text = text.trim();
     }
 
     public Integer getToQuestion() {
@@ -50,7 +50,7 @@ public class Answer {
     }
 
     public String getEncrypted() throws UnsupportedEncodingException {
-        return SecurityUtil.encrypt(ConvertSymbols.convertFromHex(text));
+        return SecurityUtil.encrypt(ConvertSymbols.convertFromHex(text.trim()));
 
 
     }

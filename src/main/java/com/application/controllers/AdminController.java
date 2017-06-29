@@ -12,16 +12,15 @@ import com.jdbc.services.QuestionsService;
 import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -88,8 +87,6 @@ public class AdminController extends AbstractController implements Initializable
     @FXML
     private ComboBox<Integer> courseCheckBox;
     @FXML
-    private ComboBox<Integer> ratingBox;
-    @FXML
     private Button confirmStudentButton;
     @FXML
     private CheckBox editStudentCheckBox;
@@ -112,6 +109,8 @@ public class AdminController extends AbstractController implements Initializable
     private TextArea rightAnswerArea;
     @FXML
     private ComboBox<TopicUtil> topicBox;
+    @FXML
+    private ComboBox<Integer> ratingBox;
     @FXML
     private CheckBox editQuestionCheckBox;
     @FXML
@@ -268,12 +267,12 @@ public class AdminController extends AbstractController implements Initializable
 
         try {
             studentsService.deleteStudent(Long.valueOf(id));
+            studentAddedLabel.setTextFill(Color.GREEN);
+            studentAddedLabel.setText("Ջնջված է");
         } catch (SQLException e) {
             studentAddedLabel.setText(e.getMessage());
             studentAddedLabel.setTextFill(Color.RED);
         }
-        studentAddedLabel.setTextFill(Color.GREEN);
-        studentAddedLabel.setText("Ջնջված է");
         successPopup(studentAddedLabel);
     }
 
@@ -353,6 +352,7 @@ public class AdminController extends AbstractController implements Initializable
     public void unHideStudentEditFields() {
         if (editStudentCheckBox.selectedProperty().get()) {
             disableStudentEditFields(false);
+            studentIDField.requestFocus();
         } else {
             disableStudentEditFields(true);
         }
@@ -361,14 +361,20 @@ public class AdminController extends AbstractController implements Initializable
     public void unHideQuestionEditFields() {
         if (editQuestionCheckBox.selectedProperty().get()) {
             disableQuestionEditFields(false);
+            questionIDField.requestFocus();
+            questionIDField.setOnKeyPressed(event -> {
+               if (event.getCode().equals(KeyCode.ENTER)) confirmID();
+            });
         } else {
             disableQuestionEditFields(true);
+            resetQuestionFields();
         }
     }
 
     private void disableQuestionEditFields(boolean bool) {
         questionIDField.setDisable(bool);
         questionIDLabel.setDisable(bool);
+        confirmIdButton.setDisable(bool);
         confirmQuestionButton.setDisable(!bool);
         delQuestionButton.setDisable(bool);
         if (bool) {
@@ -404,8 +410,8 @@ public class AdminController extends AbstractController implements Initializable
         rightAnswerArea.setText("");
         ans1Area.setText("");
         ans2Area.setText("");
-        topicBox.getSelectionModel().select(-1);
-        ratingBox.getSelectionModel().select(-1);
+        topicBox.valueProperty().setValue(null);
+        ratingBox.valueProperty().setValue(null);
     }
 
     public void showAllConfigs() {
@@ -507,28 +513,49 @@ public class AdminController extends AbstractController implements Initializable
         topicsVBox.getChildren().add(newField);
     }
 
-    public void confirmID(ActionEvent actionEvent) {
+    public void confirmID() {
+        String idStr = questionIDField.getText().trim();
+        if (!idStr.matches("-?\\d+(\\.\\d+)?")){
+            questionAddedLabel.setTextFill(Color.RED);
+            questionAddedLabel.setText("Սխալ ID");
+            successPopup(questionAddedLabel);
+            return;
+        }
+        Long id = Long.valueOf(idStr);
         confirmQuestionButton.setDisable(false);
+        delQuestionButton.setDisable(false);
         Question question = null;
         for (Question next : resultFromDB.keySet()){
-            if (Objects.equals(next.getId(), Long.valueOf(questionIDField.getText()))) question = next;
-        }
-        questionArea.setText(ConvertSymbols.convertFromHex(question.getQuestion()));
-        topicBox.setValue(new TopicUtil(question.getTopic()));
-        ratingBox.setValue(question.getRating());
-        List<Answer> answerList = resultFromDB.get(question);
-        for (Answer next : answerList){
-            try {
-                if (question.getAnswer().equals(next.getEncrypted())) {
-                    rightAnswerArea.setText(ConvertSymbols.convertFromHex(next.getText()));
-                    answerList.remove(next);
-                    break;
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            if (next.getId().equals(id)) {
+                question = next;
+                break;
             }
         }
-        ans1Area.setText(ConvertSymbols.convertFromHex(answerList.get(0).getText()));
-        ans2Area.setText(ConvertSymbols.convertFromHex(answerList.get(1).getText()));
+        if (question != null) {
+            questionArea.setText(ConvertSymbols.convertFromHex(question.getQuestion()));
+            topicBox.setValue(new TopicUtil(question.getTopic()));
+            ratingBox.setValue(question.getRating());
+
+            List<Answer> answers = resultFromDB.get(question);
+            for (Answer next : answers) {
+                try {
+                    if (question.getAnswer().trim().equals(next.getEncrypted())) {
+                        rightAnswerArea.setText(ConvertSymbols.convertFromHex(next.getText()));
+                        answers.remove(next);
+                        ans1Area.setText(ConvertSymbols.convertFromHex(answers.get(0).getText()));
+                        ans2Area.setText(ConvertSymbols.convertFromHex(answers.get(1).getText()));
+                        answers.add(next);
+                        break;
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    //TODO log
+                }
+            }
+        } else{
+            resetQuestionFields();
+            questionAddedLabel.setText("Տրված համարով հարց չկա։");
+            questionAddedLabel.setTextFill(Color.RED);
+            successPopup(questionAddedLabel);
+        }
     }
 }

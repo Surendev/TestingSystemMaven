@@ -48,20 +48,21 @@ public class TestLogInController extends AbstractController implements Initializ
     private Timeline timeline;
 
     public void checkAuthentication() throws IOException {
-        if (!isValidEnteredValues()) {
-            return;
-        }
-        Student studentFromDB = studentsService.getStudentById(idField.getText());
-        if (!studentFromDB.getFirstName().equals(firstNameField.getText()) ||
-                !studentFromDB.getLastName().equals(lastNameField.getText()) ||
-                !studentFromDB.getGroup().equals(groupBox.getValue())) {
-            errLabel.setText("Ուսանողի տվյալները չեն համապատասխանում");
-            errLabel.setTextFill(Color.RED);
-        } else {
+//        if (!isValidEnteredValues()) {
+//            return;
+//        }
+//        Student studentFromDB = studentsService.getStudentById(idField.getText().trim());
+//        if (!studentFromDB.getFirstName().trim().equals(firstNameField.getText().trim()) ||
+//                !studentFromDB.getMiddleName().trim().equals(middleNameField.getText().trim()) ||
+//                !studentFromDB.getLastName().trim().equals(lastNameField.getText().trim()) ||
+//                !studentFromDB.getGroup().equals(groupBox.getValue())) {
+//            errLabel.setText("Ուսանողի տվյալները չեն համապատասխանում");
+//            errLabel.setTextFill(Color.RED);
+//        } else {
             showTestPage();
             resetTestLoginFields();
             errLabel.getScene().getWindow().hide();
-        }
+//        }
     }
 
 
@@ -85,7 +86,7 @@ public class TestLogInController extends AbstractController implements Initializ
             setErrorToView(middleNameField, "Հայրանունը");
             return false;
         }
-        if ((value = idField.getText()).equals("") || !value.matches("\\d+")) {
+        if ((value = idField.getText().trim()).equals("") || !value.matches("\\d+")) {
             setErrorToView(idField, "Հերթական համարը");
             return false;
         }
@@ -119,7 +120,7 @@ public class TestLogInController extends AbstractController implements Initializ
 
     private void showTestPage() throws IOException{
         Pane testPane = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
-        Scene testScene = new Scene(testPane, 800, 620);
+        Scene testScene = new Scene(testPane, 800, 660);
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(testScene);

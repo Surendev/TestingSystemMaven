@@ -1,5 +1,6 @@
 package com;
 
+import com.sun.java.accessibility.util.TopLevelWindowListener;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -64,6 +65,9 @@ public class StartApp extends Application {
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setTitle("Registering system _ Test");
         primaryStage.setResizable(false);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        primaryStage.setX(dimension.getWidth() / 2 - 250);
+        primaryStage.setY(0.0);
         primaryStage.show();
     }
 

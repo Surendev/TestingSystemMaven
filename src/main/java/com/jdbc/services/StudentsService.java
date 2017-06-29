@@ -64,7 +64,7 @@ public class StudentsService implements StudentsDAO{
     public void deleteStudent(Long studentId) throws SQLException {
         final String query = "DELETE FROM students WHERE id = ?";
         if(jdbc.update(query,studentId) <= 0){
-            throw new SQLException("Չի ստացվել ջնջել Ուսանողին id id:" + studentId);
+            throw new SQLException("Չի ստացվել ջնջել ուսանողին ID: " + studentId);
         }
     }
 }
