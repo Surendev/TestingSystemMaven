@@ -1,6 +1,5 @@
 package com;
 
-import com.sun.java.accessibility.util.TopLevelWindowListener;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

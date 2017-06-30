@@ -5,8 +5,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <Pane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      onKeyPressed="#initKeys" onMouseDragged="#changeDirection" onMouseExited="#hideStage"
-      onMouseMoved="#decorateButtons" onMousePressed="#fixDirection" onMouseReleased="#resetCoords" prefHeight="660.0"
+      onKeyPressed="#initKeys"  onMouseExited="#hideStage"
+      onMouseMoved="#decorateButtons" prefHeight="660.0"
       prefWidth="800.0" style="-fx-background-color: white" xmlns="http://javafx.com/javafx/8.0.112"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.TestController">
     <Label prefHeight="20.0" prefWidth="45"
@@ -99,7 +99,7 @@
             <Font size="17.0"/>
         </font>
     </Label>
-    <Button fx:id="forwardButton" layoutX="475.0" layoutY="610.0" mnemonicParsing="false" onAction="#goToNextButton"
+    <Button layoutX="475.0" layoutY="610.0" mnemonicParsing="false" onAction="#goToNextButton"
             prefHeight="40.0" prefWidth="50.0" text="&gt;"/>
     <Button fx:id="backButton" layoutX="275.0" layoutY="610.0" mnemonicParsing="false"
             onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;"/>

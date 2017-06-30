@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -18,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -119,10 +121,10 @@ public class TestLogInController extends AbstractController implements Initializ
     }
 
     private void showTestPage() throws IOException{
-        Pane testPane = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
-        Scene testScene = new Scene(testPane, 800, 660);
+        Parent root = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
+        Scene testScene = new Scene(new TestPane(stage, root));
         stage.setScene(testScene);
         stage.getIcons().add(new Image("/icons/TestIcon.png"));
 //        stage.setTitle("Testing System _ Test");
@@ -163,5 +165,32 @@ public class TestLogInController extends AbstractController implements Initializ
             timeline.stop();
             confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: Background");
         });
+    }
+
+    private class TestPane extends AnchorPane{
+        private double xOffset = 0;
+        private double yOffset = 0;
+        private Stage primaryStage;
+
+        public TestPane(Stage stage, Node node) {
+            super();
+
+            primaryStage = stage;
+            this.setPadding(new javafx.geometry.Insets(0, 0, 0, 0));
+
+            this.getChildren().addAll(node);
+
+            this.setOnMousePressed((MouseEvent event) -> {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            });
+            this.setOnMouseDragged((MouseEvent event) -> {
+                if (yOffset <= 25){
+                    primaryStage.setX(event.getScreenX() - xOffset);
+                    primaryStage.setY(event.getScreenY() - yOffset);
+                }
+            });
+
+        }
     }
 }

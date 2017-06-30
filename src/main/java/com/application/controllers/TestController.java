@@ -307,19 +307,19 @@ public class TestController extends AbstractController implements Initializable 
     }
 
 
-    public void changeDirection(MouseEvent mouseEvent) {
-        stage.setX(mouseEvent.getScreenX() - xy[0]);
-        stage.setY(mouseEvent.getScreenY() - xy[1]);
-    }
+//    public void changeDirection(MouseEvent mouseEvent) {
+//        stage.setX(mouseEvent.getScreenX() - xy[0]);
+//        stage.setY(mouseEvent.getScreenY() - xy[1]);
+//    }
 
-    public void fixDirection(MouseEvent mouseEvent) {
-        stage = (Stage) questionNumberLabel.getScene().getWindow();
-        if (mouseEvent.getSceneY() <= 20) {
-            xy = new double[2];
-            xy[0] = mouseEvent.getSceneX();
-            xy[1] = mouseEvent.getSceneY();
-        }
-    }
+//    public void fixDirection(MouseEvent mouseEvent) {
+//        stage = (Stage) questionNumberLabel.getScene().getWindow();
+//        if (mouseEvent.getSceneY() <= 20) {
+//            xy = new double[2];
+//            xy[0] = mouseEvent.getSceneX();
+//            xy[1] = mouseEvent.getSceneY();
+//        }
+//    }
 
     public void decorateButtons() {
         closeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> closeButton.setStyle("-fx-background-image: url(icons/close.png)"));
