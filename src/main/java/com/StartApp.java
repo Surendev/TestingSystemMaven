@@ -32,7 +32,7 @@ public class StartApp extends Application {
         showMainPage();
     }
 
-    public static void showMainPage() throws IOException {
+    public static Stage showMainPage() throws IOException {
         if (mainLayout == null) {
             mainLayout = FXMLLoader.load(StartApp.class.getResource("/fxml/main.fxml"));
             mainScene = new Scene(mainLayout, 300, 300);
@@ -42,6 +42,7 @@ public class StartApp extends Application {
         primaryStage.getIcons().add(new Image("/icons/TestIcon.png"));
         primaryStage.setResizable(false);
         primaryStage.show();
+        return primaryStage;
     }
 
     public static void showLoginPage() throws IOException {

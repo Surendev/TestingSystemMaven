@@ -2,7 +2,6 @@ package com.application.controllers;
 
 
 import com.StartApp;
-import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -33,7 +31,6 @@ import java.util.ResourceBundle;
 public class TestLogInController extends AbstractController implements Initializable {
 
     public Button confirmButton;
-    private StudentsDAO studentsService;
 
     private @FXML
     TextField firstNameField;
@@ -61,16 +58,16 @@ public class TestLogInController extends AbstractController implements Initializ
 //            errLabel.setText("Ուսանողի տվյալները չեն համապատասխանում");
 //            errLabel.setTextFill(Color.RED);
 //        } else {
-            showTestPage();
-            resetTestLoginFields();
-            errLabel.getScene().getWindow().hide();
+        showTestPage();
+        resetTestLoginFields();
+        errLabel.getScene().getWindow().hide();
 //        }
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        studentsService = context.getBean("studentsService", StudentsDAO.class);
+        StudentsDAO studentsService = context.getBean("studentsService", StudentsDAO.class);
         groupBox.setItems(FXCollections.observableArrayList(studentsService.getGroups()));
     }
 
@@ -120,7 +117,7 @@ public class TestLogInController extends AbstractController implements Initializ
         StartApp.showMainPage();
     }
 
-    private void showTestPage() throws IOException{
+    private void showTestPage() throws IOException {
         Parent root = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
@@ -131,6 +128,7 @@ public class TestLogInController extends AbstractController implements Initializ
         stage.setResizable(false);
         stage.show();
     }
+
     private void resetTestLoginFields() {
         firstNameField.clear();
         middleNameField.clear();
@@ -141,19 +139,19 @@ public class TestLogInController extends AbstractController implements Initializ
         reset();
     }
 
-    public void initMouse(MouseEvent mouseEvent) {
+    public void initMouse() {
         confirmButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
             int[] ints = {1};
             timeline = new Timeline(new KeyFrame(Duration.millis(3),
                     event1 -> {
-                        confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/1.png'); -fx-rotate: " + ints[0]);
+                        confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/1.png'); -fx-rotate: " + ints[0]);
                         ++ints[0];
                         if (ints[0] == 92) {
-                            confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/2.png')");
+                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/2.png')");
                         }
                         if (ints[0] > 92) {
-                            confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/3.png')");
-                            confirmButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/1/4.png')");
+                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/3.png')");
+                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/4.png')");
                             timeline.stop();
                         }
 
@@ -163,16 +161,16 @@ public class TestLogInController extends AbstractController implements Initializ
         });
         confirmButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> {
             timeline.stop();
-            confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: Background");
+            confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: transparent");
         });
     }
 
-    private class TestPane extends AnchorPane{
+    private class TestPane extends AnchorPane {
         private double xOffset = 0;
         private double yOffset = 0;
         private Stage primaryStage;
 
-        public TestPane(Stage stage, Node node) {
+        private TestPane(Stage stage, Node node) {
             super();
 
             primaryStage = stage;
@@ -185,7 +183,7 @@ public class TestLogInController extends AbstractController implements Initializ
                 yOffset = event.getSceneY();
             });
             this.setOnMouseDragged((MouseEvent event) -> {
-                if (yOffset <= 25){
+                if (yOffset <= 20) {
                     primaryStage.setX(event.getScreenX() - xOffset);
                     primaryStage.setY(event.getScreenY() - yOffset);
                 }

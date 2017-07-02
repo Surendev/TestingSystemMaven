@@ -57,19 +57,19 @@
     </Label>
     <Button id="6" fx:id="confirmButton" layoutX="220.0" layoutY="480.0" mnemonicParsing="false"
             onAction="#checkAuthentication" prefHeight="60.0" prefWidth="60.0"
-            style="-fx-background-image: url('/icons/1/1.png'); -fx-background-color: Background;"/>
-    <Button id="7" fx:id="homeButton" layoutY="552.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="40.0"
-            prefWidth="100.0" style="-fx-background-color: Background">
+            style="-fx-background-image: url('/icons/1/1.png'); -fx-background-color: transparent;"/>
+    <Button id="7" layoutY="552.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="40.0"
+            prefWidth="100.0" style="-fx-background-color: transparent">
         <graphic>
             <ImageView fitHeight="40.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../icons/home.png"/>
             </ImageView>
         </graphic>
     </Button>
-    <Button id="7" fx:id="pass" layoutX="165.0" layoutY="496.0" mnemonicParsing="false" onAction="#checkAuthentication"
-            prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: Background" text="Անցնել"
+    <Button id="7" layoutX="165.0" layoutY="496.0" mnemonicParsing="false" onAction="#checkAuthentication"
+            prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: transparent" text="Անցնել"
             textAlignment="CENTER" textFill="floralwhite"/>
-    <Button id="7" fx:id="test" layoutX="275.0" layoutY="496.0" mnemonicParsing="false" onAction="#checkAuthentication"
-            prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: Background" text="Թեստը"
+    <Button id="7" layoutX="275.0" layoutY="496.0" mnemonicParsing="false" onAction="#checkAuthentication"
+            prefHeight="20.0" prefWidth="60.0" style="-fx-background-color: transparent" text="Թեստը"
             textAlignment="CENTER" textFill="floralwhite"/>
 </Pane>

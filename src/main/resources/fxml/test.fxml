@@ -14,13 +14,13 @@
            text="      Test"/>
     <Button fx:id="minimizeButton" contentDisplay="RIGHT" layoutX="680.0" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity" onAction="#minimize" prefHeight="20.0" prefWidth="40.0"
-            style="-fx-background-image: url('icons/minimize_1.png'); -fx-background-color: Background"/>
+            style="-fx-background-image: url('icons/minimize_1.png'); -fx-background-color: transparent"/>
     <Button fx:id="fullScreenButton" contentDisplay="RIGHT" layoutX="720.0" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity" onAction="#setFullScreen" prefHeight="20.0" prefWidth="40.0"
-            style="-fx-background-image: url('icons/fullScreen_1.png'); -fx-background-color: Background"/>
+            style="-fx-background-image: url('icons/fullScreen_1.png'); -fx-background-color: transparent"/>
     <Button fx:id="closeButton" cache="true" contentDisplay="RIGHT" layoutX="760.0" maxHeight="-Infinity"
             maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#close" prefHeight="20.0"
-            prefWidth="40.0" style="-fx-background-image: url('icons/close_1.png'); -fx-background-color: Background">
+            prefWidth="40.0" style="-fx-background-image: url('icons/close_1.png'); -fx-background-color: transparent">
         <opaqueInsets>
             <Insets/>
         </opaqueInsets>

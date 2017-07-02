@@ -10,28 +10,27 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.stage.*;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.awt.event.InvocationEvent;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -50,7 +49,7 @@ public class TestController extends AbstractController implements Initializable 
     public Label resultLabel;
 
     private Stage stage;
-    private double[] xy;
+    //    private double[] xy;
     private Integer timeOfExam = Integer.valueOf(adminConfigs.getProperty("test.timer"));
     private Timeline timeline;
 
@@ -90,6 +89,18 @@ public class TestController extends AbstractController implements Initializable 
     private int[] chosenAnswers;
     private boolean examPassed = false;
     private int[] rights;
+    private Scene exitScene = null;
+
+    {
+        Pane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/exit.fxml"));
+            exitScene = new Scene(root, 250, 140);
+        } catch (IOException e){
+
+        }
+
+    }
 
 
     @Override
@@ -133,11 +144,12 @@ public class TestController extends AbstractController implements Initializable 
         disableTest();
         test.markAnswerToQuestion(chosenAnswers);
         double[] result = test.qualifyTest(rights);
-//        double enough = result[1] / 2.5;
-//        double good = result[1] / 1.6;
-//        double excellent = result[1] / 1.1;
-//        String color = result[0] < enough ? "red" : result[0] < good ? "blue" : result[0] < excellent ? "green" : "gold";
-        resultLabel.setText("Դուք հավաքել եք " + result[0] + " միավոր " + result[1] + "-ից։");
+        double enough = result[1] / 2.5;
+        double good = result[1] / 1.6;
+        double excellent = result[1] / 1.1;
+        String color = result[0] < enough ? "red" : result[0] < good ? "blue" : result[0] < excellent ? "green" : "gold";
+        resultLabel.setText("Ստացած միավորները ՝  " + result[1] + "-ից   " + result[0]);
+        resultLabel.setStyle("-fx-text-fill: linear-gradient(to right, black 88%, " + color + " 12%)");
         examPassed = true;
         showDifference();
     }
@@ -157,47 +169,67 @@ public class TestController extends AbstractController implements Initializable 
 
     public void goToHomePage() throws IOException {
         stage = (Stage) closeButton.getScene().getWindow();
-        timeline.pause();
-        Button ok = new Button("Այո");
-        ok.setLayoutX(10.0);
-        ok.setLayoutY(90.0);
-        ok.setPrefWidth(100.0);
-
-        Button cancel = new Button("Ոչ");
-        cancel.setLayoutX(140.0);
-        cancel.setLayoutY(90.0);
-        cancel.setPrefWidth(100.0);
-
-        Label confirmLabel = new Label("Դու՞րս գալ թեստից։");
-        confirmLabel.setPrefWidth(240.0);
-        confirmLabel.setFont(javafx.scene.text.Font.font(20.0));
-        confirmLabel.setLayoutY(40.0);
-        confirmLabel.setAlignment(Pos.CENTER);
-        confirmLabel.setTextAlignment(TextAlignment.CENTER);
-
-        Pane confirmPane = new Pane(confirmLabel, ok, cancel);
-        confirmPane.setStyle("-fx-background-color: white");
-        Scene confirmScene = new Scene(confirmPane, 240, 140);
-        Stage confirmStage = new Stage();
-        confirmStage.setScene(confirmScene);
-        confirmStage.getIcons().add(new Image("/icons/TestIcon.png"));
-        confirmStage.setTitle(" log out");
-        confirmStage.setResizable(false);
-        confirmStage.initModality(Modality.WINDOW_MODAL);
-        confirmStage.initOwner(stage);
-        confirmStage.show();
-        ok.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            stage.close();
-            try {
-                StartApp.showMainPage();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        cancel.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            timeline.play();
-            confirmStage.close();
-        });
+//        timeline.pause();
+//        Button ok = new Button("Այո");
+//        ok.setLayoutX(10.0);
+//        ok.setLayoutY(90.0);
+//        ok.setPrefWidth(100.0);
+//
+//        Button cancel = new Button("Ոչ");
+//        cancel.setLayoutX(140.0);
+//        cancel.setLayoutY(90.0);
+//        cancel.setPrefWidth(100.0);
+//
+//        Label confirmLabel = new Label("Դու՞րս գալ թեստից։");
+//        confirmLabel.setPrefWidth(240.0);
+//        confirmLabel.setFont(javafx.scene.text.Font.font(20.0));
+//        confirmLabel.setLayoutY(40.0);
+//        confirmLabel.setAlignment(Pos.CENTER);
+//        confirmLabel.setTextAlignment(TextAlignment.CENTER);
+//
+//        Pane confirmPane = new Pane(confirmLabel, ok, cancel);
+//        confirmPane.setStyle("-fx-background-color: white");
+//        Scene confirmScene = new Scene(confirmPane, 240, 140);
+//        Stage confirmStage = new Stage();
+//        confirmStage.setScene(confirmScene);
+//        confirmStage.getIcons().add(new Image("/icons/TestIcon.png"));
+//        confirmStage.setTitle(" log out");
+//        confirmStage.setResizable(false);
+//        confirmStage.initModality(Modality.WINDOW_MODAL);
+//        confirmStage.initOwner(stage);
+//        confirmStage.show();
+//        ok.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+//            stage.close();
+//            try {
+//                StartApp.showMainPage();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        cancel.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+//            timeline.play();
+//            confirmStage.close();
+//        });
+        Stage exitStage = new Stage();
+        if (exitScene != null) {
+            exitStage.setScene(exitScene);
+            exitStage.setTitle("Log out");
+            exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+            exitStage.initModality(Modality.APPLICATION_MODAL);
+            exitStage.initOwner(stage);
+            Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
+            label.setText("Դու՞րս գալ թեստից");
+            Button button = (Button) exitScene.getRoot().lookup("#ok");
+            button.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                stage.close();
+                try {
+                    StartApp.showMainPage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            exitStage.show();
+        }
     }
 
 
@@ -262,9 +294,9 @@ public class TestController extends AbstractController implements Initializable 
     }
 
     private void showDifference() {
-        answer1.setStyle("-fx-background-color: Background");
-        answer2.setStyle("-fx-background-color: Background");
-        answer3.setStyle("-fx-background-color: Background");
+        answer1.setStyle("-fx-background-color: transparent");
+        answer2.setStyle("-fx-background-color: transparent");
+        answer3.setStyle("-fx-background-color: transparent");
         stage = (Stage) questionNumberLabel.getScene().getWindow();
         Label current;
         current = (Label) stage.getScene().getRoot().lookup("#answer" + chosenAnswers[questionId - 1]);
@@ -294,16 +326,30 @@ public class TestController extends AbstractController implements Initializable 
         stage = (Stage) questionNumberLabel.getScene().getWindow();
         if (!stage.isFullScreen()) {
             stage.setFullScreen(true);
-            fullScreenButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/fullScreen.png')");
+            fullScreenButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/fullScreen.png')");
         } else {
             stage.setFullScreen(false);
-            fullScreenButton.setStyle("-fx-background-color: Background; -fx-background-image: url('icons/fullScreen_1.png')");
+            fullScreenButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/fullScreen_1.png')");
         }
     }
 
     public void close() {
         stage = (Stage) questionNumberLabel.getScene().getWindow();
-        Platform.exit();
+        Stage exitStage = new Stage();
+        if (exitScene != null) {
+            exitStage.setScene(exitScene);
+            exitStage.setTitle("Exit");
+            exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+            exitStage.initModality(Modality.APPLICATION_MODAL);
+            exitStage.initOwner(stage);
+            Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
+            label.setText("Փակե՞լ ծրագիրը");
+            Button button = (Button) exitScene.getRoot().lookup("#ok");
+            button.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> stage.close());
+            exitStage.show();
+        } else {
+            Platform.exit();
+        }
     }
 
 
@@ -323,16 +369,16 @@ public class TestController extends AbstractController implements Initializable 
 
     public void decorateButtons() {
         closeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> closeButton.setStyle("-fx-background-image: url(icons/close.png)"));
-        closeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> closeButton.setStyle("-fx-background-image: url(icons/close_1.png); -fx-background-color: Background"));
+        closeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> closeButton.setStyle("-fx-background-image: url(icons/close_1.png); -fx-background-color: transparent"));
         minimizeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize.png)"));
-        minimizeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize_1.png); -fx-background-color: Background"));
+        minimizeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize_1.png); -fx-background-color: transparent"));
         fullScreenButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen.png); -fx-background-color: #13a61d; -fx-border-color: #13a61d"));
-        fullScreenButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen_1.png); -fx-background-color: Background"));
+        fullScreenButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen_1.png); -fx-background-color: transparent"));
     }
 
-    public void resetCoords() {
-        xy = null;
-    }
+//    public void resetCoords() {
+//        xy = null;
+//    }
 
     public void initKeys(KeyEvent keyEvent) throws UnsupportedEncodingException {
         KeyCode keyCode = keyEvent.getCode();

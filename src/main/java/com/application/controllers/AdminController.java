@@ -13,14 +13,21 @@ import com.jdbc.services.StudentsService;
 import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -147,6 +154,19 @@ public class AdminController extends AbstractController implements Initializable
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
     private Map<Question, List<Answer>> resultFromDB;
+
+    private Scene exitScene = null;
+
+    {
+        Pane root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/exit.fxml"));
+            exitScene = new Scene(root, 250, 140);
+        } catch (IOException e){
+
+        }
+
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -329,8 +349,25 @@ public class AdminController extends AbstractController implements Initializable
     }
 
     public void goToMainPage() throws IOException {
-        homeButton.getScene().getWindow().hide();
-        StartApp.showMainPage();
+        Stage stage = (Stage) homeButton.getScene().getWindow();
+        Stage exitStage = new Stage();
+        exitStage.setScene(exitScene);
+        exitStage.setTitle("Log Out");
+        exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        exitStage.initModality(Modality.APPLICATION_MODAL);
+        exitStage.initOwner(stage);
+        Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
+        label.setText("Փակե՞լ էջը");
+        Button button = (Button) exitScene.getRoot().lookup("#ok");
+        button.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            try {
+                stage.close();
+                StartApp.showMainPage();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        exitStage.show();
     }
 
     private void successPopup(Label inLabel) {
