@@ -1,6 +1,5 @@
 package com.application.controllers;
 
-import com.StartApp;
 import com.dto.QuestionInApp;
 import com.dto.Test;
 import com.jdbc.dao.QuestionsDAO;
@@ -18,19 +17,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.*;
-import javafx.stage.Window;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
-import java.awt.event.InvocationEvent;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -96,10 +91,9 @@ public class TestController extends AbstractController implements Initializable 
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/exit.fxml"));
             exitScene = new Scene(root, 250, 140);
-        } catch (IOException e){
-
+        } catch (IOException e) {
+            exitScene = null;
         }
-
     }
 
 
@@ -164,70 +158,20 @@ public class TestController extends AbstractController implements Initializable 
         answer2CheckBox.setVisible(false);
         answer3CheckBox.setVisible(false);
         confirmButton.setDisable(true);
-        confirmButton.setVisible(false);
     }
 
     public void goToHomePage() throws IOException {
         stage = (Stage) closeButton.getScene().getWindow();
-//        timeline.pause();
-//        Button ok = new Button("Այո");
-//        ok.setLayoutX(10.0);
-//        ok.setLayoutY(90.0);
-//        ok.setPrefWidth(100.0);
-//
-//        Button cancel = new Button("Ոչ");
-//        cancel.setLayoutX(140.0);
-//        cancel.setLayoutY(90.0);
-//        cancel.setPrefWidth(100.0);
-//
-//        Label confirmLabel = new Label("Դու՞րս գալ թեստից։");
-//        confirmLabel.setPrefWidth(240.0);
-//        confirmLabel.setFont(javafx.scene.text.Font.font(20.0));
-//        confirmLabel.setLayoutY(40.0);
-//        confirmLabel.setAlignment(Pos.CENTER);
-//        confirmLabel.setTextAlignment(TextAlignment.CENTER);
-//
-//        Pane confirmPane = new Pane(confirmLabel, ok, cancel);
-//        confirmPane.setStyle("-fx-background-color: white");
-//        Scene confirmScene = new Scene(confirmPane, 240, 140);
-//        Stage confirmStage = new Stage();
-//        confirmStage.setScene(confirmScene);
-//        confirmStage.getIcons().add(new Image("/icons/TestIcon.png"));
-//        confirmStage.setTitle(" log out");
-//        confirmStage.setResizable(false);
-//        confirmStage.initModality(Modality.WINDOW_MODAL);
-//        confirmStage.initOwner(stage);
-//        confirmStage.show();
-//        ok.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-//            stage.close();
-//            try {
-//                StartApp.showMainPage();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        });
-//        cancel.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-//            timeline.play();
-//            confirmStage.close();
-//        });
         Stage exitStage = new Stage();
         if (exitScene != null) {
             exitStage.setScene(exitScene);
-            exitStage.setTitle("Log out");
+            exitStage.setTitle("LOG_OUT");
             exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+            stage.setResizable(false);
             exitStage.initModality(Modality.APPLICATION_MODAL);
             exitStage.initOwner(stage);
             Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
             label.setText("Դու՞րս գալ թեստից");
-            Button button = (Button) exitScene.getRoot().lookup("#ok");
-            button.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-                stage.close();
-                try {
-                    StartApp.showMainPage();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
             exitStage.show();
         }
     }
@@ -338,34 +282,18 @@ public class TestController extends AbstractController implements Initializable 
         Stage exitStage = new Stage();
         if (exitScene != null) {
             exitStage.setScene(exitScene);
-            exitStage.setTitle("Exit");
+            exitStage.setTitle("EXIT");
             exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+            stage.setResizable(false);
             exitStage.initModality(Modality.APPLICATION_MODAL);
             exitStage.initOwner(stage);
             Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
             label.setText("Փակե՞լ ծրագիրը");
-            Button button = (Button) exitScene.getRoot().lookup("#ok");
-            button.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> stage.close());
             exitStage.show();
         } else {
             Platform.exit();
         }
     }
-
-
-//    public void changeDirection(MouseEvent mouseEvent) {
-//        stage.setX(mouseEvent.getScreenX() - xy[0]);
-//        stage.setY(mouseEvent.getScreenY() - xy[1]);
-//    }
-
-//    public void fixDirection(MouseEvent mouseEvent) {
-//        stage = (Stage) questionNumberLabel.getScene().getWindow();
-//        if (mouseEvent.getSceneY() <= 20) {
-//            xy = new double[2];
-//            xy[0] = mouseEvent.getSceneX();
-//            xy[1] = mouseEvent.getSceneY();
-//        }
-//    }
 
     public void decorateButtons() {
         closeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> closeButton.setStyle("-fx-background-image: url(icons/close.png)"));
@@ -375,38 +303,5 @@ public class TestController extends AbstractController implements Initializable 
         fullScreenButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen.png); -fx-background-color: #13a61d; -fx-border-color: #13a61d"));
         fullScreenButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen_1.png); -fx-background-color: transparent"));
     }
-
-//    public void resetCoords() {
-//        xy = null;
-//    }
-
-    public void initKeys(KeyEvent keyEvent) throws UnsupportedEncodingException {
-        KeyCode keyCode = keyEvent.getCode();
-        if (keyCode.equals(KeyCode.PRINTSCREEN)) {
-            Clipboard.getSystemClipboard().clear();
-//            Stage stage = (Stage) questionNumberLabel.getScene().getWindow();
-//            stage.setIconified(true);
-            showEndPopup();
-        }
-        if (keyCode.equals(KeyCode.DOWN)) {
-            if (answer1CheckBox.isSelected()) answer2CheckBox.setSelected(true);
-            if (answer2CheckBox.isSelected()) answer3CheckBox.setSelected(true);
-            if (answer3CheckBox.isSelected()) answer1CheckBox.setSelected(true);
-        }
-        if (keyCode.equals(KeyCode.UP)) {
-            if (answer1CheckBox.isSelected()) answer3CheckBox.setSelected(true);
-            if (answer2CheckBox.isSelected()) answer1CheckBox.setSelected(true);
-            if (answer3CheckBox.isSelected()) answer2CheckBox.setSelected(true);
-        }
-        if (keyCode.equals(KeyCode.LEFT)) {
-            backToPreviousQuestion();
-        }
-        if (keyCode.equals(KeyCode.RIGHT)) {
-            goToNextButton();
-        }
-    }
-
-
     //region
-
 }

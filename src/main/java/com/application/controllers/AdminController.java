@@ -352,21 +352,12 @@ public class AdminController extends AbstractController implements Initializable
         Stage stage = (Stage) homeButton.getScene().getWindow();
         Stage exitStage = new Stage();
         exitStage.setScene(exitScene);
-        exitStage.setTitle("Log Out");
+        exitStage.setTitle("LOG_OUT");
         exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
         exitStage.initModality(Modality.APPLICATION_MODAL);
         exitStage.initOwner(stage);
         Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
         label.setText("Փակե՞լ էջը");
-        Button button = (Button) exitScene.getRoot().lookup("#ok");
-        button.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-            try {
-                stage.close();
-                StartApp.showMainPage();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
         exitStage.show();
     }
 

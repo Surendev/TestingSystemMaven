@@ -140,29 +140,31 @@ public class TestLogInController extends AbstractController implements Initializ
     }
 
     public void initMouse() {
-        confirmButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
-            int[] ints = {1};
-            timeline = new Timeline(new KeyFrame(Duration.millis(3),
-                    event1 -> {
-                        confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/1.png'); -fx-rotate: " + ints[0]);
-                        ++ints[0];
-                        if (ints[0] == 92) {
-                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/2.png')");
-                        }
-                        if (ints[0] > 92) {
-                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/3.png')");
-                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/4.png')");
-                            timeline.stop();
-                        }
-
-                    }));
-            timeline.setCycleCount(93);
-            timeline.play();
-        });
-        confirmButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> {
-            timeline.stop();
-            confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: transparent");
-        });
+//        confirmButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
+//            int[] ints = {1};
+//            timeline = new Timeline(new KeyFrame(Duration.millis(3),
+//                    event1 -> {
+//                        confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/1.png'); -fx-rotate: " + ints[0]);
+//                        ++ints[0];
+//                        if (ints[0] == 92) {
+//                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/2.png')");
+//                        }
+//                        if (ints[0] > 92) {
+//                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/3.png')");
+//                            confirmButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/1/4.png')");
+//                            timeline.stop();
+//                        }
+//
+//                    }));
+//            timeline.setCycleCount(93);
+//            timeline.play();
+//        });
+//        confirmButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> {
+//            timeline.stop();
+//            confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: transparent");
+//        });
+        confirmButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> confirmButton.setStyle("-fx-background-image: url('icons/1/5.png'); -fx-background-color: transparent"));
+        confirmButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> confirmButton.setStyle("-fx-background-image: url('icons/1/2.png'); -fx-background-color: transparent"));
     }
 
     private class TestPane extends AnchorPane {
