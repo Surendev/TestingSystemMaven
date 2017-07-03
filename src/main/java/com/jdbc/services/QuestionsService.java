@@ -47,31 +47,22 @@ public class QuestionsService implements QuestionsDAO {
             jdbc.update(query.toString(), newRightAnswer, questionId);
         } else {
 
-            if(question.isEmpty() && rating == 0 && topic.isEmpty()){
-                questionId = Integer.valueOf(id);
-            }else{
-                query = new StringBuilder("UPDATE questions SET ");
-                query.append(question.equals("") ? "" : "question='" + question + "'")
-                        .append(rating == 0 ? "" : "rating='" + rating + "'")
-                        .append(topic.equals("") ? "" : "topic='" + topic + "'")
-                        .append(" WHERE id=").append(id);
+            questionId = Integer.valueOf(id);
+//            query = new StringBuilder("UPDATE questions SET ");
+//            query.append("question='" + question + "'")
+//                    .append("rating='" + rating + "'")
+//                    .append("topic='" + topic + "'")
+//                    .append(" WHERE id=").append(id);
+            jdbc.update("UPDATE questions SET question=?,rating=?,topic=?,answer=? WHERE id=?",
+                        question,rating,topic,SecurityUtil.encrypt(newRightAnswer), id);
 
-                questionId = jdbc.update(query.toString());
+            for (int i = 0; i < 3; i++) {
+                jdbc.update("DELETE FROM answers WHERE to_question=?", questionId);
             }
-
-            if(!newRightAnswer.isEmpty() && !answers[0].isEmpty() && !answers[1].isEmpty()){
-                query = new StringBuilder("UPDATE questions SET answer = ? WHERE id=?");
-                jdbc.update(String.valueOf(query), SecurityUtil.encrypt(newRightAnswer),questionId);
-                for (int i = 0; i < 3; i++) {
-                    jdbc.update("DELETE FROM answers WHERE to_question=?", questionId);
-                }
-                query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
-                jdbc.update(String.valueOf(query), newRightAnswer,questionId);
-                jdbc.update("INSERT INTO answers(text, to_question) VALUES(?,?)", answers[0], questionId);
-                jdbc.update("INSERT INTO answers(text, to_question) VALUES(?,?)", answers[1], questionId);
-            }
-
-
+            query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
+            jdbc.update(String.valueOf(query), newRightAnswer, questionId);
+            jdbc.update(String.valueOf(query), answers[0], questionId);
+            jdbc.update(String.valueOf(query), answers[1], questionId);
         }
 
     }
@@ -102,18 +93,18 @@ public class QuestionsService implements QuestionsDAO {
     @Override
     public void deleteQuestion(Long questionId) throws SQLException {
         final String query = "DELETE FROM questions WHERE id = ?";
-        if(jdbc.update(query,questionId) <= 0){
+        if (jdbc.update(query, questionId) <= 0) {
             throw new SQLException("Չի ստացվել ջնջել հարցը ID: " + questionId);
         }
     }
 
     @Override
-    public Integer getQuestionIdByRightAnswer(String answer){
-        if(answer.isEmpty() || answer.length()!=64){
+    public Integer getQuestionIdByRightAnswer(String answer) {
+        if (answer.isEmpty() || answer.length() != 64) {
             return null;
         }
         final String query = "SELECT id FROM questions WHERE answer=?";
 
-        return jdbc.queryForObject(query,new Object[]{answer},(resultSet, i) -> resultSet.getInt("id"));
+        return jdbc.queryForObject(query, new Object[]{answer}, (resultSet, i) -> resultSet.getInt("id"));
     }
 }

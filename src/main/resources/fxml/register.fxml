@@ -57,7 +57,7 @@
     </Label>
     <Button id="6" fx:id="confirmButton" layoutX="220.0" layoutY="480.0" mnemonicParsing="false"
             onAction="#checkAuthentication" prefHeight="60.0" prefWidth="60.0"
-            style="-fx-background-image: url('/icons/1/2.png'); -fx-background-color: transparent;"/>
+            style="-fx-background-image: url('/icons/1/1.png'); -fx-background-color: transparent;"/>
     <Button id="7" layoutY="552.0" mnemonicParsing="false" onAction="#goToHome" prefHeight="40.0"
             prefWidth="100.0" style="-fx-background-color: transparent">
         <graphic>

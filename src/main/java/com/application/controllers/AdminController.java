@@ -305,8 +305,9 @@ public class AdminController extends AbstractController implements Initializable
 
         boolean update = editQuestionCheckBox.isSelected();
         if (update) {
-            if (questionIDField.getText().equals("") || !questionIDField.getText().matches("^\\d+$")) {
-                questionAddedLabel.setText("Սխալ տվյալ․ ID");
+            if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[1].isEmpty() ||
+                    topic.equals("") || rating == 0) {
+                questionAddedLabel.setText("Կա չներմուծված դաշտ");
                 questionAddedLabel.setTextFill(Color.RED);
                 return;
             }
@@ -322,7 +323,7 @@ public class AdminController extends AbstractController implements Initializable
         questionAddedLabel.setTextFill(Color.GREEN);
         questionAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է");
         successPopup(questionAddedLabel);
-        this.resetQuestionFields();
+        resetQuestionFields();
     }
 
 
@@ -352,6 +353,7 @@ public class AdminController extends AbstractController implements Initializable
         exitStage.setScene(exitScene);
         exitStage.setTitle("LOG_OUT");
         exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+        exitStage.setResizable(false);
         exitStage.initModality(Modality.APPLICATION_MODAL);
         exitStage.initOwner(stage);
         Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
