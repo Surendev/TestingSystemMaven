@@ -101,7 +101,7 @@
     </Label>
     <Button layoutX="475.0" layoutY="610.0" mnemonicParsing="false" onAction="#goToNextButton"
             prefHeight="40.0" prefWidth="50.0" text="&gt;"/>
-    <Button fx:id="backButton" layoutX="275.0" layoutY="610.0" mnemonicParsing="false"
+    <Button layoutX="275.0" layoutY="610.0" mnemonicParsing="false"
             onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;"/>
     <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="610.0"
                onKeyPressed="#goToQuestion" prefHeight="40.0" prefWidth="150.0" promptText="Հարցի համարը"/>

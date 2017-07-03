@@ -5,17 +5,14 @@ package com.application.utils;
  */
 public class ConvertSymbols {
 
-    private static StringBuilder buffer;
-    private static StringBuilder toConvert;
-
     public static String convertFromHex(String textToConvert){
         if (textToConvert==null)
             return null;
         if (!textToConvert.matches(".*\\\\.*")) {
             return textToConvert;
         }
-        buffer = new StringBuilder("");
-        toConvert = new StringBuilder(textToConvert);
+        StringBuilder buffer = new StringBuilder("");
+        StringBuilder toConvert = new StringBuilder(textToConvert);
         int index;
             while((index = toConvert.indexOf("\\"))>= 0) {
                 buffer.append(toConvert.substring(0, index));
@@ -26,7 +23,7 @@ public class ConvertSymbols {
                 buffer.append(cha);
 
                 String notFixed = toConvert.substring(index+6);
-                toConvert.delete(0,toConvert.length()).append(notFixed);
+                toConvert.delete(0, toConvert.length()).append(notFixed);
             }
         buffer.append(toConvert);
         return buffer.toString();

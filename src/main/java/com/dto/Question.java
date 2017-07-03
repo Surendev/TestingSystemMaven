@@ -59,11 +59,9 @@ public class Question {
 
         Question question1 = (Question) o;
 
-        if (getRating() != question1.getRating()) return false;
-        if (!getQuestion().equals(question1.getQuestion())) return false;
-        if (!getTopic().equals(question1.getTopic())) return false;
+        return getRating() == question1.getRating() && getQuestion().equals(question1.getQuestion())
+                && getTopic().equals(question1.getTopic()) && getAnswer().equals(question1.getAnswer());
 
-        return getAnswer().equals(question1.getAnswer());
     }
 
     @Override

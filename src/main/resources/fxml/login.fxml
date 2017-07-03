@@ -1,51 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" onMouseMoved="#initialMouse" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.LoginController" style="-fx-background-image: url('/icons/wall_login.png')">
-   <top>
-      <Label alignment="CENTER" prefHeight="37.0" prefWidth="300.0" text="Login" textAlignment="CENTER" textFill="#1ca43a" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="FreeSerif" size="23.0" />
-         </font></Label>
-   </top>
-   <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-            <TextField fx:id="loginField" layoutX="60.0" layoutY="30.0" onKeyPressed="#checkKeyPressing" promptText="Login" style="-fx-border-color: brown">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect>
-            </TextField>
-            <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="80.0" onKeyPressed="#checkKeyPressing" promptText="Password" style="-fx-border-color: brown">
-               <effect>
-                  <Lighting>
-                     <bumpInput>
-                        <Shadow />
-                     </bumpInput>
-                     <light>
-                        <Light.Distant />
-                     </light>
-                  </Lighting>
-               </effect>
-            </PasswordField>
-            <Button fx:id="logIn" layoutX="40.0" layoutY="160.0" mnemonicParsing="false" onAction="#logIn" prefWidth="100.0" text="Log In" style="-fx-background-color: brown" textFill="floralwhite"/>
-            <Button fx:id="cancel" layoutX="170.0" layoutY="160.0" mnemonicParsing="false" onAction="#cancel" prefWidth="100.0" text="Cancel" style="-fx-background-color: brown" textFill="floralwhite"/>
-            <Label fx:id="errLabel" alignment="CENTER" layoutY="220.0" prefWidth="300.0" textFill="#fc0000" />
-         </children>
-      </Pane>
-   </center>
+<?import javafx.scene.text.Font?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
+            prefWidth="300.0" onMouseMoved="#initialMouse" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.LoginController"
+            style="-fx-background-image: url('/icons/wall_login.png')">
+    <top>
+        <Label alignment="CENTER" prefHeight="37.0" prefWidth="300.0" text="Login" textAlignment="CENTER"
+               textFill="#1ca43a" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="FreeSerif" size="23.0"/>
+            </font>
+        </Label>
+    </top>
+    <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TextField fx:id="loginField" layoutX="60.0" layoutY="30.0" onKeyPressed="#checkKeyPressing"
+                           promptText="Login" style="-fx-border-color: brown">
+                    <effect>
+                        <Lighting>
+                            <bumpInput>
+                                <Shadow/>
+                            </bumpInput>
+                            <light>
+                                <Light.Distant/>
+                            </light>
+                        </Lighting>
+                    </effect>
+                </TextField>
+                <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="80.0" onKeyPressed="#checkKeyPressing"
+                               promptText="Password" style="-fx-border-color: brown">
+                    <effect>
+                        <Lighting>
+                            <bumpInput>
+                                <Shadow/>
+                            </bumpInput>
+                            <light>
+                                <Light.Distant/>
+                            </light>
+                        </Lighting>
+                    </effect>
+                </PasswordField>
+                <Button fx:id="logIn" layoutX="40.0" layoutY="160.0" mnemonicParsing="false" onAction="#logIn"
+                        prefWidth="100.0" text="Log In" style="-fx-background-color: brown" textFill="floralwhite"/>
+                <Button fx:id="cancel" layoutX="170.0" layoutY="160.0" mnemonicParsing="false" onAction="#cancel"
+                        prefWidth="100.0" text="Cancel" style="-fx-background-color: brown" textFill="floralwhite"/>
+                <Label fx:id="errLabel" alignment="CENTER" layoutY="220.0" prefWidth="300.0" textFill="#fc0000"/>
+            </children>
+        </Pane>
+    </center>
 </BorderPane>

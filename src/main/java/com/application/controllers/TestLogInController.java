@@ -3,8 +3,6 @@ package com.application.controllers;
 
 import com.StartApp;
 import com.jdbc.dao.StudentsDAO;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +41,7 @@ public class TestLogInController extends AbstractController implements Initializ
     TextField idField;
     private @FXML
     Label errLabel;
-    private Timeline timeline;
+//    private Timeline timeline;
 
     public void checkAuthentication() throws IOException {
 //        if (!isValidEnteredValues()) {

@@ -1,6 +1,5 @@
 package com.application.controllers;
 
-import com.StartApp;
 import com.application.utils.*;
 import com.dto.Answer;
 import com.dto.Question;
@@ -21,7 +20,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -162,8 +160,8 @@ public class AdminController extends AbstractController implements Initializable
         try {
             root = FXMLLoader.load(getClass().getResource("/fxml/exit.fxml"));
             exitScene = new Scene(root, 250, 140);
-        } catch (IOException e){
-
+        } catch (IOException e) {
+            exitScene = null;
         }
 
     }
@@ -391,7 +389,7 @@ public class AdminController extends AbstractController implements Initializable
             disableQuestionEditFields(false);
             questionIDField.requestFocus();
             questionIDField.setOnKeyPressed(event -> {
-               if (event.getCode().equals(KeyCode.ENTER)) confirmID();
+                if (event.getCode().equals(KeyCode.ENTER)) confirmID();
             });
         } else {
             disableQuestionEditFields(true);
@@ -543,7 +541,7 @@ public class AdminController extends AbstractController implements Initializable
 
     public void confirmID() {
         String idStr = questionIDField.getText().trim();
-        if (!idStr.matches("-?\\d+(\\.\\d+)?")){
+        if (!idStr.matches("-?\\d+(\\.\\d+)?")) {
             questionAddedLabel.setTextFill(Color.RED);
             questionAddedLabel.setText("Սխալ ID");
             successPopup(questionAddedLabel);
@@ -553,7 +551,7 @@ public class AdminController extends AbstractController implements Initializable
         confirmQuestionButton.setDisable(false);
         delQuestionButton.setDisable(false);
         Question question = null;
-        for (Question next : resultFromDB.keySet()){
+        for (Question next : resultFromDB.keySet()) {
             if (next.getId().equals(id)) {
                 question = next;
                 break;
@@ -579,7 +577,7 @@ public class AdminController extends AbstractController implements Initializable
                     //TODO log
                 }
             }
-        } else{
+        } else {
             resetQuestionFields();
             questionAddedLabel.setText("Տրված համարով հարց չկա։");
             questionAddedLabel.setTextFill(Color.RED);

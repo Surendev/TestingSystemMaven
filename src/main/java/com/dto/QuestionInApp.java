@@ -64,15 +64,15 @@ public class QuestionInApp {
         return ConvertSymbols.convertFromHex(answer3);
     }
 
-    public void setAnswer1(String answer1) {
+    void setAnswer1(String answer1) {
         this.answer1 = answer1;
     }
 
-    public void setAnswer2(String answer2) {
+    void setAnswer2(String answer2) {
         this.answer2 = answer2;
     }
 
-    public void setAnswer3(String answer3) {
+    void setAnswer3(String answer3) {
         this.answer3 = answer3;
     }
 
@@ -88,7 +88,7 @@ public class QuestionInApp {
             }
         }
     }
-    public int getRightIndex() {
+    int getRightIndex() {
         try {
             if (SecurityUtil.encrypt(answer1).equals(rightAnswer)) return 1;
             else if (SecurityUtil.encrypt(answer2).equals(rightAnswer)) return 2;

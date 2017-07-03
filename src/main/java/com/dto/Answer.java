@@ -4,7 +4,6 @@ import com.application.utils.ConvertSymbols;
 import com.application.utils.SecurityUtil;
 
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Suro Smith on 2/22/2017

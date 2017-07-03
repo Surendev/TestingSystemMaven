@@ -18,9 +18,6 @@ public class TestUtil{
     // here is saving all questions by ratings
     private Map<Integer, List<Question>> questionsFromDB = new HashMap<>();
 
-    private ClassPathXmlApplicationContext context =
-            new ClassPathXmlApplicationContext("/spring_context.xml");
-
     public TestUtil() {
         String[] ratingsArr = ConfigsLoader.getInstance().getProperties().getProperty("test.ratings").split(",");
         int[] ratings = new int[ratingsArr.length];
@@ -28,6 +25,7 @@ public class TestUtil{
             ratings[i] = Integer.valueOf(ratingsArr[i]);
         }
         this.ratings = ratings;
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring_context.xml");
         questionsService = context.getBean("questionsService", QuestionsService.class);
         fillQuestionsFromDB();
     }

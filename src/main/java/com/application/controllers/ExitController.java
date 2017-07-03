@@ -14,6 +14,7 @@ import java.io.IOException;
 
 /**
  * Created by Atom on 02-Jul-17.
+ *
  */
 public class ExitController {
 
@@ -22,7 +23,7 @@ public class ExitController {
     public Button cancel;
     private Stage currentStage = new Stage();
 
-    public void close() {
+    private void close() {
         currentStage = (Stage) exitLabel.getScene().getWindow();
         if (currentStage.getTitle().equals("EXIT")) exit();
         else if (currentStage.getTitle().equals("LOG_OUT")) logOut();
@@ -52,7 +53,7 @@ public class ExitController {
         }
     }
 
-    public void cancel() {
+    private void cancel() {
         currentStage = (Stage) exitLabel.getScene().getWindow();
         currentStage.close();
     }

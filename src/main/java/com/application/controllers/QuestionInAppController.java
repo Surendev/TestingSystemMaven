@@ -1,6 +1,5 @@
 package com.application.controllers;
 
-import com.dto.QuestionInApp;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

@@ -72,12 +72,11 @@ public class Student {
 
         Student student = (Student) o;
 
-        if (course != student.course) return false;
-        if (!id.equals(student.id)) return false;
-        if (!firstName.equals(student.firstName)) return false;
-        if (!middleName.equals(student.middleName)) return false;
-        if (!lastName.equals(student.lastName)) return false;
-        return group.equals(student.group);
+        return course == student.course && id.equals(student.id)
+                && firstName.equals(student.firstName)
+                && middleName.equals(student.middleName)
+                && lastName.equals(student.lastName)
+                && group.equals(student.group);
     }
 
     @Override

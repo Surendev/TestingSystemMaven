@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.*?>
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" onMouseMoved="#initialMouse" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.MainController"  style="-fx-background-image: url('/icons/system-testing1_main.png')">
-   <left>
-      <Button fx:id="goToAdminPage" mnemonicParsing="false" onAction="#gotToAdminPage" prefWidth="100.0" text="Admin Page" BorderPane.alignment="CENTER" >
-         <BorderPane.margin>
-            <Insets left="10.0" />
-         </BorderPane.margin>
-      </Button>
-   </left>
-   <right>
-      <Button fx:id="goToTest" mnemonicParsing="false" onAction="#goToTestPage" prefWidth="100.0" text="Test" BorderPane.alignment="CENTER">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets right="10.0" />
-         </BorderPane.margin>
-      </Button>
-   </right>
-   <bottom>
-      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitFromApp" prefHeight="50.0" prefWidth="100.0" text="Exit" textFill="#b50d0d" BorderPane.alignment="CENTER">
-         <font>
-            <Font size="26.0" />
-         </font>
-      </Button>
-   </bottom>
+<?import javafx.scene.text.Font?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
+            prefWidth="300.0" onMouseMoved="#initialMouse" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.MainController"
+            style="-fx-background-image: url('/icons/system-testing1_main.png')">
+    <left>
+        <Button fx:id="goToAdminPage" mnemonicParsing="false" onAction="#gotToAdminPage" prefWidth="100.0"
+                text="Admin Page" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets left="10.0"/>
+            </BorderPane.margin>
+        </Button>
+    </left>
+    <right>
+        <Button fx:id="goToTest" mnemonicParsing="false" onAction="#goToTestPage" prefWidth="100.0" text="Test"
+                BorderPane.alignment="CENTER">
+            <opaqueInsets>
+                <Insets/>
+            </opaqueInsets>
+            <BorderPane.margin>
+                <Insets right="10.0"/>
+            </BorderPane.margin>
+        </Button>
+    </right>
+    <bottom>
+        <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitFromApp" prefHeight="50.0" prefWidth="100.0"
+                text="Exit" textFill="#b50d0d" BorderPane.alignment="CENTER">
+            <font>
+                <Font size="26.0"/>
+            </font>
+        </Button>
+    </bottom>
 </BorderPane>

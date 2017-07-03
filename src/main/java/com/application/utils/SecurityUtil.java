@@ -3,8 +3,6 @@ package com.application.utils;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Suro Smith on 2/20/2017
@@ -16,7 +14,6 @@ public class SecurityUtil {
     public static String encrypt(String plainText) throws UnsupportedEncodingException {
         return DigestUtils.sha256Hex(plainText);
     }
-
 
 
 }
