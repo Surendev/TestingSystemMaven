@@ -54,7 +54,7 @@ public class LoginController extends AbstractController implements Initializable
             errLabel.setTextFill(Color.RED);
             return;
         }
-        if (login.equals("admin") && SecurityUtil.encrypt(pass).equals(SecurityUtil.justString)) {
+        if (login.trim().equals("admin") && SecurityUtil.encrypt(pass.trim()).equals(SecurityUtil.justString)) {
             logIn.getScene().getWindow().hide();
             showAdminPage();
         }

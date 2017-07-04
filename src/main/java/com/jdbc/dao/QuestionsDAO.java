@@ -15,7 +15,7 @@ public interface QuestionsDAO {
 
     List<Question> getQuestionsByRating(int rating);
 
-    void addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String... answers) throws UnsupportedEncodingException, SQLException;
+    String addOrUpdateQuestion(boolean update, String id, String question, Integer rating, String topic, String rightAnswer, String[] answers, String[] questionsOldValues) throws UnsupportedEncodingException, SQLException;
 
     List<Answer> getAnswersByQuestionId(Long id);
 

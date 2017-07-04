@@ -6,6 +6,7 @@ import com.dto.Question;
 import com.jdbc.dao.QuestionsDAO;
 import com.jdbc.mappers.AnswerRowMapper;
 import com.jdbc.mappers.QuestionRowMapper;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -31,8 +32,8 @@ public class QuestionsService implements QuestionsDAO {
         return jdbc.query(query, new Object[]{rating}, new QuestionRowMapper());
     }
 
-    public void addOrUpdateQuestion(boolean update, String id, String question,
-                                    Integer rating, String topic, String newRightAnswer, String... answers)
+    public String addOrUpdateQuestion(boolean update, String id, String question,
+                                    Integer rating, String topic, String newRightAnswer, String[] answers, String[] questionsOldValues)
             throws UnsupportedEncodingException, SQLException {
         StringBuilder query;
         int questionId;
@@ -45,24 +46,26 @@ public class QuestionsService implements QuestionsDAO {
                 jdbc.update(query.toString(), each, questionId);
             }
             jdbc.update(query.toString(), newRightAnswer, questionId);
+            return "Ավելացված է";
         } else {
-
-            questionId = Integer.valueOf(id);
 //            query = new StringBuilder("UPDATE questions SET ");
 //            query.append("question='" + question + "'")
 //                    .append("rating='" + rating + "'")
 //                    .append("topic='" + topic + "'")
 //                    .append(" WHERE id=").append(id);
-            jdbc.update("UPDATE questions SET question=?,rating=?,topic=?,answer=? WHERE id=?",
-                        question,rating,topic,SecurityUtil.encrypt(newRightAnswer), id);
+            if (!(questionsOldValues[0].equals(question)
+                && questionsOldValues[1].equals(topic)
+                && questionsOldValues[2].equals(Integer.toString(rating))
+                && questionsOldValues[3].equals(newRightAnswer)))           {
 
-            for (int i = 0; i < 3; i++) {
-                jdbc.update("DELETE FROM answers WHERE to_question=?", questionId);
+                jdbc.update("UPDATE questions SET question=?,rating=?,topic=?,answer=? WHERE id=?",
+                        question,rating,topic,SecurityUtil.encrypt(newRightAnswer), id);
             }
-            query = new StringBuilder("INSERT INTO answers(text,to_question) VALUES(?,?)");
-            jdbc.update(String.valueOf(query), newRightAnswer, questionId);
-            jdbc.update(String.valueOf(query), answers[0], questionId);
-            jdbc.update(String.valueOf(query), answers[1], questionId);
+            if (!(questionsOldValues[3].equals(newRightAnswer))) jdbc.update("UPDATE answers SET text=? WHERE text=?", newRightAnswer, questionsOldValues[3]);
+            if (!(questionsOldValues[4].equals(answers[0]))) jdbc.update("UPDATE answers SET text=? WHERE text=?", answers[0], questionsOldValues[4]);
+            if (!(questionsOldValues[5].equals(answers[1]))) jdbc.update("UPDATE answers SET text=? WHERE text=?", answers[1], questionsOldValues[5]);
+            System.out.println();
+            return  "Փոփոխված է";
         }
 
     }

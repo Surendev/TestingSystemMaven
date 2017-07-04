@@ -152,6 +152,7 @@ public class AdminController extends AbstractController implements Initializable
     private StudentsDAO studentsService;
     private QuestionsDAO questionsService;
     private Map<Question, List<Answer>> resultFromDB;
+    private String[] questionsOldValues = new String[6];
 
     private Scene exitScene = null;
 
@@ -303,25 +304,16 @@ public class AdminController extends AbstractController implements Initializable
         String topic = topicBox.getValue() == null ? "" : topicBox.getValue().getTopic();
         Integer rating = ratingBox.getValue() == null ? 0 : ratingBox.getValue();
 
-        boolean update = editQuestionCheckBox.isSelected();
-        if (update) {
-            if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() || answers[1].isEmpty() ||
-                    topic.equals("") || rating == 0) {
-                questionAddedLabel.setText("Կա չներմուծված դաշտ");
-                questionAddedLabel.setTextFill(Color.RED);
-                return;
-            }
-        } else {
-            if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() ||
-                    answers[1].isEmpty() || topic.equals("") || rating == 0) {
-                questionAddedLabel.setText("Սխալ տվյալներ");
-                return;
-            }
+        boolean update = editQuestionCheckBox.selectedProperty().get();
+        if (question.isEmpty() || rightAnswer.isEmpty() || answers[0].isEmpty() ||
+                answers[1].isEmpty() || topic.equals("") || rating == 0) {
+            questionAddedLabel.setText("Սխալ տվյալներ");
+            successPopup(questionAddedLabel);
+            return;
         }
-
-        questionsService.addOrUpdateQuestion(update, questionIDField.getText(), question, rating, topic, rightAnswer, answers);
+        String message = questionsService.addOrUpdateQuestion(update, questionIDField.getText(), question, rating, topic, rightAnswer, answers, questionsOldValues);
         questionAddedLabel.setTextFill(Color.GREEN);
-        questionAddedLabel.setText(update ? "Փոփոխված է" : "Ավելացված է");
+        questionAddedLabel.setText(message);
         successPopup(questionAddedLabel);
         resetQuestionFields();
     }
@@ -561,17 +553,23 @@ public class AdminController extends AbstractController implements Initializable
         }
         if (question != null) {
             questionArea.setText(ConvertSymbols.convertFromHex(question.getQuestion()));
+            questionsOldValues[0] = questionArea.getText();
             topicBox.setValue(new TopicUtil(question.getTopic()));
+            questionsOldValues[1] = topicBox.getValue().getTopic();
             ratingBox.setValue(question.getRating());
+            questionsOldValues[2] = Integer.toString(ratingBox.getValue());
 
             List<Answer> answers = resultFromDB.get(question);
             for (Answer next : answers) {
                 try {
                     if (question.getAnswer().trim().equals(next.getEncrypted())) {
                         rightAnswerArea.setText(ConvertSymbols.convertFromHex(next.getText()));
+                        questionsOldValues[3] = rightAnswerArea.getText();
                         answers.remove(next);
                         ans1Area.setText(ConvertSymbols.convertFromHex(answers.get(0).getText()));
+                        questionsOldValues[4] = ans1Area.getText();
                         ans2Area.setText(ConvertSymbols.convertFromHex(answers.get(1).getText()));
+                        questionsOldValues[5] = ans2Area.getText();
                         answers.add(next);
                         break;
                     }
