@@ -181,7 +181,10 @@
                          </Label>
                         <Button fx:id="savePropsButton" layoutX="522.0" layoutY="480.0" mnemonicParsing="false" onAction="#saveSettingsInPropFIle" prefHeight="32.0" prefWidth="180.0" text="Պահպանել" />
                         <Button fx:id="addQuestionsRating" contentDisplay="CENTER" layoutX="427.0" layoutY="146.0" mnemonicParsing="false" onAction="#addQuestionCountField" prefHeight="32.0" prefWidth="32.0">
-                           <graphic>
+                            <tooltip>
+                                <Tooltip text="Ավելացնել նոր տող՝ թեստի մեջ նոր արժեքով և համապատասխան քանակով հարց ավելացնելու համար" prefWidth="160.0" wrapText="true"/>
+                            </tooltip>
+                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../icons/plus.png" />
@@ -190,6 +193,9 @@
                            </graphic>
                         </Button>
                         <Button fx:id="addTopicButton" contentDisplay="CENTER" layoutX="712.0" layoutY="146.0" mnemonicParsing="false" onAction="#addTopicField" prefHeight="32.0" prefWidth="32.0">
+                           <tooltip>
+                               <Tooltip text="Ավելացնել նոր տող՝ թեստում նոր թեմա ավելացնելու համար" prefWidth="160.0" wrapText="true"/>
+                           </tooltip>
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

@@ -123,6 +123,7 @@ public class TestLogInController extends AbstractController implements Initializ
         stage.getIcons().add(new Image("/icons/TestIcon.png"));
 //        stage.setTitle("Testing System _ Test");
         stage.setResizable(false);
+//        stage.focusedProperty().addListener((observable, newValue, oldValue)-> stage.setIconified(true));
         stage.show();
     }
 

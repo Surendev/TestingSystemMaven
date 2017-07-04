@@ -26,7 +26,12 @@
         </opaqueInsets>
     </Button>
     <ToolBar layoutY="20.0" prefHeight="40.0" prefWidth="800.0">
-        <Button mnemonicParsing="false" onAction="#goToHomePage" text="HOME"/>
+        <Button mnemonicParsing="false" onAction="#goToHomePage" text="HOME">
+            <tooltip>
+                <Tooltip text="Գլխավոր էջ վերադառնալու դեպքում չհաստատված թեստի արդյունքները կկորչեն"
+                         wrapText="true" prefWidth="160.0"/>
+            </tooltip>
+        </Button>
         <Label fx:id="questionsSizeLabel" alignment="CENTER" prefHeight="20.0" prefWidth="180.0" text="Հարցերի քանակ "
                textAlignment="CENTER" textFill="darkgoldenrod" translateX="5.0">
             <font>
@@ -55,7 +60,12 @@
             </opaqueInsets>
         </Label>
         <Button fx:id="confirmButton" alignment="BASELINE_RIGHT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
-                onAction="#showEndPopup" text="Հաստատել"/>
+                onAction="#showEndPopup" text="Հաստատել">
+            <tooltip>
+                <Tooltip text="Ավարտել թեստը և կատարել միավորների հաշվարկ։ Հարցի տարբերակ չնշելու դեպքում ավտոմատ կընտրվի առաջինը։"
+                         wrapText="true" prefWidth="160.0"/>
+            </tooltip>
+        </Button>
     </ToolBar>
     <VBox layoutY="60.0" prefHeight="500.0" prefWidth="800.0">
         <AnchorPane fx:id="answersPane" prefHeight="170.0" prefWidth="800.0">

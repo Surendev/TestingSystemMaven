@@ -17,7 +17,7 @@ import java.io.IOException;
 public class QuestionsHelper {
 
 
-    public static void showQuestionOnNewPage(QuestionInApp clickedQuestion) throws IOException {
+    public static void showQuestionOnNewPage(QuestionInApp clickedQuestion, Stage owner) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApp.class.getResource("/fxml/question.fxml"));
         Pane newPane = loader.load();
         initLabels(loader.getController(),clickedQuestion);
@@ -27,6 +27,7 @@ public class QuestionsHelper {
         stage.setTitle("Question");
         stage.getIcons().add(new Image("/icons/TestIcon.png"));
         stage.setResizable(false);
+        stage.initOwner(owner);
         stage.show();
     }
 

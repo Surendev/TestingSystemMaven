@@ -213,7 +213,7 @@ public class AdminController extends AbstractController implements Initializable
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                 QuestionInApp clickedQuestion = questionsTable.getSelectionModel().getSelectedItem();
                 try {
-                    QuestionsHelper.showQuestionOnNewPage(clickedQuestion);
+                    QuestionsHelper.showQuestionOnNewPage(clickedQuestion, (Stage) questionsTable.getScene().getWindow());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

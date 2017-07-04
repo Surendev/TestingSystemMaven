@@ -8,6 +8,8 @@ import com.jdbc.services.TestService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -259,6 +261,11 @@ public class TestController extends AbstractController implements Initializable 
     public void hideStage() {
 //        stage = (Stage) questionNumberLabel.getScene().getWindow();
 //        stage.setIconified(true);
+    }
+
+    private void checkFocused(){
+        stage = (Stage) questionNumberLabel.getScene().getWindow();
+        stage.focusedProperty().addListener((observable, oldValue, newValue) -> stage.setIconified(true));
     }
 
     public void minimize() {
