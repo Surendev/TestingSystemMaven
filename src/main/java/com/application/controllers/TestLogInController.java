@@ -3,6 +3,7 @@ package com.application.controllers;
 
 import com.StartApp;
 import com.jdbc.dao.StudentsDAO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +16,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -117,15 +120,54 @@ public class TestLogInController extends AbstractController implements Initializ
     private void showTestPage() throws IOException {
         Parent root = FXMLLoader.load(StartApp.class.getResource("/fxml/test.fxml"));
         Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        Scene testScene = new Scene(new TestPane(stage, root));
+        Scene testScene = new Scene(root, 800,660);
         stage.setScene(testScene);
         stage.getIcons().add(new Image("/icons/TestIcon.png"));
-//        stage.setTitle("Testing System _ Test");
+        stage.setTitle("Testing System _ Test");
         stage.setResizable(false);
-//        stage.focusedProperty().addListener((observable, newValue, oldValue)-> stage.setIconified(true));
+        stage.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode keyCode = event.getCode();
+            if (keyCode.equals(KeyCode.PRINTSCREEN)) {
+                stage.setIconified(true);
+                if (Clipboard.getSystemClipboard().hasImage()) Clipboard.getSystemClipboard().clear();
+            }
+        });
+        stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (observable.getValue())
+                if (!newValue) stage.setIconified(true);
+        });
+        stage.setOnCloseRequest(event -> {
+            try{
+                event.consume();
+                Parent parent = FXMLLoader.load(getClass().getResource("/fxml/exit.fxml"));
+                Scene exitScene = new Scene(parent, 250, 140);
+                Stage exitStage = new Stage();
+                exitStage.setScene(exitScene);
+                exitStage.setTitle("EXIT");
+                Label label = (Label) parent.lookup("#exitLabel");
+                label.setText("Փակե՞լ ծրագիրը");
+                exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
+                exitStage.setResizable(false);
+                exitStage.initModality(Modality.APPLICATION_MODAL);
+                exitStage.initOwner(stage);
+                exitStage.addEventFilter(KeyEvent.KEY_PRESSED, newEvent -> {
+                    if (newEvent.getCode().equals(KeyCode.PRINTSCREEN)) {
+                        stage.setIconified(true);
+                        if (Clipboard.getSystemClipboard().hasImage()) Clipboard.getSystemClipboard().clear();
+                    }
+                });
+                exitStage.focusedProperty().addListener(((observable, oldValue, newValue) -> {
+                    if (!newValue) stage.setIconified(true);
+                }));
+                exitStage.show();
+            } catch (IOException e){
+                Platform.exit();
+                // TODO log
+            }
+        });
         stage.show();
     }
+
 
     private void resetTestLoginFields() {
         firstNameField.clear();
@@ -165,30 +207,4 @@ public class TestLogInController extends AbstractController implements Initializ
         confirmButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> confirmButton.setStyle("-fx-background-image: url('icons/1/1.png'); -fx-background-color: transparent"));
     }
 
-    private class TestPane extends AnchorPane {
-        private double xOffset = 0;
-        private double yOffset = 0;
-        private Stage primaryStage;
-
-        private TestPane(Stage stage, Node node) {
-            super();
-
-            primaryStage = stage;
-            this.setPadding(new javafx.geometry.Insets(0, 0, 0, 0));
-
-            this.getChildren().addAll(node);
-
-            this.setOnMousePressed((MouseEvent event) -> {
-                xOffset = event.getSceneX();
-                yOffset = event.getSceneY();
-            });
-            this.setOnMouseDragged((MouseEvent event) -> {
-                if (yOffset <= 20) {
-                    primaryStage.setX(event.getScreenX() - xOffset);
-                    primaryStage.setY(event.getScreenY() - yOffset);
-                }
-            });
-
-        }
-    }
 }

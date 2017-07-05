@@ -7,9 +7,6 @@ import com.jdbc.dao.TestDAO;
 import com.jdbc.services.TestService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,7 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -38,11 +36,8 @@ import java.util.ResourceBundle;
  */
 public class TestController extends AbstractController implements Initializable {
 
-    public Button closeButton;
-    public Button minimizeButton;
     public Button confirmButton;
     public AnchorPane answersPane;
-    public Button fullScreenButton;
     public Label resultLabel;
 
     private Stage stage;
@@ -108,7 +103,6 @@ public class TestController extends AbstractController implements Initializable 
         }
         questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
         rights = new int[chosenAnswers.length];
-        fullScreenButton.setDisable(true);
         initRadioButtons();
         displayCurrentQuestion();
         initializeTimer();
@@ -137,7 +131,7 @@ public class TestController extends AbstractController implements Initializable 
 
     @FXML
     private void showEndPopup() {
-        disableTest();
+        disableTest(true);
         test.markAnswerToQuestion(chosenAnswers);
         double[] result = test.qualifyTest(rights);
         double enough = result[1] / 2.5;
@@ -150,20 +144,20 @@ public class TestController extends AbstractController implements Initializable 
         showDifference();
     }
 
-    private void disableTest() {
+    private void disableTest(boolean what) {
         timeline.stop();
         Toolkit.getDefaultToolkit().beep();
-        answer1CheckBox.setDisable(true);
-        answer2CheckBox.setDisable(true);
-        answer3CheckBox.setDisable(true);
-        answer1CheckBox.setVisible(false);
-        answer2CheckBox.setVisible(false);
-        answer3CheckBox.setVisible(false);
-        confirmButton.setDisable(true);
+        answer1CheckBox.setDisable(what);
+        answer2CheckBox.setDisable(what);
+        answer3CheckBox.setDisable(what);
+        answer1CheckBox.setVisible(!what);
+        answer2CheckBox.setVisible(!what);
+        answer3CheckBox.setVisible(!what);
+        confirmButton.setDisable(what);
     }
 
     public void goToHomePage() throws IOException {
-        stage = (Stage) closeButton.getScene().getWindow();
+        stage = (Stage) confirmButton.getScene().getWindow();
         Stage exitStage = new Stage();
         if (exitScene != null) {
             exitStage.setScene(exitScene);
@@ -258,57 +252,5 @@ public class TestController extends AbstractController implements Initializable 
         answer3CheckBox.setToggleGroup(answersGroup);
     }
 
-    public void hideStage() {
-//        stage = (Stage) questionNumberLabel.getScene().getWindow();
-//        stage.setIconified(true);
-    }
-
-    private void checkFocused(){
-        stage = (Stage) questionNumberLabel.getScene().getWindow();
-        stage.focusedProperty().addListener((observable, oldValue, newValue) -> stage.setIconified(true));
-    }
-
-    public void minimize() {
-        stage = (Stage) questionNumberLabel.getScene().getWindow();
-        stage.setIconified(true);
-    }
-
-    public void setFullScreen() {
-        stage = (Stage) questionNumberLabel.getScene().getWindow();
-        if (!stage.isFullScreen()) {
-            stage.setFullScreen(true);
-            fullScreenButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/fullScreen.png')");
-        } else {
-            stage.setFullScreen(false);
-            fullScreenButton.setStyle("-fx-background-color: transparent; -fx-background-image: url('icons/fullScreen_1.png')");
-        }
-    }
-
-    public void close() {
-        stage = (Stage) questionNumberLabel.getScene().getWindow();
-        Stage exitStage = new Stage();
-        if (exitScene != null) {
-            exitStage.setScene(exitScene);
-            exitStage.setTitle("EXIT");
-            exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
-            stage.setResizable(false);
-            exitStage.initModality(Modality.APPLICATION_MODAL);
-            exitStage.initOwner(stage);
-            Label label = (Label) exitScene.getRoot().lookup("#exitLabel");
-            label.setText("Փակե՞լ ծրագիրը");
-            exitStage.show();
-        } else {
-            Platform.exit();
-        }
-    }
-
-    public void decorateButtons() {
-        closeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> closeButton.setStyle("-fx-background-image: url(icons/close.png)"));
-        closeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> closeButton.setStyle("-fx-background-image: url(icons/close_1.png); -fx-background-color: transparent"));
-        minimizeButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize.png)"));
-        minimizeButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> minimizeButton.setStyle("-fx-background-image: url(icons/minimize_1.png); -fx-background-color: transparent"));
-        fullScreenButton.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen.png); -fx-background-color: #13a61d; -fx-border-color: #13a61d"));
-        fullScreenButton.addEventFilter(MouseEvent.MOUSE_EXITED, event -> fullScreenButton.setStyle("-fx-background-image: url(icons/fullScreen_1.png); -fx-background-color: transparent"));
-    }
     //region
 }

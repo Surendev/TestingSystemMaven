@@ -4,28 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<Pane focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      onMouseExited="#hideStage"
-      onMouseMoved="#decorateButtons" prefHeight="660.0"
+<Pane focusTraversable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefWidth="800.0" style="-fx-background-color: white" xmlns="http://javafx.com/javafx/8.0.112"
+      prefHeight="640.0"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.application.controllers.TestController">
-    <Label prefHeight="20.0" prefWidth="45"
-           style="-fx-background-image: url('icons/TestIcon_1.png'); -fx-background-repeat: no-repeat"
-           text="      Test"/>
-    <Button fx:id="minimizeButton" contentDisplay="RIGHT" layoutX="680.0" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" onAction="#minimize" prefHeight="20.0" prefWidth="40.0"
-            style="-fx-background-image: url('icons/minimize_1.png'); -fx-background-color: transparent"/>
-    <Button fx:id="fullScreenButton" contentDisplay="RIGHT" layoutX="720.0" maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity" onAction="#setFullScreen" prefHeight="20.0" prefWidth="40.0"
-            style="-fx-background-image: url('icons/fullScreen_1.png'); -fx-background-color: transparent"/>
-    <Button fx:id="closeButton" cache="true" contentDisplay="RIGHT" layoutX="760.0" maxHeight="-Infinity"
-            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#close" prefHeight="20.0"
-            prefWidth="40.0" style="-fx-background-image: url('icons/close_1.png'); -fx-background-color: transparent">
-        <opaqueInsets>
-            <Insets/>
-        </opaqueInsets>
-    </Button>
-    <ToolBar layoutY="20.0" prefHeight="40.0" prefWidth="800.0">
+    <ToolBar prefHeight="40.0" prefWidth="800.0">
         <Button mnemonicParsing="false" onAction="#goToHomePage" text="HOME">
             <tooltip>
                 <Tooltip text="Գլխավոր էջ վերադառնալու դեպքում չհաստատված թեստի արդյունքները կկորչեն"
@@ -50,7 +33,8 @@
                 <Insets/>
             </opaqueInsets>
         </Label>
-        <Label fx:id="timerLabel" alignment="CENTER" prefHeight="20.0" prefWidth="100.0" textAlignment="CENTER" textFill="#c63333"
+        <Label fx:id="timerLabel" alignment="CENTER" prefHeight="20.0" prefWidth="100.0" textAlignment="CENTER"
+               textFill="#c63333"
                translateX="5.0">
             <font>
                 <Font size="15.0"/>
@@ -59,15 +43,17 @@
                 <Insets/>
             </opaqueInsets>
         </Label>
-        <Button fx:id="confirmButton" alignment="BASELINE_RIGHT" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+        <Button fx:id="confirmButton" alignment="BASELINE_RIGHT" minHeight="-Infinity" minWidth="-Infinity"
+                mnemonicParsing="false"
                 onAction="#showEndPopup" text="Հաստատել">
             <tooltip>
-                <Tooltip text="Ավարտել թեստը և կատարել միավորների հաշվարկ։ Հարցի տարբերակ չնշելու դեպքում ավտոմատ կընտրվի առաջինը։"
-                         wrapText="true" prefWidth="160.0"/>
+                <Tooltip
+                        text="Ավարտել թեստը և կատարել միավորների հաշվարկ։ Հարցի տարբերակ չնշելու դեպքում ավտոմատ կընտրվի առաջինը։"
+                        wrapText="true" prefWidth="160.0"/>
             </tooltip>
         </Button>
     </ToolBar>
-    <VBox layoutY="60.0" prefHeight="500.0" prefWidth="800.0">
+    <VBox layoutY="40.0" prefHeight="500.0" prefWidth="800.0">
         <AnchorPane fx:id="answersPane" prefHeight="170.0" prefWidth="800.0">
             <Label fx:id="questionTitle" alignment="CENTER" prefHeight="170.0" prefWidth="800.0" textAlignment="CENTER"
                    wrapText="true">
@@ -104,15 +90,16 @@
             </Label>
         </AnchorPane>
     </VBox>
-    <Label fx:id="resultLabel" textAlignment="CENTER" alignment="CENTER" prefHeight="40.0" prefWidth="800.0" layoutY="570">
+    <Label fx:id="resultLabel" textAlignment="CENTER" alignment="CENTER" prefHeight="40.0" prefWidth="800.0"
+           layoutY="550">
         <font>
             <Font size="17.0"/>
         </font>
     </Label>
-    <Button layoutX="475.0" layoutY="610.0" mnemonicParsing="false" onAction="#goToNextButton"
+    <Button layoutX="475.0" layoutY="590.0" mnemonicParsing="false" onAction="#goToNextButton"
             prefHeight="40.0" prefWidth="50.0" text="&gt;"/>
-    <Button layoutX="275.0" layoutY="610.0" mnemonicParsing="false"
+    <Button layoutX="275.0" layoutY="590.0" mnemonicParsing="false"
             onAction="#backToPreviousQuestion" prefHeight="40.0" prefWidth="50.0" text="&lt;"/>
-    <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="610.0"
+    <TextField fx:id="insertedQuestionId" alignment="CENTER" layoutX="325.0" layoutY="590.0"
                onKeyPressed="#goToQuestion" prefHeight="40.0" prefWidth="150.0" promptText="Հարցի համարը"/>
 </Pane>

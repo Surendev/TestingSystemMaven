@@ -67,5 +67,4 @@ public class ExitController {
         if (mouseEvent.getButton().equals(MouseButton.PRIMARY)) cancel();
 
     }
-
 }
