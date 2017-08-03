@@ -36,7 +36,8 @@ import java.util.ResourceBundle;
  */
 public class TestController extends AbstractController implements Initializable {
 
-    public Button confirmButton;
+    @FXML
+    private Button confirmButton;
     public AnchorPane answersPane;
     public Label resultLabel;
 
@@ -99,7 +100,7 @@ public class TestController extends AbstractController implements Initializable 
         test = testService.generateTest(context.getBean("questionsService", QuestionsDAO.class));
         chosenAnswers = new int[test.getAppQuestionsSize()];
         for (int i = 0; i < chosenAnswers.length; i++) {
-            chosenAnswers[i] = 1;
+            chosenAnswers[i] = 0;
         }
         questionsSizeLabel.setText("Հարցերի քանակը - " + test.getAppQuestionsSize());
         rights = new int[chosenAnswers.length];
@@ -131,6 +132,19 @@ public class TestController extends AbstractController implements Initializable 
 
     @FXML
     private void showEndPopup() {
+        rollbackRadioButtons();
+        for (int chosenAnswer : chosenAnswers) {
+            if (chosenAnswer == 0) {
+                Tooltip tooltip = new Tooltip("Թեստի արդյունքների հաշվարկ կատարելու համար բոլոր հարցերի համար " +
+                        "անհրաժեշտ է պատասխան ընտրել։");
+                tooltip.setWrapText(true);
+                tooltip.setWidth(200.0);
+                tooltip.setAutoHide(true);
+                tooltip.show(confirmButton, confirmButton.getScene().getWindow().getX() + 550.0,
+                        confirmButton.getScene().getWindow().getY() + 30.0);
+                return;
+            }
+        }
         disableTest(true);
         test.markAnswerToQuestion(chosenAnswers);
         double[] result = test.qualifyTest(rights);

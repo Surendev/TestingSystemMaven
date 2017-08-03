@@ -2,6 +2,7 @@ package com.application.controllers;
 
 
 import com.StartApp;
+import com.dto.Student;
 import com.jdbc.dao.StudentsDAO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -31,6 +32,7 @@ import java.util.ResourceBundle;
 public class TestLogInController extends AbstractController implements Initializable {
 
     public Button confirmButton;
+    private StudentsDAO studentsService;
 
     private @FXML
     TextField firstNameField;
@@ -59,15 +61,15 @@ public class TestLogInController extends AbstractController implements Initializ
 //            errLabel.setTextFill(Color.RED);
 //        } else {
         showTestPage();
-        resetTestLoginFields();
-        errLabel.getScene().getWindow().hide();
+//        resetTestLoginFields();
+//        errLabel.getScene().getWindow().hide();
 //        }
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        StudentsDAO studentsService = context.getBean("studentsService", StudentsDAO.class);
+        studentsService = context.getBean("studentsService", StudentsDAO.class);
         groupBox.setItems(FXCollections.observableArrayList(studentsService.getGroups()));
     }
 
@@ -133,10 +135,11 @@ public class TestLogInController extends AbstractController implements Initializ
             }
         });
         stage.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (observable.getValue())
+            if (!observable.getValue()){
                 if (!newValue) stage.setIconified(true);
+            }
         });
-        stage.setOnCloseRequest(event -> {
+                stage.setOnCloseRequest(event -> {
             try{
                 event.consume();
                 Parent parent = FXMLLoader.load(getClass().getResource("/fxml/exit.fxml"));
@@ -148,7 +151,7 @@ public class TestLogInController extends AbstractController implements Initializ
                 label.setText("Փակե՞լ ծրագիրը");
                 exitStage.getIcons().add(new Image("/icons/TestIcon.png"));
                 exitStage.setResizable(false);
-                exitStage.initModality(Modality.APPLICATION_MODAL);
+                exitStage.initModality(Modality.WINDOW_MODAL);
                 exitStage.initOwner(stage);
                 exitStage.addEventFilter(KeyEvent.KEY_PRESSED, newEvent -> {
                     if (newEvent.getCode().equals(KeyCode.PRINTSCREEN)) {
@@ -157,7 +160,7 @@ public class TestLogInController extends AbstractController implements Initializ
                     }
                 });
                 exitStage.focusedProperty().addListener(((observable, oldValue, newValue) -> {
-                    if (!newValue) stage.setIconified(true);
+                    if (oldValue) stage.setIconified(false);
                 }));
                 exitStage.show();
             } catch (IOException e){

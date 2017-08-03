@@ -518,6 +518,23 @@ public class AdminController extends AbstractController implements Initializable
 
     }
 
+    private boolean checkConfigsCorrectness(){
+
+        return false;
+    }
+
+    private String[] getAvailableConfigs(){
+
+
+        return null;
+    }
+
+    private String[] getAvailableTopics(){
+
+
+        return null;
+    }
+
     public void addQuestionCountField() {
         TextField ratingField = new TextField();
         ratingField.setMaxWidth(180);
